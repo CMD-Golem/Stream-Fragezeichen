@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Stream Fragezeichen</title>
+	<meta name="description" content="A lot of Data Packs and Resource Packs for Minecraft.">
+	<!-- <meta rel="canonical" href=""> -->
+	<meta name="robots" content="index, follow, archive"/>
+	<meta name="google-site-verification" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="elements/style.css"/>
+	<link rel="icon" href="nav/favicon.png">
+</head>
+<body>
+	<nav>
+		<a class="nav_button nav_home" href="">Stream Fragezeichen</a>
+		<!-- <div class="provider_list">
+			<div class="provider_sel" onclick="selectProvider(this)" id="spotify" title="Spotify">
+				<img src="nav/spotify.svg">
+				<span>Spotify</span>
+			</div>
+			<div class="provider_sel provider_selected" onclick="selectProvider(this)" id="youtube" title="Youtube Music">
+				<img src="nav/youtube.svg">
+				<span>Youtube Music</span>
+			</div>
+			<div class="provider_sel" onclick="selectProvider(this)" id="deezer" title="Deezer">
+				<img src="nav/deezer.svg">
+				<span>Deezer</span>
+			</div>
+			<div class="provider_sel" onclick="selectProvider(this)" id="apple" title="Apple Music">
+				<img src="nav/apple.svg">
+				<span>Apple Music</span>
+			</div>
+		</div> -->
+		<div class="nav_buttons">
+			<div class="nav_button" onclick="toggleOrder()" title="Liste anordnen"><img src="nav/sort.svg" alt="Liste anordnen" id="sort_list"></div>
+			<div class="nav_button" onclick="showWatchList()" title="Watch List"><img src="nav/watchlist.svg" alt="Watch List"></div>
+			<input type="checkbox" id="nav_search_button" style="display: none;"><label for="nav_search_button" title="Suche" class="nav_button nav_search_button" onclick="document.getElementById('site_search').value='';siteSearch();"></label>
+			<div class="nav_search">
+				<div class="nav_search_box"><input type="text" placeholder="Suche..." id="site_search" onkeyup="siteSearch()"></div>
+			</div>
+		</div>
+	</nav>
+
+	<main>
+		<ol></ol>
+		<div id="not_found" style="display:none; text-align: center;">Keine Folge gefunden.</div>
+		<div id="no_watch_list" style="display:none; text-align: center;">Keine Folge in der Watch List.</div>
+	</main>
+
+	<footer>
+		<p>Footer</p>
+	</footer>
+	
+	<script src="elements/episoden.js"></script>
+	<script src="elements/main.js"></script>
+</body>
+</html>
