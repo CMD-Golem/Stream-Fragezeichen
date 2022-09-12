@@ -115,16 +115,16 @@ function showWatchList() {
 var last_provider_selected = document.getElementsByClassName("provider_selected")[0];
 
 function selectProvider(el_button) {
-	var button_selected = el_button.classList.contains("provider_selected");
+	// var button_selected = el_button.classList.contains("provider_selected");
 	last_provider_selected.classList.remove("provider_selected");
 
-	if (!button_selected) {
+	// if (!button_selected) {
 		el_button.classList.add("provider_selected");
-	}
+	// }
 
 	last_provider_selected = el_button;
 	provider = el_button.id;
-	load_episodes();
+	loadEpisodes();
 }
 
 
@@ -135,17 +135,34 @@ var input = document.getElementById("site_search");
 var not_found = document.getElementById("not_found");
 
 function siteSearch() {
-	var filter = input.value.toUpperCase();
-	setTimeout(function(){ input.focus(); }, 100);
+	var search_input = input.value.toUpperCase().split(" ");
 
 	for (var i = 0; i < article.length; i++) {
-		var filterwords = article[i].dataset.filter;
-		if (filterwords.toUpperCase().indexOf(filter) > -1) {
-			article[i].classList.remove("hide_search");
-		} else {
+		var search_data = article[i].dataset.filter.toUpperCase().split(" ");
+		var hide = false;
+
+		// Search: loop trough array from input
+		for (var j = 0; j < search_input.length; j++) {
+			var prehide = true;
+
+			// Check if keywords are in input
+			for (var k = 0; k < search_data.length; k++) {
+				if (search_data[k].startsWith(search_input[j])) { var prehide = false; }
+			}
+			if (prehide == false && hide != true) { var hide = false; }
+			else { var hide = true; }
+		}
+
+		// hide/ unhide
+		if (hide == true) {
 			article[i].classList.add("hide_search");
 		}
+		else {
+			article[i].classList.remove("hide_search");
+		}
 	}
+
+	// not found
 	var hide_search = document.getElementsByClassName("hide_search").length;
 
 	if (article.length - hide_search <= 0) {
@@ -153,5 +170,5 @@ function siteSearch() {
 	}
 	else {
 		not_found.style.display = "none";
-	};
-};
+	}
+}
