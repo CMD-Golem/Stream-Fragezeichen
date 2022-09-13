@@ -33,8 +33,12 @@ function loadEpisodes() {
 	for (var i = 0; i < episoden.length; i++) {
 		var episode = episoden[i];
 		var number = parseInt(episode.number);
+
+		var href = episode.href[link] + '" target="_blank';
+		if (href == '" target="_blank') { href = "#"; }
+
 		html.push(`
-		<a href="${episode.href[link]}" target="_blank" id="${number}" data-filter="die drei fragezeichen ??? ${episode.number} ${episode.name}">
+		<a href="${href}" id="${number}" data-filter="die drei fragezeichen ??? ${episode.number} ${episode.name}">
 			<img src="img/episode_${number}.jpg" alt="Folge ${episode.number}: ${episode.name}">
 			<p><b>Folge ${episode.number}</b>: ${episode.name}</p>
 			<button class="add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
@@ -44,6 +48,33 @@ function loadEpisodes() {
 	}
 	if (backwards) {
 		html.reverse();
+	}
+	episoden_list.innerHTML = html.join("");
+}
+
+
+function loadSpecial() {
+	var html = [];
+
+	if (provider == "deezer") { var link = 0; } 
+	else if (provider == "spotify") { var link = 2; }
+	else if (provider == "apple") { var link = 3; }
+	else { var link = 1; } // Youtube
+
+	for (var i = 0; i < special.length; i++) {
+		var episode = special[i];
+
+		var href = episode.href[link] + '" target="_blank';
+		if (href == '" target="_blank') { href = "#"; }
+
+		html.push(`
+		<a href="${href}" id="${episode.number}" data-filter="die drei fragezeichen ??? ${episode.search} ${episode.name}">
+			<img src="img_special/special_${episode.number}.jpg" alt="${episode.name}">
+			<p>${episode.name}</p>
+			<button class="add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+			<button class="remove" title="Von Watch List entfernen" onclick="toggleWatchList(this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+			<button class="play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+		</a>`);
 	}
 	episoden_list.innerHTML = html.join("");
 }

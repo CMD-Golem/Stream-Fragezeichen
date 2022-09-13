@@ -1094,4 +1094,263 @@ var episoden = [
 	  name: "und die Teufelsklippe",
 	  href: ["", "", "", ""]
 	}
-  ]
+]
+
+//#################################################################################################
+var special = [
+	{
+		number: "S1",
+		name: "Das Grab der Inka-Mumie",
+		search: "Special Spezial",
+		href: ["https://www.deezer.com/de/album/38907271", "https://music.youtube.com/browse/MPREb_MtjxLSOwIBC", "https://open.spotify.com/album/7osWCNCcvGfqP31G7281iL", "https://music.apple.com/ch/album/das-grab-der-inka-mumie/1219257238"]
+	},
+	{
+		number: "S2",
+		name: "und der Tornadojäger",
+		search: "Special Spezial",
+		href: ["https://www.deezer.com/de/album/41409151", "https://music.youtube.com/browse/MPREb_9VEYPMEsL9K", "https://open.spotify.com/album/7mH8vdj0TkiPO6fMHBCvYj", "https://music.apple.com/ch/album/specialfolge-und-der-tornadoj%C3%A4ger/1235580462"]
+	},
+	{
+		number: "S3",
+		name: "und das kalte Auge",
+		search: "Special Spezial",
+		href: ["https://www.deezer.com/de/album/45275591", "https://music.youtube.com/browse/MPREb_89YtUrkU8j5", "https://open.spotify.com/album/3egVVb6Zt0LdS6agBMGsiJ", "https://music.apple.com/ch/album/specialfolge-und-das-kalte-auge/1263882229"]
+	},
+	{
+		number: "S4",
+		name: "und die schwarze Katze",
+		search: "Special Spezial",
+		href: ["https://www.deezer.com/de/album/90356932", "https://music.youtube.com/browse/MPREb_nICq2qyf9tu", "https://open.spotify.com/album/39K0Sczt1mIbW33lB5RNer", "https://music.apple.com/ch/album/und-die-schwarze-katze/1456265306"]
+	},
+	{
+		number: "S5",
+		name: "und das versunkene Schiff",
+		search: "Special Spezial",
+		href: ["https://www.deezer.com/de/album/111783672", "https://music.youtube.com/browse/MPREb_HhXa9tjuT16", "https://open.spotify.com/album/6UN8m07SmIzyDe63H0oljL", "https://music.apple.com/ch/album/und-das-versunkene-schiff/1480675865"]
+	},
+	{
+		number: "S6",
+		name: "und der dreiäugige Totenkopf",
+		search: "Special Spezial",
+		href: ["https://www.deezer.com/de/album/125947742", "https://music.youtube.com/browse/MPREb_wSTyZjRbMQb", "https://open.spotify.com/album/76M62o1rdKEqTN1JIbGdGV", "https://music.apple.com/ch/album/und-der-drei%C3%A4ugige-totenkopf/1492053303"]
+	},
+	{
+		number: "S7",
+		name: "und das Grab der Maya",
+		search: "Special Spezial",
+		href: ["https://www.deezer.com/de/album/179706512", "https://music.youtube.com/browse/MPREb_0bOFkwXrX2x", "https://open.spotify.com/album/4vj4Dq2q7fyvwY7UCj2vin", "https://music.apple.com/ch/album/und-das-grab-der-maya/1535920186"]
+	},
+	{
+		number: "TS1",
+		name: "Brainwash - Gefangene Gedanken",
+		search: "Top Secret",
+		href: ["https://www.deezer.com/de/album/12761808", "https://music.youtube.com/browse/MPREb_FGzyAEOzqQq", "https://open.spotify.com/album/5RBu5WK95Q6BtWfA4o3Vgs", "https://music.apple.com/ch/album/brainwash-gefangene-gedanken/1092529878"]
+	},
+	{
+		number: "TS2",
+		name: "House of Horrors - Haus der Angst",
+		search: "Top Secret",
+		href: ["https://www.deezer.com/de/album/12761800", "https://music.youtube.com/browse/MPREb_fh8K2BcA1r9", "https://open.spotify.com/album/249qkyRcqMAoKJhXwrTYtE", "https://music.apple.com/ch/album/house-of-horrors-haus-der-angst/452658930"]
+	},
+	{
+		number: "TS3",
+		name: "High Strung - Unter Hochspannung",
+		search: "Top Secret",
+		href: ["https://www.deezer.com/de/album/12761836", "https://music.youtube.com/browse/MPREb_aRhOTg9A4fu", "https://open.spotify.com/album/2Bxdn8Gn8vEy4UiTOc8cBK", "https://music.apple.com/ch/album/high-strung-unter-hochspannung/1092538532"]
+	},
+	{
+		number: "AK12",
+		name: "Der 5. Advent",
+		search: "Adventskalender Kalender",
+		href: ["https://www.deezer.com/de/album/14924739", "https://music.youtube.com/browse/MPREb_xqQYIFXpbwT", "https://open.spotify.com/album/2qFuUJMx8w4VEO0Zdf8jFJ", "https://music.apple.com/ch/album/der-5-advent/1174866876"]
+	},
+	{
+		number: "AK15",
+		name: "Adventskalender - Stille Nacht, düstere Nacht",
+		search: "Adventskalender Kalender",
+		href: ["https://www.deezer.com/de/album/49725642", "https://music.youtube.com/browse/MPREb_7Zx1bSM4Rwc", "https://open.spotify.com/album/5iobM2gNVymvP8XqnRnHVR", "https://music.apple.com/ch/album/adventskalender-stille-nacht-d%C3%BCstere-nacht/1295117431"]
+	},
+	{
+		number: "AK20",
+		name: "Adventskalender - O du finstere",
+		search: "Adventskalender Kalender",
+		href: ["https://www.deezer.com/de/album/169734362", "https://music.youtube.com/browse/MPREb_r2rvTX6ESWG", "https://open.spotify.com/album/7ynXpeQRwzqKiv8WVh7c7B", "https://music.apple.com/ch/album/die-drei-adventskalender-o-du-finstere/1529420801"]
+	},
+	{
+		number: "SK1",
+		name: "Das Grab der Inka-Mumie (Kopfhörer-Hörspiel)",
+		search: "Special Spezial Kopfhörer",
+		href: ["https://www.deezer.com/de/album/296172512", "https://music.youtube.com/browse/MPREb_z6rJJrZxu0i", "https://open.spotify.com/album/6T5D7KpnftvfLaYPp94U4y", "https://music.apple.com/ch/album/das-grab-der-inka-mumie-kopfh%C3%B6rer-h%C3%B6rspiel/1610353941"]
+	},
+	{
+		number: "SK5",
+		name: "und das versunkene Schiff (Kopfhörer-Hörspiel)",
+		search: "Special Spezial Kopfhörer",
+		href: ["https://www.deezer.com/de/album/296175362", "https://music.youtube.com/browse/MPREb_MeQ2GaGRGjN", "https://open.spotify.com/album/7FVn5TYEbQbWM6r8unRaCe", "https://music.apple.com/ch/album/und-das-versunkene-schiff-kopfh%C3%B6rer-h%C3%B6rspiel/1610388882"]
+	},
+	{
+		number: "SK6",
+		name: "und der dreiäugige Totenkopf (Kopfhörer-Hörspiel)",
+		search: "Special Spezial Kopfhörer",
+		href: ["https://www.deezer.com/de/album/297389892", "https://music.youtube.com/browse/MPREb_87jYWoEw66q", "https://open.spotify.com/album/2uMs1XZBdGdZuXOY7draw4", "https://music.apple.com/ch/album/und-der-drei%C3%A4ugige-totenkopf-kopfh%C3%B6rer-h%C3%B6rspiel/1611039441"]
+	},
+	{
+		number: "SK7",
+		name: "und das Grab der Maya (Kopfhörer-Hörspiel)",
+		search: "Special Spezial Kopfhörer",
+		href: ["https://www.deezer.com/de/album/179712452", "https://music.youtube.com/browse/MPREb_jKPVtTRN29I", "https://open.spotify.com/album/3t9NGa2A9SGvipHoU5Bc6m", "https://music.apple.com/ch/album/und-das-grab-der-maya-kopfh%C3%B6rer-h%C3%B6rspiel/1535924407"]
+	},
+	{
+		number: "SP",
+		name: "und der Super-Papagei 2004",
+		href: ["https://www.deezer.com/de/album/12761834", "https://music.youtube.com/browse/MPREb_6cKhBgCr5Yw", "https://open.spotify.com/album/4KXnXnpFRnQsjeZHpNC7X9", "https://music.apple.com/ch/album/super-papagei-2004/1092550463"]
+	},
+	{
+		number: "3T",
+		name: "und der dreiTag",
+		href: ["https://www.deezer.com/de/album/12761802", "https://music.youtube.com/browse/MPREb_FkxFDU3nyUl", "https://open.spotify.com/album/3JJeehFIJTxhrltC6e44VT", "https://music.apple.com/ch/album/und-der-dreitag/1092548111"]
+	},
+	{
+		number: "MC",
+		name: "Master of Chess",
+		href: ["https://www.deezer.com/de/album/12761804", "https://music.youtube.com/browse/MPREb_zSanf1hlYJR", "https://open.spotify.com/album/4uJPgDMOIRfoAumwwmpRbR", "https://music.apple.com/ch/album/master-of-chess-live-unplugged/1092551485"]
+	},
+	{
+		number: "KG1",
+		name: "Und die Geisterlampe",
+		search: "Kurzgeschichten",
+		href: ["https://www.deezer.com/de/album/12761852", "https://music.youtube.com/browse/MPREb_OapVHfFET5a", "https://open.spotify.com/album/1nL3AddBvZ845zMyXRowgs", "https://music.apple.com/ch/album/und-die-geisterlampe/1092546618"]
+	},
+	{
+		number: "KG2",
+		name: "Das Rätsel der Sieben",
+		search: "Kurzgeschichten",
+		href: ["https://www.deezer.com/de/album/12761844", "https://music.youtube.com/browse/MPREb_vwIe8fywkgK", "https://open.spotify.com/album/2AEzTekSWfyfzJH56jmhET", "https://music.apple.com/ch/album/das-r%C3%A4tsel-der-sieben/1092549930"]
+	},
+	{
+		number: "KG3",
+		name: "und der Zeitgeist (Sechs Kurzgeschichten)",
+		search: "Kurzgeschichten",
+		href: ["https://www.deezer.com/de/album/14720692", "https://music.youtube.com/browse/MPREb_urHZhGbeUjq", "https://open.spotify.com/album/4lLOJQU6QBH5cxmERE77La", "https://music.apple.com/ch/album/und-der-zeitgeist-sechs-kurzgeschichten/1149379770"]
+	},
+	{
+		number: "KG4",
+		name: "und der schwarze Tag (Sechs Kurzgeschichten)",
+		search: "Kurzgeschichten",
+		href: ["https://www.deezer.com/de/album/73551222", "https://music.youtube.com/browse/MPREb_NlJYUFIIM9C", "https://open.spotify.com/album/7ehMwTyKuIM4zdiltMxE4X", "https://music.apple.com/ch/album/und-der-schwarze-tag-sechs-kurzgeschichten/1436692770"]
+	},
+	{
+		number: "F06",
+		name: "Das Geheimnis der Geisterinsel",
+		search: "Film",
+		href: ["https://www.deezer.com/de/album/185329092", "https://open.spotify.com/album/5DyZvpTRRE0ObKVXkJu6wy", "https://music.apple.com/ch/album/das-geheimnis-der-geisterinsel/1539646905"]
+	},
+	{
+		number: "F09",
+		name: "Das verfluchte Schloss",
+		search: "Film",
+		href: ["https://www.deezer.com/de/album/12761814", "https://music.youtube.com/browse/MPREb_P6jnlecox6Q", "https://open.spotify.com/album/0sCs2S5YTEN0UT1fwWpvKw", "https://music.apple.com/ch/album/das-verfluchte-schloss/1092531155"]
+	},
+	{
+		number: "HB01",
+		name: "Jens Wawrczeck liest ...und das Gespensterschloß",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/117191402", "https://music.youtube.com/browse/MPREb_xmWI61lgZ5S", "https://open.spotify.com/album/1uPmiAn5sBUdGCbAeiPTNG", ""]
+	},
+	{
+		number: "HB03",
+		name: "Tim Grobe liest ...und der Fluch des Rubins",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/136712702", "https://music.youtube.com/browse/MPREb_KEhpjCFeDju", "https://open.spotify.com/album/1PO7K8YvBHLa5d6jIuTkaj", ""]
+	},
+	{
+		number: "HB04",
+		name: "Henning May liest ...und der seltsame Wecker",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/128821822", "https://music.youtube.com/browse/MPREb_zgXij78z6YB", "https://open.spotify.com/album/5femMu6wEiqpYJ2O6FxwFH", ""]
+	},
+	{
+		number: "HB05",
+		name: "Karin Lieneweg liest… und der sprechende Totenkopf",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/277419492", "https://music.youtube.com/browse/MPREb_jbzJxcPde9T", "https://open.spotify.com/album/5yI3MACumg0ZjPSRUOFmoB", ""]
+	},
+	{
+		number: "HB06",
+		name: "Oliver Kalkofe liest ...und der lachende Schatten",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/148632852", "https://music.youtube.com/browse/MPREb_6rlVCS1jYN2", "https://open.spotify.com/album/0VmZF3nyMuhRDcyVY0MuE1", ""]
+	},
+	{
+		number: "HB07",
+		name: "Axel Prahl liest… und die schwarze Katze",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/250816912", "https://music.youtube.com/browse/MPREb_MbcUeBzrwJ7", "https://open.spotify.com/album/6heVFpJImaEoJT3TEtlSMl", ""]
+	},
+	{
+		number: "HB08",
+		name: "Oliver Rohrbeck liest ...und der Super-Papagei",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/117190222", "https://music.youtube.com/browse/MPREb_gRpdbNJ4w5u", "https://open.spotify.com/album/3qqFfEjRLF7pxUpWw2g0P5", ""]
+	},
+	{
+		number: "HB11",
+		name: "Anna Thalbach liest... und die Geisterinsel",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/134531492", "https://music.youtube.com/browse/MPREb_WRNXfJIwg84", "https://open.spotify.com/album/2EzmlFDy8q8etqohlJpaaB", ""]
+	},
+	{
+		number: "HB14",
+		name: "Bastian Pastewka liest... und der grüne Geist",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/107353052", "https://music.youtube.com/browse/MPREb_GcrZA5Zd15B", "https://open.spotify.com/album/4QQ2iK81MWMhK2Qqr1AO0R", ""]
+	},
+	{
+		number: "HB15",
+		name: "Katrin Fröhlich liest ...und die singende Schlange",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/167297692", "https://music.youtube.com/browse/MPREb_nE4vYbo2LZk", "https://open.spotify.com/album/5YuHQZqJWP3EmAvMSoWeTs", ""]
+	},
+	{
+		number: "HB18",
+		name: "Jannik Schümann liest ...und der Phantomsee",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/114804782", "https://music.youtube.com/browse/MPREb_1oUitRVexDt", "https://open.spotify.com/album/3yzJOoR3024vkb7WXRVtFr", ""]
+	},
+	{
+		number: "HB19",
+		name: "Jürgen Thormann liest… und der Zauberspiegel",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/237274692", "https://music.youtube.com/browse/MPREb_qh76kqH0VMG", "https://open.spotify.com/album/4u8yNY4Un2nErgeNRMFeh3", ""]
+	},
+	{
+		number: "HB21",
+		name: "Andreas Fröhlich liest...und der Karpatenhund",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/117193712", "https://music.youtube.com/browse/MPREb_y6NLT8xEPvs", "https://open.spotify.com/album/5oCCy3K7JBWfdfp4QNhYxA", ""]
+	},
+	{
+		number: "HB23",
+		name: "Bela B liest... und der tanzende Teufel",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/119497082", "https://music.youtube.com/browse/MPREb_D0eQRgLIuHu", "https://open.spotify.com/album/14OPACj7jtzXOrgxis7pu2", ""]
+	},
+	{
+		number: "HB27",
+		name: "Jessica Schwarz liest ...und der magische Kreis",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/121455152", "https://music.youtube.com/browse/MPREb_8nic9TiF2Ep", "https://open.spotify.com/album/5q9quwSbPpYxoAzMSKGfIw", ""]
+	},
+	{
+		number: "HB31",
+		name: "Judy Winter liest… und der Ameisenmensch",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/219396662", "https://music.youtube.com/browse/MPREb_vqkFtm1XUjH", "https://open.spotify.com/album/7fsdjOiouCHQ9Rlmrz7ZIa", ""]
+	},
+	{
+		number: "HB43",
+		name: "Sascha Draeger liest… und der gestohlene Preis",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/265216312", "https://music.youtube.com/browse/MPREb_iShLyEBKCh1", "https://open.spotify.com/album/5KIQUoxcSBlPN3ie9xVmnA", ""]
+	}
+]
