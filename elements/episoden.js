@@ -1087,12 +1087,12 @@ var episoden = [
 	{
 	  number: "218",
 	  name: "Im Netz der Lügen",
-	  href: ["", "", "", "https://music.apple.com/ch/album/folge-218-im-netz-der-l%C3%BCgen/1633596746"]
+	  href: ["#new", "16. September", "", "https://music.apple.com/ch/album/folge-218-im-netz-der-l%C3%BCgen/1633596746"]
 	},
 	{
 	  number: "219",
 	  name: "und die Teufelsklippe",
-	  href: ["", "", "", ""]
+	  href: ["#new", "18. November", "", ""]
 	}
 ]
 

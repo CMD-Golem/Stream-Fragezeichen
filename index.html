@@ -19,7 +19,7 @@
 				<img src="nav/spotify.svg">
 				<span>Spotify</span>
 			</div>
-			<div class="provider_sel provider_selected" onclick="selectProvider(this)" id="youtube" title="Youtube Music">
+			<div class="provider_sel" onclick="selectProvider(this)" id="youtube" title="Youtube Music">
 				<img src="nav/youtube.svg">
 				<span>Youtube Music</span>
 			</div>
@@ -35,7 +35,7 @@
 		<div class="nav_buttons">
 			<div class="nav_button" onclick="toggleOrder()" title="Liste anordnen"><img src="nav/sort.svg" alt="Liste anordnen" id="sort_list"></div>
 			<div class="nav_button" onclick="showWatchList()" title="Watch List"><img src="nav/watchlist.svg" alt="Watch List"></div>
-			<input type="checkbox" id="nav_search_button" style="display: none;"><label for="nav_search_button" title="Suche" class="nav_button nav_search_button" onclick="document.getElementById('site_search').value='';siteSearch();"></label>
+			<input type="checkbox" id="nav_search_button" style="display: none;"><label for="nav_search_button" title="Suche" class="nav_button nav_search_button" onclick="startSearch()"></label>
 			<div class="nav_search">
 				<div class="nav_search_box"><input type="text" placeholder="Suche..." id="site_search" onkeyup="siteSearch()"></div>
 			</div>
