@@ -1255,102 +1255,102 @@ var special = [
 		number: "HB01",
 		name: "Jens Wawrczeck liest ...und das Gespensterschloß",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/117191402", "https://music.youtube.com/browse/MPREb_xmWI61lgZ5S", "https://open.spotify.com/album/1uPmiAn5sBUdGCbAeiPTNG", ""]
+		href: ["https://www.deezer.com/de/album/117191402", "https://music.youtube.com/browse/MPREb_xmWI61lgZ5S", "https://open.spotify.com/album/1uPmiAn5sBUdGCbAeiPTNG", "#"]
 	},
 	{
 		number: "HB03",
 		name: "Tim Grobe liest ...und der Fluch des Rubins",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/136712702", "https://music.youtube.com/browse/MPREb_KEhpjCFeDju", "https://open.spotify.com/album/1PO7K8YvBHLa5d6jIuTkaj", ""]
+		href: ["https://www.deezer.com/de/album/136712702", "https://music.youtube.com/browse/MPREb_KEhpjCFeDju", "https://open.spotify.com/album/1PO7K8YvBHLa5d6jIuTkaj", "#"]
 	},
 	{
 		number: "HB04",
 		name: "Henning May liest ...und der seltsame Wecker",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/128821822", "https://music.youtube.com/browse/MPREb_zgXij78z6YB", "https://open.spotify.com/album/5femMu6wEiqpYJ2O6FxwFH", ""]
+		href: ["https://www.deezer.com/de/album/128821822", "https://music.youtube.com/browse/MPREb_zgXij78z6YB", "https://open.spotify.com/album/5femMu6wEiqpYJ2O6FxwFH", "#"]
 	},
 	{
 		number: "HB05",
 		name: "Karin Lieneweg liest… und der sprechende Totenkopf",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/277419492", "https://music.youtube.com/browse/MPREb_jbzJxcPde9T", "https://open.spotify.com/album/5yI3MACumg0ZjPSRUOFmoB", ""]
+		href: ["https://www.deezer.com/de/album/277419492", "https://music.youtube.com/browse/MPREb_jbzJxcPde9T", "https://open.spotify.com/album/5yI3MACumg0ZjPSRUOFmoB", "#"]
 	},
 	{
 		number: "HB06",
 		name: "Oliver Kalkofe liest ...und der lachende Schatten",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/148632852", "https://music.youtube.com/browse/MPREb_6rlVCS1jYN2", "https://open.spotify.com/album/0VmZF3nyMuhRDcyVY0MuE1", ""]
+		href: ["https://www.deezer.com/de/album/148632852", "https://music.youtube.com/browse/MPREb_6rlVCS1jYN2", "https://open.spotify.com/album/0VmZF3nyMuhRDcyVY0MuE1", "#"]
 	},
 	{
 		number: "HB07",
 		name: "Axel Prahl liest… und die schwarze Katze",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/250816912", "https://music.youtube.com/browse/MPREb_MbcUeBzrwJ7", "https://open.spotify.com/album/6heVFpJImaEoJT3TEtlSMl", ""]
+		href: ["https://www.deezer.com/de/album/250816912", "https://music.youtube.com/browse/MPREb_MbcUeBzrwJ7", "https://open.spotify.com/album/6heVFpJImaEoJT3TEtlSMl", "#"]
 	},
 	{
 		number: "HB08",
 		name: "Oliver Rohrbeck liest ...und der Super-Papagei",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/117190222", "https://music.youtube.com/browse/MPREb_gRpdbNJ4w5u", "https://open.spotify.com/album/3qqFfEjRLF7pxUpWw2g0P5", ""]
+		href: ["https://www.deezer.com/de/album/117190222", "https://music.youtube.com/browse/MPREb_gRpdbNJ4w5u", "https://open.spotify.com/album/3qqFfEjRLF7pxUpWw2g0P5", "#"]
 	},
 	{
 		number: "HB11",
 		name: "Anna Thalbach liest... und die Geisterinsel",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/134531492", "https://music.youtube.com/browse/MPREb_WRNXfJIwg84", "https://open.spotify.com/album/2EzmlFDy8q8etqohlJpaaB", ""]
+		href: ["https://www.deezer.com/de/album/134531492", "https://music.youtube.com/browse/MPREb_WRNXfJIwg84", "https://open.spotify.com/album/2EzmlFDy8q8etqohlJpaaB", "#"]
 	},
 	{
 		number: "HB14",
 		name: "Bastian Pastewka liest... und der grüne Geist",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/107353052", "https://music.youtube.com/browse/MPREb_GcrZA5Zd15B", "https://open.spotify.com/album/4QQ2iK81MWMhK2Qqr1AO0R", ""]
+		href: ["https://www.deezer.com/de/album/107353052", "https://music.youtube.com/browse/MPREb_GcrZA5Zd15B", "https://open.spotify.com/album/4QQ2iK81MWMhK2Qqr1AO0R", "#"]
 	},
 	{
 		number: "HB15",
 		name: "Katrin Fröhlich liest ...und die singende Schlange",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/167297692", "https://music.youtube.com/browse/MPREb_nE4vYbo2LZk", "https://open.spotify.com/album/5YuHQZqJWP3EmAvMSoWeTs", ""]
+		href: ["https://www.deezer.com/de/album/167297692", "https://music.youtube.com/browse/MPREb_nE4vYbo2LZk", "https://open.spotify.com/album/5YuHQZqJWP3EmAvMSoWeTs", "#"]
 	},
 	{
 		number: "HB18",
 		name: "Jannik Schümann liest ...und der Phantomsee",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/114804782", "https://music.youtube.com/browse/MPREb_1oUitRVexDt", "https://open.spotify.com/album/3yzJOoR3024vkb7WXRVtFr", ""]
+		href: ["https://www.deezer.com/de/album/114804782", "https://music.youtube.com/browse/MPREb_1oUitRVexDt", "https://open.spotify.com/album/3yzJOoR3024vkb7WXRVtFr", "#"]
 	},
 	{
 		number: "HB19",
 		name: "Jürgen Thormann liest… und der Zauberspiegel",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/237274692", "https://music.youtube.com/browse/MPREb_qh76kqH0VMG", "https://open.spotify.com/album/4u8yNY4Un2nErgeNRMFeh3", ""]
+		href: ["https://www.deezer.com/de/album/237274692", "https://music.youtube.com/browse/MPREb_qh76kqH0VMG", "https://open.spotify.com/album/4u8yNY4Un2nErgeNRMFeh3", "#"]
 	},
 	{
 		number: "HB21",
 		name: "Andreas Fröhlich liest...und der Karpatenhund",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/117193712", "https://music.youtube.com/browse/MPREb_y6NLT8xEPvs", "https://open.spotify.com/album/5oCCy3K7JBWfdfp4QNhYxA", ""]
+		href: ["https://www.deezer.com/de/album/117193712", "https://music.youtube.com/browse/MPREb_y6NLT8xEPvs", "https://open.spotify.com/album/5oCCy3K7JBWfdfp4QNhYxA", "#"]
 	},
 	{
 		number: "HB23",
 		name: "Bela B liest... und der tanzende Teufel",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/119497082", "https://music.youtube.com/browse/MPREb_D0eQRgLIuHu", "https://open.spotify.com/album/14OPACj7jtzXOrgxis7pu2", ""]
+		href: ["https://www.deezer.com/de/album/119497082", "https://music.youtube.com/browse/MPREb_D0eQRgLIuHu", "https://open.spotify.com/album/14OPACj7jtzXOrgxis7pu2", "#"]
 	},
 	{
 		number: "HB27",
 		name: "Jessica Schwarz liest ...und der magische Kreis",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/121455152", "https://music.youtube.com/browse/MPREb_8nic9TiF2Ep", "https://open.spotify.com/album/5q9quwSbPpYxoAzMSKGfIw", ""]
+		href: ["https://www.deezer.com/de/album/121455152", "https://music.youtube.com/browse/MPREb_8nic9TiF2Ep", "https://open.spotify.com/album/5q9quwSbPpYxoAzMSKGfIw", "#"]
 	},
 	{
 		number: "HB31",
 		name: "Judy Winter liest… und der Ameisenmensch",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/219396662", "https://music.youtube.com/browse/MPREb_vqkFtm1XUjH", "https://open.spotify.com/album/7fsdjOiouCHQ9Rlmrz7ZIa", ""]
+		href: ["https://www.deezer.com/de/album/219396662", "https://music.youtube.com/browse/MPREb_vqkFtm1XUjH", "https://open.spotify.com/album/7fsdjOiouCHQ9Rlmrz7ZIa", "#"]
 	},
 	{
 		number: "HB43",
 		name: "Sascha Draeger liest… und der gestohlene Preis",
 		search: "Hörbuch Hörbücher",
-		href: ["https://www.deezer.com/de/album/265216312", "https://music.youtube.com/browse/MPREb_iShLyEBKCh1", "https://open.spotify.com/album/5KIQUoxcSBlPN3ie9xVmnA", ""]
+		href: ["https://www.deezer.com/de/album/265216312", "https://music.youtube.com/browse/MPREb_iShLyEBKCh1", "https://open.spotify.com/album/5KIQUoxcSBlPN3ie9xVmnA", "#"]
 	}
 ]
