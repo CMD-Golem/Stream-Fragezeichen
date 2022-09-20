@@ -63,15 +63,18 @@ ol {
 	flex-flow: row wrap;
 }
 
-ol a:link, ol a:visited, ol a:link:active, ol a:visited:active {
-	color: inherit;
-	text-decoration: none;
+ol div {
 	cursor: auto;
 	display: var(--watch_list);
 	margin: 12px;
 	margin-bottom: 15px;
 	position: relative;
 	cursor: pointer;
+}
+
+ol a:link, ol a:visited, ol a:link:active, ol a:visited:active {
+	color: inherit;
+	text-decoration: none;
 }
   
 ol a:hover {
@@ -83,7 +86,7 @@ ol img {
 	border-radius: 5px;
 }
 
-ol a:hover img {
+ol div:hover img {
 	opacity: 60%;
 }
 
@@ -125,9 +128,9 @@ ol button:hover {
 	transform: scale(1.3);
 }
 
-ol a:hover .play,
-ol a:not(.in_watch_list):hover .add,
-ol a.in_watch_list:hover .remove {
+ol div:hover .play,
+ol div:not(.in_watch_list):hover .add,
+ol div.in_watch_list:hover .remove {
 	display: block;
 }
 
