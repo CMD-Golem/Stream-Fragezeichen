@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 	<title>Stream Fragezeichen</title>
-	<meta name="description" content="A lot of Data Packs and Resource Packs for Minecraft.">
+	<meta name="description" content="Deine Seite um drei Fragezeichen Hörbücher aus deinem Streaming auszuwählen und zu hören.">
 	<!-- <meta rel="canonical" href=""> -->
 	<meta name="robots" content="index, follow, archive"/>
 	<meta name="google-site-verification" content="" />
@@ -14,24 +14,6 @@
 <body>
 	<nav>
 		<a class="nav_button nav_home" href=""><h1>Stream Fragezeichen</h1></a>
-		<div class="provider_list" style="display: none;">
-			<div class="provider_sel" onclick="selectProvider(this)" id="spotify" title="Spotify">
-				<img src="nav/spotify.svg">
-				<span>Spotify</span>
-			</div>
-			<div class="provider_sel" onclick="selectProvider(this)" id="youtube" title="Youtube Music">
-				<img src="nav/youtube.svg">
-				<span>Youtube Music</span>
-			</div>
-			<div class="provider_sel" onclick="selectProvider(this)" id="deezer" title="Deezer">
-				<img src="nav/deezer.svg">
-				<span>Deezer</span>
-			</div>
-			<div class="provider_sel" onclick="selectProvider(this)" id="apple" title="Apple Music">
-				<img src="nav/apple.svg">
-				<span>Apple Music</span>
-			</div>
-		</div>
 		<div class="nav_buttons">
 			<div class="nav_button" onclick="toggleOrder()" title="Liste anordnen"><img src="nav/sort.svg" alt="Liste anordnen" id="sort_list"></div>
 			<input type="checkbox" id="nav_search_button" style="display: none;"><label for="nav_search_button" title="Suche" class="nav_button nav_search_button" onclick="startSearch()"></label>
@@ -63,8 +45,34 @@
 				</p>
 			</div>
 		</div>
-		<div class="aside_content"> <!-- Settings Box -->
-
+		<div class="aside_content center"> <!-- Settings Box -->
+			<p>Stream-Fragezeichen.de - Deine Seite um drei Fragezeichen Hörbücher aus deinem Streaming auszuwählen und zu hören.<br>Suche nach einzelnen Folgen und speichere sie in deiner Watch List oder verfolge deinen Hörverlauf.</p>
+			<div class="settings_box">
+				<div>
+					<p>Wähle deinen Streaming Anbieter aus:</p>
+					<div class="provider_list">
+						<div class="provider_sel" onclick="selectProvider(this)" id="spotify" title="Spotify">
+							<img src="nav/spotify.svg">
+							<span>Spotify</span>
+						</div>
+						<div class="provider_sel" onclick="selectProvider(this)" id="youtube" title="Youtube Music">
+							<img src="nav/youtube.svg">
+							<span>Youtube Music</span>
+						</div>
+						<div class="provider_sel" onclick="selectProvider(this)" id="deezer" title="Deezer">
+							<img src="nav/deezer.svg">
+							<span>Deezer</span>
+						</div>
+						<div class="provider_sel" onclick="selectProvider(this)" id="apple" title="Apple Music">
+							<img src="nav/apple.svg">
+							<span>Apple Music</span>
+						</div>
+					</div>
+				</div>
+				<div>
+					<p>Kostenloser und werbefreien Account erstellen:</p>
+				</div>
+			</div>
 		</div>
 		<button onclick="hideAside()" class="hide_aside">Minimize</button>
 	</aside>

@@ -271,8 +271,9 @@ var show_aside = false;
 
 function hideAside() {
 	show_aside = false;
+	show_settings = false;
 	aside.style.height = "0";
-	settings_button.classList.remove("nav_active");
+	settings_button.classList.remove("set_active");
 
 	setTimeout(function(){
 		aside.style.overflow = "hidden";
@@ -330,27 +331,58 @@ function showInfo(array_id) {
 	date_input.disabled = true;
 	edit_history.style.display = "inline-block";
 	done_history.style.display = "none";
+
+	// Settings
+	show_settings = false;
+	settings_button.classList.remove("set_active");
 }
 
 // show settings
 var settings_button = document.getElementsByClassName("active_blue")[0];
+var show_settings = false;
 
-function showSettings(el) {
+function showSettings() {
 	aside_content[0].style.display = "none";
-	aside_content[1].style.display = "flex";
-	el.classList.add("nav_active");
-
-	
+	aside_content[1].style.display = "block";
+	settings_button.classList.add("set_active");
 
 	if (!show_aside) {
 		show_aside = true;
 		aside.style.height = "340px";
 		aside.style.overflow = "visible";
 	}
-	else {
+	if (show_settings) {
+		show_settings = false;
 		hideAside();
 	}
+	else {
+		show_settings = true;
+	}
 }
+
+//#################################################################################################
+// Settings
+// Provider
+var last_provider_selected = document.getElementById(provider);
+last_provider_selected.classList.add("provider_selected");
+
+function selectProvider(el_button) {
+	last_provider_selected.classList.remove("provider_selected");
+	el_button.classList.add("provider_selected");
+
+	last_provider_selected = el_button;
+	provider = el_button.id;
+	
+	if (provider == "deezer") { provider_link = 0; } 
+	else if (provider == "spotify") { provider_link = 2; }
+	else if (provider == "apple") { provider_link = 3; }
+	else { provider_link = 1; } // Youtube
+
+	loadEpisodes(active_type);
+	window.localStorage.setItem("provider", provider);
+}
+
+//
 
 //#################################################################################################
 // Watchlist
@@ -500,26 +532,6 @@ function showHistory(el) {
 		loadEpisodes("history");
 	}
 }
-
-//#################################################################################################
-// Provider
-var last_provider_selected = document.getElementById(provider);
-last_provider_selected.classList.add("provider_selected");
-
-function selectProvider(el_button) {
-	// var button_selected = el_button.classList.contains("provider_selected");
-	last_provider_selected.classList.remove("provider_selected");
-
-	// if (!button_selected) {
-		el_button.classList.add("provider_selected");
-	// }
-
-	last_provider_selected = el_button;
-	provider = el_button.id;
-	// loadEpisodes(active_type);
-	window.localStorage.setItem("provider", provider);
-}
-
 
 //#################################################################################################
 // Search

@@ -43,6 +43,10 @@ h1 {
 	font-weight: normal;
 }
 
+.center {
+	text-align: center;
+}
+
 button, input {
 	appearance: none;
 	background-color: transparent;
@@ -212,7 +216,7 @@ aside {
 }
 
 .aside_content {
-	display: flex;
+	display: none;
 	position: relative;
 	height: calc(100% - 40px);
 	padding-top: 40px;
@@ -286,25 +290,20 @@ aside .play {
 	fill: #333333;
 }
 
-/* ####################################################################### */
-/* Navbar */
-nav {
-	padding-right: 15%;
-	padding-left: 15%;
-	height: 60px;
-	position: sticky;
-	top: 0;
-	z-index: 2;
-	background-color: #030303;
-	border-bottom: #CCCCCC solid 1px;
-	overflow: hidden;
+/* Settings */
+.settings_box {
+	display: flex;
+	margin-top: 30px;
 }
 
-/* Provider Selection */
+.settings_box > div {
+	padding: 0 10px;
+	width: calc(50% - 20px);
+}
+
 .provider_list {
 	display: flex;
 	justify-content: center;
-	width: 400px;
 }
 
 .provider_sel {
@@ -332,6 +331,20 @@ nav {
 
 .provider_sel:not(.provider_selected):not(:hover) img {
 	filter: grayscale(100%);
+}
+
+/* ####################################################################### */
+/* Navbar */
+nav {
+	padding-right: 15%;
+	padding-left: 15%;
+	height: 60px;
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	background-color: #030303;
+	border-bottom: #CCCCCC solid 1px;
+	overflow: hidden;
 }
 
 /* Button */
@@ -373,7 +386,7 @@ nav {
 .active_red.nav_active {
 	background-color: #e91b24;
 }
-.active_blue.nav_active {
+.active_blue.set_active {
 	background-color: #02abeb;
 }
 
@@ -384,7 +397,7 @@ nav {
 	fill-opacity: 1;
 }
 
-.active_white.nav_active svg, .active_red.nav_active svg, .active_blue.nav_active svg {
+.active_white.nav_active svg, .active_red.nav_active svg, .active_blue.set_active svg {
 	fill: #333333;
 }
 
