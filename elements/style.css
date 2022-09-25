@@ -43,11 +43,28 @@ h1 {
 	font-weight: normal;
 }
 
-/* .sidebar_active main, aside {
+button, input {
+	appearance: none;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	color: inherit;
+}
+
+button:focus, input:focus {
+	outline: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+	display: none;
+}
+
+/* .sidebar_active main, info {
 	display: none;
 } */
 
-/* .sidebar_active aside {
+/* .sidebar_active info {
 	display: block;
 } */
 
@@ -81,10 +98,8 @@ footer {
 .control_button {
 	display: none;
 	position: absolute;
-	appearance: none;
 	background-color: rgba(0, 0, 0, 0.5);
 	backdrop-filter: blur(10px);
-	border: none;
 	border-radius: 100%;
 	transition: transform 0.2s;
 	width: 40px;
@@ -117,7 +132,6 @@ ol {
 }
 
 ol div {
-	cursor: auto;
 	display: var(--watch_list);
 	margin: 12px;
 	margin-bottom: 15px;
@@ -175,17 +189,22 @@ ol div.in_watch_list:hover .remove {
 	display: block;
 }
 
+.not_found {
+	display:none;
+	text-align: center;
+}
+
 /* ####################################################################### */
-/* aside */
+/* Aside */
 aside {
-	position: fixed;
+	position: sticky;
 	z-index: 1;
 	right: 0;
-	top: 0;
-	width: 100vw;
+	top: 60px;
+	height: 0;
+	overflow: hidden;
 	/* height: calc(100vh - 100px);
 	max-height: 700px; */
-	height: 400px;
 	border-bottom: #CCCCCC solid 1px;
 	background-color: rgba(0, 0, 0, 0.8);
 	backdrop-filter: blur(20px);
@@ -195,28 +214,13 @@ aside {
 .aside_content {
 	display: flex;
 	position: relative;
-	margin-top: 100px;
-}
-
-aside img {
-	border-radius: 5px;
-	width: 264px;
-	margin-right: 50px;
-}
-
-aside p {
-	overflow-y: auto;
-}
-
-aside .play {
-	top: 102px;
-	right: unset;
-	left: 102px;
+	height: calc(100% - 40px);
+	padding-top: 40px;
+	overflow: hidden;
 }
 
 .hide_aside {
 	position: absolute;
-	appearance: none;
 	color: inherit;
 	background-color: #030303;
 	border: #CCCCCC solid 1px;
@@ -228,6 +232,59 @@ aside .play {
 	height: 30px;
 }
 
+.hide_aside:hover {
+	background-color: #333333;
+}
+
+/* Info Box */
+aside .img_play_box img {
+	border-radius: 5px;
+	width: 264px;
+	margin-right: 50px;
+}
+
+aside .play {
+	top: 142px;
+	right: unset;
+	left: 102px;
+}
+
+
+.info_description {
+	height: 270px;
+	user-select: text;
+}
+
+.info_description div {
+	display: flex;
+	justify-content: space-between;
+}
+
+.info_description p {
+	height: 220px;
+	overflow-y: auto;
+}
+
+.info_description header {
+	font-size: small;
+	/* margin-top: 2px; */
+}
+
+.info_description svg {
+	width: 15px;
+	height: 15px;
+	fill:#CCCCCC;
+	fill-opacity: 1;
+}
+
+.info_description input {
+	cursor: initial;
+	width: 70px;
+}
+
+.info_description svg:hover {
+	fill: #333333;
+}
 
 /* ####################################################################### */
 /* Navbar */
@@ -242,21 +299,6 @@ nav {
 	border-bottom: #CCCCCC solid 1px;
 	overflow: hidden;
 }
-
-@media (max-width: 1600px) {
-	nav {
-		padding-right: 10%;
-		padding-left: 10%;
-	}
-}
-
-@media (max-width: 1350px) {
-	nav {
-		padding-right: 10px;
-		padding-left: 10px;
-	}
-}
-
 
 /* Provider Selection */
 .provider_list {
@@ -325,6 +367,27 @@ nav {
 	margin-right: 40px;
 }
 
+.active_white.nav_active {
+	background-color: white;
+}
+.active_red.nav_active {
+	background-color: #e91b24;
+}
+.active_blue.nav_active {
+	background-color: #02abeb;
+}
+
+.nav_button svg, .nav_button:hover svg {
+	height: 30px;
+	width: 30px;
+	fill: #CCCCCC;
+	fill-opacity: 1;
+}
+
+.active_white.nav_active svg, .active_red.nav_active svg, .active_blue.nav_active svg {
+	fill: #333333;
+}
+
 /* Navbar Search */
 .nav_search input {
 	width: 100%;
@@ -354,8 +417,9 @@ nav {
 	background: #030303;
 	z-index: 3;
 	padding: 0;
-	right: 0;
+	right: 15%;
 	top: 0;
+	margin-right: 188px;
 }
 .nav_search_box {
 	width: calc(100% - 60px);
@@ -381,9 +445,9 @@ nav {
 }
 
 #nav_search_button:checked ~ .nav_search_button {
-	position: fixed;
+	/* position: fixed;
 	right: 0;
-	top: 0;
+	top: 0; */
 	background: transparent url('../nav/close.svg') center/30px no-repeat;
 }
 
@@ -393,4 +457,24 @@ nav {
 
 .hide_search, .not_aviable {
 	display: none !important;
+}
+
+@media (max-width: 1600px) {
+	nav {
+		padding-right: 10%;
+		padding-left: 10%;
+	}
+	.nav_search {
+		right: 10%;
+	}
+}
+
+@media (max-width: 1350px) {
+	nav {
+		padding-right: 10px;
+		padding-left: 10px;
+	}
+	.nav_search {
+		right: 10px;
+	}
 }
