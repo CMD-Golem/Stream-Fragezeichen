@@ -1,22 +1,35 @@
+// var serie = JSON.parse(spezial_json);
+
 // function main() {
-// 	for (var i = 0; i < episoden.length; i++) {
-// 		episoden[i].inhalt = test[i].inhalt;
-// // 		var number = episoden[i].number.toString();
-// // 		if (number.length == 2) {
-// // 			number = "0" + number;
-// // 		}
-// // 		episoden[i].number = number;
+// 	for (var i = 0; i < serie.length; i++) {
+// 		var episode = serie[i];
 
-// // 		var name = episoden[i].name;
-// // 		name = name.slice(4);
+// 		for (var j = 0; j < episode.length; j++) {
+// 			if (special[j].number == episode.number) {
+// 				seri = special[j];
+// 				break;
+// 			}
+// 		}
 
-// // 		if (name.includes("Und")) {
-// // 			name = name.replace("Und", "und");
-// // 		}
+// 		if (serie.content == "") {
+// 			serie.content = seri.
+// 		}
+// 		episode.content = seri.beschreibung;
+// 		episode.release = seri.veröffentlichungsdatum;
 
-// // 		episoden[i].name = name;
+// 		delete episode.inhalt;
+
+// 		try {
+// 			episode.length = seri.kapitel[seri.kapitel.length - 1].end;
+// 		}
+// 		catch (i) {
+// 			console.error(episode.name);
+// 		}
 // 	}
 // }
+
+
+
 var provider, provider_link, backwards, active_type, user_list = [], watch_list_count = 0;
 
 function setup() {
@@ -37,40 +50,40 @@ function setup() {
 	active_type = "all";
 
 	// int user list
-	var json_user_list = window.localStorage.getItem("user_list");
+	// var json_user_list = window.localStorage.getItem("user_list");
 
-	if (json_user_list != null) {
-		user_list = JSON.parse(json_user_list);
+	// if (json_user_list != null) {
+	// 	user_list = JSON.parse(json_user_list);
 
-		for (var i = 0; i < user_list.length; i++) {
-			var episode = user_list[i];
-			var add_class = "";
+	// 	for (var i = 0; i < user_list.length; i++) {
+	// 		var episode = user_list[i];
+	// 		var add_class = "";
 
-			// int history
-			var history = "";
+	// 		// int history
+	// 		var history = "";
 
-			if (episode.history != "") {
-				history = episode.history;
-			}
+	// 		if (episode.history != "") {
+	// 			history = episode.history;
+	// 		}
 
-			// int watch list
-			if (episode.list != "") {
-				add_class += "in_watch_list ";
-				watch_list_count++;
-			}
+	// 		// int watch list
+	// 		if (episode.list != "") {
+	// 			add_class += "in_watch_list ";
+	// 			watch_list_count++;
+	// 		}
 
-			// load in episode array
-			var episode_id = episode.array_id.split("_");
-			if (episode_id[0] == "normal") {
-				episoden[episode_id[1]].class = add_class;
-				episoden[episode_id[1]].history = history;
-			}
-			else {
-				special[episode_id[1]].class = add_class;
-				special[episode_id[1]].history = history;
-			}
-		}
-	}
+	// 		// load in episode array
+	// 		var episode_id = episode.array_id.split("_");
+	// 		if (episode_id[0] == "normal") {
+	// 			episoden[episode_id[1]].class = add_class;
+	// 			episoden[episode_id[1]].history = history;
+	// 		}
+	// 		else {
+	// 			special[episode_id[1]].class = add_class;
+	// 			special[episode_id[1]].history = history;
+	// 		}
+	// 	}
+	// }
 }
 
 setup();
@@ -130,7 +143,6 @@ function changeUserList(array_id, history, list) {
 //#################################################################################################
 // load episodes
 var episoden_list = document.getElementsByTagName("ol")[0];
-var test = [];
 
 function loadEpisodes(load_type) {
 	var html = [];
@@ -199,7 +211,7 @@ function loadEpisodes(load_type) {
 			html.push(`
 			<div data-history="${episode.history}" id="${episode.number}" class="${episode_class}" data-array="special_${i}" data-filter="die drei fragezeichen ??? ${episode.search} ${episode.name}">
 				<a ${href} class="img_play_box">
-					<img src="img_special/special_${episode.number}.jpg" alt="${episode.name}">
+					<img src="img_special/special_${episode.number.toLowerCase()}.jpg" alt="${episode.name}">
 					<p>${episode.name}</p>
 					<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 				</a>
@@ -233,8 +245,6 @@ function loadEpisodes(load_type) {
 			return 0;
 		});
 	}
-
-	test = html;
 	
 	episoden_list.innerHTML = html.join("");
 }
@@ -318,11 +328,12 @@ function showInfo(array_id) {
 	// link and text
 	info_href.href = episode.href[provider_link];
 	info_name.innerHTML = episode.name;
-	info_content.innerHTML = episode.inhalt;
+	info_content.innerHTML = episode.content;
+
+	aside.style.height = "340px";
 
 	if (!show_aside) {
 		show_aside = true;
-		aside.style.height = "340px";
 		aside.style.overflow = "visible";
 	}
 
@@ -346,9 +357,10 @@ function showSettings() {
 	aside_content[1].style.display = "block";
 	settings_button.classList.add("set_active");
 
+	aside.style.height = "400px";
+
 	if (!show_aside) {
 		show_aside = true;
-		aside.style.height = "340px";
 		aside.style.overflow = "visible";
 	}
 	if (show_settings) {
