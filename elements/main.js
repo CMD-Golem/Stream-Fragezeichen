@@ -1,132 +1,130 @@
-// var serie = JSON.parse(spezial_json);
+// Functions to generate the list according to settings
+// setup(); storeUserData(); changeUserData(); loadEpisodes();
+// toggleOrder(); toggleSort();
+// toggleWatchList(); showWatchList();
+// refreshHistory(); editHistory(); saveEditHistory(); showHistory();
 
-// function main() {
-// 	for (var i = 0; i < serie.length; i++) {
-// 		var episode = serie[i];
+var provider, provider_link, backwards, sort_date, active_type, user_data = {list:[]}, watch_list_count = 0;
 
-// 		for (var j = 0; j < episode.length; j++) {
-// 			if (special[j].number == episode.number) {
-// 				seri = special[j];
-// 				break;
-// 			}
-// 		}
-
-// 		if (serie.content == "") {
-// 			serie.content = seri.
-// 		}
-// 		episode.content = seri.beschreibung;
-// 		episode.release = seri.veröffentlichungsdatum;
-
-// 		delete episode.inhalt;
-
-// 		try {
-// 			episode.length = seri.kapitel[seri.kapitel.length - 1].end;
-// 		}
-// 		catch (i) {
-// 			console.error(episode.name);
-// 		}
-// 	}
-// }
-
-
-
-var provider, provider_link, backwards, active_type, user_list = [], watch_list_count = 0;
-
+// get data from storage/db
 function setup() {
-	// int selected provider
-	provider = window.localStorage.getItem("provider");
-	if (provider == null) { provider = "youtube"; }
+	var json_user_data = window.localStorage.getItem("user_data");
+	if (json_user_data != null) {
+		user_data = JSON.parse(json_user_data);
 
-	if (provider == "deezer") { provider_link = 0; } 
-	else if (provider == "spotify") { provider_link = 2; }
-	else if (provider == "apple") { provider_link = 3; }
-	else { provider_link = 1; } // Youtube
+		// int selected provider
+		provider = user_data.provider;
+		if (user_data.provider == undefined) { provider = "youtube"; }
 
-	// int list sorting
-	backwards = window.localStorage.getItem("backwards");
-	if (backwards == "false") { backwards = false; }
-	else { backwards = true; }
+		if (provider == "deezer") { provider_link = 0; } 
+		else if (provider == "spotify") { provider_link = 2; }
+		else if (provider == "apple") { provider_link = 3; }
+		else { provider_link = 1; } // Youtube
 
-	active_type = "all";
+		// int list sorting
+		backwards = user_data.backwards;
+		if (backwards == false) {
+			el_sort_list.style.transform = "scaleY(-1)";
+		}
+		else {
+			backwards = true;
+			el_sort_list.style.transform = "scaleY(1)";
+		}
 
-	// int user list
-	// var json_user_list = window.localStorage.getItem("user_list");
+		// int list sort type
+		sort_date = user_data.sort_date;
+		if (sort_date == true) {
+			episode_number.style.display = "flex";
+			release_date.style.display = "none";
+		}
+		else {
+			sort_date = false;
+			episode_number.style.display = "none";
+			release_date.style.display = "flex";
+		}
 
-	// if (json_user_list != null) {
-	// 	user_list = JSON.parse(json_user_list);
+		active_type = "all";
 
-	// 	for (var i = 0; i < user_list.length; i++) {
-	// 		var episode = user_list[i];
-	// 		var add_class = "";
+		// int user list
+		for (var i = 0; i < user_data.list.length; i++) {
+			var episode = user_data.list[i];
+			var add_class = "";
 
-	// 		// int history
-	// 		var history = "";
+			// int history
+			var history = "";
 
-	// 		if (episode.history != "") {
-	// 			history = episode.history;
-	// 		}
+			if (episode.history != "") {
+				history = episode.history;
+			}
 
-	// 		// int watch list
-	// 		if (episode.list != "") {
-	// 			add_class += "in_watch_list ";
-	// 			watch_list_count++;
-	// 		}
+			// int watch list
+			if (episode.list != "") {
+				add_class += "in_watch_list ";
+				watch_list_count++;
+			}
 
-	// 		// load in episode array
-	// 		var episode_id = episode.array_id.split("_");
-	// 		if (episode_id[0] == "normal") {
-	// 			episoden[episode_id[1]].class = add_class;
-	// 			episoden[episode_id[1]].history = history;
-	// 		}
-	// 		else {
-	// 			special[episode_id[1]].class = add_class;
-	// 			special[episode_id[1]].history = history;
-	// 		}
-	// 	}
-	// }
+			// load in episode array
+			var episode_id = episode.array_id.split("_");
+			if (episode_id[0] == "normal") {
+				episoden[episode_id[1]].class = add_class;
+				episoden[episode_id[1]].history = history;
+			}
+			else {
+				special[episode_id[1]].class = add_class;
+				special[episode_id[1]].history = history;
+			}
+		}
+	}
 }
 
-setup();
+//#################################################################################################
+// store user data on storage/db
+document.addEventListener("visibilitychange", function() { if (document.hidden) { storeUserData() } });
+document.addEventListener("beforeunload", storeUserData);
 
-// store user list
-document.addEventListener("visibilitychange", function() {
-	if (document.hidden) {
-		console.log("Saved User data")
-		json_user_list = JSON.stringify(user_list);
-		window.localStorage.setItem("user_list", json_user_list)
-	}
-});
+function storeUserData() {
+	console.log("Saved User data");
 
-// change user list
-function changeUserList(array_id, history, list) {
+	user_data.provider = provider;
+	user_data.backwards = backwards;
+	user_data.sort_date = sort_date;
+	user_data.active_type = active_type;
+
+	json_user_data = JSON.stringify(user_data);
+	window.localStorage.setItem("user_data", json_user_data);
+}
+
+//#################################################################################################
+// make changes to user data list
+function changeUserData(array_id, history, list) {
 	var in_array = false;
 	var add_class = "";
 
 	// if (user_list[0] == undefined) { return; }
 
-	for (var i = 0; i < user_list.length; i++) {
-		if (user_list[i].array_id == array_id) {
+	for (var i = 0; i < user_data.list.length; i++) {
+		if (user_data.list[i].array_id == array_id) {
 			in_array = i;
 		}
 	}
 
 	// add episode to user list if not existing
 	if (in_array === false) {
-		var in_array = user_list.push({array_id:array_id, history:"", list:""});
+		var in_array = user_data.list.push({array_id:array_id, history:"", list:""});
 		in_array--;
 	}
 
 	// change history
-	if (history != "" || user_list[in_array].history != "") {
-		user_list[in_array].history = history;
+	if (history != "" || user_data.list[in_array].history != "") {
+		user_data.list[in_array].history = history;
 	}
 
 	// change watch list
 	if (list == "true") {
-		user_list[in_array].list = "true";
+		user_data.list[in_array].list = "true";
 		add_class += "in_watch_list ";
 	}
-	else if (list == "false") { user_list[in_array].list = ""; }
+	else if (list == "false") { user_data.list[in_array].list = ""; }
 
 	// load in episode array
 	var episode_id = array_id.split("_");
@@ -170,7 +168,7 @@ function loadEpisodes(load_type) {
 			}
 	
 			html.push(`
-			<div data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="normal_${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name}">
+			<div data-release="${episode.release}" data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="normal_${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name}">
 				<a ${href} class="img_play_box">
 					<img src="img/episode_${number}.jpg" alt="Folge ${episode.number}: ${episode.name}">
 					<p><b>Folge ${episode.number}</b>: ${episode.name}</p>
@@ -209,7 +207,7 @@ function loadEpisodes(load_type) {
 			}
 
 			html.push(`
-			<div data-history="${episode.history}" id="${episode.number}" class="${episode_class}" data-array="special_${i}" data-filter="die drei fragezeichen ??? ${episode.search} ${episode.name}">
+			<div data-release="${episode.release}" data-history="${episode.history}" id="${episode.number}" class="${episode_class}" data-array="special_${i}" data-filter="die drei fragezeichen ??? ${episode.search} ${episode.name}">
 				<a ${href} class="img_play_box">
 					<img src="img_special/special_${episode.number.toLowerCase()}.jpg" alt="${episode.name}">
 					<p>${episode.name}</p>
@@ -224,8 +222,8 @@ function loadEpisodes(load_type) {
 
 	if (show_history) {
 		html.sort((a, b) => {
-			var a_date = a.slice(23, 47);
-			var b_date = b.slice(23, 47);
+			var a_date = a.slice(45, 69);
+			var b_date = b.slice(45, 69);
 
 			if (new Date(a_date) == "Invalid Date") {
 				a_date = "2000-01-01T00:00:00.000Z"
@@ -245,25 +243,41 @@ function loadEpisodes(load_type) {
 			return 0;
 		});
 	}
+
+	if (sort_date) {
+		html.sort((a, b) => {
+			var a_date = a.slice(19, 29);
+			var b_date = b.slice(19, 29);
+
+			if (backwards) {
+				if (a_date < b_date) { return 1; }
+				if (a_date > b_date){ return -1; }
+			}
+			else {
+				if (a_date < b_date) { return -1; }
+				if (a_date > b_date){ return 1; }
+			}
+			return 0;
+		});
+	}
 	
 	episoden_list.innerHTML = html.join("");
 }
 
-loadEpisodes("all");
-
-// sort episode list
+//#################################################################################################
+// change direction of episode list
 var el_sort_list = document.getElementById("sort_list");
 
 function toggleOrder() {
+	backwards = !backwards;
 	if (backwards) {
-		el_sort_list.style.transform = "scaleY(-1)";
-	}
-	else {
 		el_sort_list.style.transform = "scaleY(1)";
 	}
+	else {
+		el_sort_list.style.transform = "scaleY(-1)";
+	}
 
-	backwards = !backwards;
-	window.localStorage.setItem("backwards", backwards);
+	console.log(backwards)
 	
 	if (show_history) {
 		loadEpisodes("history");
@@ -274,127 +288,34 @@ function toggleOrder() {
 }
 
 //#################################################################################################
-// Aside
-var aside = document.getElementsByTagName("aside")[0];
-var aside_content = document.getElementsByClassName("aside_content");
-var show_aside = false;
+// sort episode list for date or numbering
+var episode_number = document.getElementById("episode_number");
+var release_date = document.getElementById("release_date");
 
-function hideAside() {
-	show_aside = false;
-	show_settings = false;
-	aside.style.height = "0";
-	settings_button.classList.remove("set_active");
-
-	setTimeout(function(){
-		aside.style.overflow = "hidden";
-		aside_content[0].style.display = "none";
-		aside_content[1].style.display = "none";
-	}, 200);
-}
-
-// show episode info
-var info_href = document.getElementById("info_href");
-var info_img = document.getElementById("info_img");
-var info_name = document.getElementById("info_name");
-var info_history = document.getElementById("info_history");
-var info_content = document.getElementById("info_content");
-
-function showInfo(array_id) {
-	var episode_id = array_id.split("_");
-	aside_content[0].style.display = "flex";
-	aside_content[1].style.display = "none";
-
-	// img
-	if (episode_id[0] == "normal") {
-		var episode = episoden[episode_id[1]];
-		info_img.src = `img/episode_${parseInt(episode.number)}.jpg`;
+function toggleSort() {
+	sort_date = !sort_date;
+	if (sort_date) {
+		episode_number.style.display = "flex";
+		release_date.style.display = "none";
 	}
 	else {
-		var episode = special[episode_id[1]];
-		info_img.src = `img_special/special_${episode.number}.jpg`;
+		episode_number.style.display = "none";
+		release_date.style.display = "flex";
 	}
-
-	// history
-	info_href.setAttribute("onclick", "refreshHistory(" + array_id + ")");
-	var history = episode.history;
-	if (history == "" || history == undefined) {
-		history = "nie";
+	
+	if (show_history) {
+		loadEpisodes("history");
 	}
 	else {
-		var history = new Date(history).toLocaleDateString("fr-CH");
-	}
-	info_history.value = history;
-
-	// link and text
-	info_href.href = episode.href[provider_link];
-	info_name.innerHTML = episode.name;
-	info_content.innerHTML = episode.content;
-
-	aside.style.height = "340px";
-
-	if (!show_aside) {
-		show_aside = true;
-		aside.style.overflow = "visible";
-	}
-
-	// Prepare Edit History
-	info_history.dataset.array = array_id;
-	date_input.disabled = true;
-	edit_history.style.display = "inline-block";
-	done_history.style.display = "none";
-
-	// Settings
-	show_settings = false;
-	settings_button.classList.remove("set_active");
-}
-
-// show settings
-var settings_button = document.getElementsByClassName("active_blue")[0];
-var show_settings = false;
-
-function showSettings() {
-	aside_content[0].style.display = "none";
-	aside_content[1].style.display = "block";
-	settings_button.classList.add("set_active");
-
-	aside.style.height = "400px";
-
-	if (!show_aside) {
-		show_aside = true;
-		aside.style.overflow = "visible";
-	}
-	if (show_settings) {
-		show_settings = false;
-		hideAside();
-	}
-	else {
-		show_settings = true;
+		loadEpisodes(active_type);
 	}
 }
 
 //#################################################################################################
-// Settings
-// Provider
-var last_provider_selected = document.getElementById(provider);
-last_provider_selected.classList.add("provider_selected");
+// init
+setup();
+loadEpisodes("all");
 
-function selectProvider(el_button) {
-	last_provider_selected.classList.remove("provider_selected");
-	el_button.classList.add("provider_selected");
-
-	last_provider_selected = el_button;
-	provider = el_button.id;
-	
-	if (provider == "deezer") { provider_link = 0; } 
-	else if (provider == "spotify") { provider_link = 2; }
-	else if (provider == "apple") { provider_link = 3; }
-	else { provider_link = 1; } // Youtube
-
-	loadEpisodes(active_type);
-	window.localStorage.setItem("provider", provider);
-}
-
-//
 
 //#################################################################################################
 // Watchlist
@@ -408,13 +329,13 @@ function toggleWatchList(el_button) {
 		// Add to Watchlist
 		element.classList.add("in_watch_list");
 		watch_list_count++;
-		changeUserList(array_id, "", "true");
+		changeUserData(array_id, "", "true");
 	}
 	else {
 		// Remove from Watchlist
 		element.classList.remove("in_watch_list");
 		watch_list_count--;
-		changeUserList(array_id, "", "false");
+		changeUserData(array_id, "", "false");
 
 		if (watch_list_count == 0 && show_watch_list) {
 			no_watch_list.style.display = "block";
@@ -425,7 +346,7 @@ function toggleWatchList(el_button) {
 var show_watch_list = false;
 
 function showWatchList(el) {
-	removeActiveNav("watch_list");
+	removeActiveNav("watch_list"); // actions.js
 	if (show_watch_list) {
 		document.querySelector(":root").style.setProperty("--watch_list", "block");
 		show_watch_list = false;
@@ -464,7 +385,7 @@ function refreshHistory(array_id) {
 		info_img.src = `img_special/special_${episode.number}.jpg`;
 	}
 
-	changeUserList(array_id, new Date(), "");
+	changeUserData(array_id, new Date(), "");
 }
 
 function editHistory() {
@@ -490,7 +411,7 @@ function saveEditHistory() {
 	var date_array = date_input.value.split(".");
 	var date = `${date_array[2]}-${date_array[1]}-${date_array[0]}T00:00:00.000Z`;
 
-	changeUserList(info_history.dataset.array, date, "");
+	changeUserData(info_history.dataset.array, date, "");
 }
 
 // https://stackoverflow.com/a/43473017/14225364
@@ -533,7 +454,7 @@ date_input.onkeyup = function() {
 var show_history = false;
 
 function showHistory(el) {
-	removeActiveNav("history");
+	removeActiveNav("history"); // actions.js
 	if (show_history) {
 		show_history = false;
 		loadEpisodes(active_type);
@@ -542,85 +463,5 @@ function showHistory(el) {
 		show_history = true;
 		el.classList.add("nav_active");
 		loadEpisodes("history");
-	}
-}
-
-//#################################################################################################
-// Search
-var article = document.getElementsByTagName("ol")[0].children;
-var input = document.getElementById("site_search");
-var not_found = document.getElementById("not_found");
-
-function siteSearch() {
-	var search_input = input.value.toUpperCase().split(" ");
-
-	for (var i = 0; i < article.length; i++) {
-		var search_data = article[i].dataset.filter.toUpperCase().split(" ");
-		var hide = false;
-
-		// Search: loop trough array from input
-		for (var j = 0; j < search_input.length; j++) {
-			var prehide = true;
-
-			// Check if keywords are in input
-			for (var k = 0; k < search_data.length; k++) {
-				if (search_data[k].startsWith(search_input[j])) { var prehide = false; }
-			}
-			if (prehide == false && hide != true) { var hide = false; }
-			else { var hide = true; }
-		}
-
-		// hide/ unhide
-		if (hide == true) {
-			article[i].classList.add("hide_search");
-		}
-		else {
-			article[i].classList.remove("hide_search");
-		}
-	}
-
-	// not found
-	var hide_search = document.getElementsByClassName("hide_search").length;
-
-	if (article.length - hide_search <= 0) {
-		not_found.style.display = "block";
-	}
-	else {
-		not_found.style.display = "none";
-	}
-}
-
-var search_checkbox = document.getElementById("nav_search_button");
-
-function startSearch() {
-	if (!search_checkbox.checked) {
-		// loadEpisodes("all");
-		setTimeout(function(){ input.focus() }, 100);
-		if (show_watch_list == true) {
-			showWatchList();
-		}
-	}
-	else {
-		input.value = "";
-		// siteSearch();
-		// loadEpisodes(active_type);
-	}
-}
-
-function removeActiveNav(sel_button) {
-	var nav_active = document.getElementsByClassName("nav_active");
-	loadEpisodes(active_type);
-
-	for (var i = 0; i < nav_active.length; i++) {
-		nav_active[i].classList.remove("nav_active")
-	}
-
-	if (sel_button != "watch_list") {
-		show_watch_list = false;
-		document.querySelector(":root").style.setProperty("--watch_list", "block");
-		no_watch_list.style.display = "none";
-	}
-	if (sel_button != "history") {
-		show_history = false;
 	}
 }

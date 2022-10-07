@@ -20,31 +20,32 @@
 			<div class="nav_search_box"><input type="text" placeholder="Suche..." id="site_search" onkeyup="siteSearch()"></div>
 		</div>
 		<div class="nav_buttons">
-			<div class="nav_button" onclick="toggleOrder()" title="Liste anordnen"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></g></svg></div>
-			
+			<div class="nav_button" onclick="toggleOrder()" title="Liste umkehren"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></g></svg></div>
+			<div class="nav_button" id="episode_number" style="display: none;" onclick="toggleSort()" title="Nach Folgennummer anordnen"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/></g></svg></div>
+			<div class="nav_button" id="release_date" onclick="toggleSort()" title="Nach Erscheinungsdatum anordnen"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M 11.990234 2 C 6.4702344 2 2 6.48 2 12 C 2 17.52 6.4702344 22 11.990234 22 C 17.520234 22 22 17.52 22 12 C 22 6.48 17.520234 2 11.990234 2 z M 12 4 C 16.42 4 20 7.58 20 12 C 20 16.42 16.42 20 12 20 C 7.58 20 4 16.42 4 12 C 4 7.58 7.58 4 12 4 z M 11 7 L 11 13 L 16.25 16.150391 L 17 14.919922 L 12.5 12.25 L 12.5 7 L 11 7 z"/></g></svg></div>
 			<div class="nav_button active_white" onclick="showWatchList(this)" title="Watch List"><svg viewBox="0 0 24 24"><g><path d="M 4.0000001,6 H 2 v 14 c 0,1.1 0.9000001,2 2.0000001,2 H 18 V 20 H 4.0000001 Z M 20,2 H 8.0000001 c -1.1,0 -2,0.9 -2,2 v 12 c 0,1.1 0.9,2 2,2 H 20 c 1.1,0 2,-0.9 2,-2 V 4 C 22,2.9 21.1,2 20,2 Z m -8,12.5 v -9 l 6,4.5 z"/></g></svg></div>
-			<div class="nav_button active_red" onclick="showHistory(this)" title="Verlauf"><svg viewBox="0 0 24 24"><g><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></g></svg></div>
-			<div class="nav_button active_blue" onclick="showSettings(this)" title="Einstellungen"><svg viewBox="0 0 24 24"><g><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></g></svg></div>
+			<div class="nav_button active_white" onclick="showHistory(this)" title="Verlauf"><svg viewBox="0 0 24 24"><g><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></g></svg></div>
+			<div class="nav_button active_red" onclick="showSettings(this)" title="Einstellungen"><svg viewBox="0 0 24 24"><g><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></g></svg></div>
+			<div class="nav_button active_blue" onclick="showAccount(this)" title="Account"><svg viewBox="0 0 24 24"><g><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,6c1.93,0,3.5,1.57,3.5,3.5S13.93,13,12,13 s-3.5-1.57-3.5-3.5S10.07,6,12,6z M12,20c-2.03,0-4.43-0.82-6.14-2.88C7.55,15.8,9.68,15,12,15s4.45,0.8,6.14,2.12 C16.43,19.18,14.03,20,12,20z"/></g></svg></div>
 		</div>
 	</nav>
 
 	<aside>
 		<div class="aside_content"> <!-- Info Box -->
 			<a class="img_play_box" id="info_href" target="_blank">
-				<img src="img/episode_20.jpg" alt="Folgen Cover" id="info_img">
+				<img src="" alt="Folgen Cover" id="info_img">
 				<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 			</a>
 			<div class="info_description">
 				<div>
-					<h1>Die drei ??? <span id="info_name">und die flammende Spur</span></h1>
+					<h1>Die drei ??? <span id="info_name"></span></h1>
 					<header>
 						zuletzt gehört: <input id="info_history" data-array="" type="text" value="tt.mm.yyyy" disabled maxlength="10"></input>
 						<button id="edit_history" onclick="editHistory()" title="Zuletzt gehört bearbeiten"><svg viewBox="0 0 24 24"><g><path d="M 0,19.000694 V 24 H 4.9993057 L 19.743924,9.2553812 14.744619,4.2560755 Z M 23.610054,5.3892515 c 0.519928,-0.5199278 0.519928,-1.3598111 0,-1.8797389 L 20.490487,0.38994584 c -0.519927,-0.51992779 -1.359811,-0.51992779 -1.879738,0 L 16.171087,2.829607 21.170393,7.8289127 Z"/></g></svg></button>
 						<button id="done_history" style="display: none;" onclick="saveEditHistory()" title="Speichern"><svg viewBox="0 0 24 24"><g><path d="M 7.636364,17.318045 1.9090909,11.590773 0,13.499864 7.636364,21.136227 24,4.7725909 22.090909,2.8635 Z"/></g></svg></button>
 					</header>
 				</div>
-				<p id="info_content">Nur selten verläßt der alte Töpfer, genannt der Potter, sein Haus in Rocky Beach. Doch nicht nur sein Eremitendasein macht die Einwohner mißtrauisch, auch sein Aussehen: Er hat langes weißes Haar, einen schönen gekämmten Vollbart, ein wallend weißes Gewand, und er geht immer barfuß. Außerdem trägt er um den Hals ein Medaillon aus Keramik, das einen scharlachroten Adler mit zwei Köpfen zeigt - ist das nicht höchst sonderbar? Plötzlich aber verschwindet er, obwohl er seine Tochter, Mrs. Dobson, und seinen Enkel Tom zu Besuch erwartet. Ist eine zufällige, kurze Begegnung mit den zwei etwas undurchsichtigen fremden Männern der Grund? Ein weiterer verdächtiger Mann, angeblich ein Sportfischer, hat offenbar ebenfalls die Finger in dieser geheimnisvollen Sache. Alle sind sie hinter dem Symbol eines zweiköpfigen Adlers her - so einem Adler, wie der Potter um den Hals hängen hat. Flammende Fußspuren und das Geräusch fließenden Wassers in der Leitung im Potterschen Haus bringen Mrs. Dobson an den Rand der Hysterie. Mit gewohntem Forscherdrang und üblicher Tatkraft versuchen die drei ???, hinter das Geheimnis zu kommen: Sollte der Potter etwa ein Edelmann aus Europa, der doppelköpfige Adler sein Emblem, sein wallendes Gewand eine wehmütige Erinnerung an einen fürstlichen Umhang sein? - Das Inkognito wahren - so heißt es oft bei Hoheiten, wenn sie unerkannt bleiben wollen...
-				</p>
+				<p id="info_content"></p>
 			</div>
 		</div>
 		<div class="aside_content center"> <!-- Settings Box -->
@@ -78,13 +79,32 @@
 						<button onclick="" class="border_button">Import</button>
 						<button onclick="" class="border_button">Zurücksetzen</button>
 					</div>
-					
 				</div>
 			</div>
-			<div style="margin-top: 30px">
-				<p>Kostenloser Account für geräteübergreifende Synchronisation erstellen:</p>
-				<div class="settings_center">
-					<button onclick="alert('Noch in Entwicklung')" class="border_button" style="cursor: not-allowed;">Log in</button>
+		</div>
+		<div class="aside_content center"> <!-- Account Box -->
+			<p>Stream-Fragezeichen.de - Deine Seite um drei Fragezeichen Hörbücher aus deinem Streaming auszuwählen und zu hören.<br>Suche nach einzelnen Folgen und speichere sie in deiner Watch List oder verfolge deinen Hörverlauf.</p>
+			<div class="settings_box">
+				<div>
+					<p>Nutzerdaten verwalten:</p>
+					<div class="settings_center" style="padding-top: 15px">
+						<button onclick="" class="border_button">Export</button>
+						<button onclick="" class="border_button">Import</button>
+						<button onclick="" class="border_button">Zurücksetzen</button>
+					</div>
+				</div>
+				<div class="create_account">
+					<p>Account für geräteübergreifende Synchronisation erstellen:</p>
+					<div class="settings_center">
+						<button onclick="alert('Noch in Entwicklung')" class="border_button" style="cursor: not-allowed;">Log in</button>
+					</div>
+				</div>
+				<div class="manage_account">
+					<p>Account für geräteübergreifende Synchronisation erstellen:</p>
+					<div class="settings_center">
+						<button onclick="" class="border_button">Log out</button>
+						<button onclick="" class="border_button">Account löschen</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -109,6 +129,6 @@
 	
 	<script src="elements/episoden.js"></script>
 	<script src="elements/main.js"></script>
-	<script src="elements/import.js"></script>
+	<script src="elements/actions.js"></script>
 </body>
 </html>
