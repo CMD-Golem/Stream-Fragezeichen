@@ -33,9 +33,30 @@
 
 //#################################################################################################
 // settings, aside
-// hideAside(); showInfo(); showSettings();
-// selectProvider(); siteSearch(); startSearch();
 
+
+
+//#################################################################################################
+// Nav
+var watch_list_button = document.getElementById("nav_watch_list");
+var history_button = document.getElementById("nav_history");
+var random_episode_button = document.getElementById("nav_random_episode");
+var settings_button = document.getElementById("nav_settings");
+var account_button = document.getElementById("nav_account");
+
+function refreshNavButtons() {
+	watch_list_button.classList.remove("nav_active");
+	history_button.classList.remove("nav_active");
+	random_episode_button.classList.remove("nav_active");
+	settings_button.classList.remove("nav_active");
+	account_button.classList.remove("nav_active");
+
+	if (show_watch_list) { watch_list_button.classList.add("nav_active"); }
+	if (show_history) { history_button.classList.add("nav_active"); }
+	if (show_random_episode) { random_episode_button.classList.add("nav_active"); }
+	if (show_settings) { settings_button.classList.add("nav_active"); }
+	if (show_account) { account_button.classList.add("nav_active"); }
+}
 
 //#################################################################################################
 // Aside
@@ -56,18 +77,20 @@ function refreshAside() {
 
 	if (show_settings) { aside_content[1].style.display = "block"; }
 	else if (show_account) { aside_content[2].style.display = "block"; }
-	else { aside_content[0].style.display = "flex"; }
+	else if (show_info || show_random_episode) { aside_content[0].style.display = "flex"; }
+	else { hideAside(); }
 }
 
 function hideAside() {
 	show_aside = false;
+	show_random_episode = false;
 	show_settings = false;
 	show_account = false;
-	show_random_episode = false;
-	aside.style.height = "0";
-	settings_button.classList.remove("set_active");
-	account_button.classList.remove("set_active");
+	show_info = false;
 
+	refreshNavButtons();
+
+	aside.style.height = "0";
 	setTimeout(function(){
 		aside.style.overflow = "hidden";
 		aside_content[0].style.display = "none";
@@ -78,6 +101,82 @@ function hideAside() {
 
 //#################################################################################################
 // Show Aside Tabs
+var show_random_episode = false;
+var show_settings = false;
+var show_account = false;
+var show_info = false;
+var test2 = [];
+
+function getRandomEpisode() {
+	if (show_random_episode) {
+		show_random_episode = false;
+		hideAside();
+	}
+	else {
+		show_random_episode = true;
+		show_account = false;
+		show_settings = false;
+		show_info = false;
+		refreshNavButtons();
+		
+		// random episode from the 20 longest not heard
+		var history_array = episoden.concat(special);
+
+		history_array.sort((a, b) => {
+			if (a.history == undefined || a.history == "") {a.history = "1900-01-01T00:00:00.000Z";}
+			if (b.history == undefined || b.history == "") { b.history = "1900-01-01T00:00:00.000Z";}
+
+			var a_date = a.history;
+			var b_date = b.history;
+
+			if (a_date < b_date) { return -1; }
+			if (a_date > b_date){ return 1; }
+			return 0;
+		});
+		var oldest_index = 19;
+		for (var i = 20; i < history_array.length; i++) {
+			if (history_array[i].history == history_array[oldest_index].history) {
+				oldest_index = i;
+			}
+			else {break;}
+		}
+		history_array.length = oldest_index + 1;
+		var random_index = Math.floor(Math.random() * oldest_index + 1);
+		
+	}
+	refreshAside();
+}
+
+function showSettings() {
+	if (show_settings) {
+		show_settings = false;
+		hideAside();
+	}
+	else {
+		show_settings = true;
+		show_account = false;
+		show_random_episode = false;
+		show_info = false;
+		refreshNavButtons();
+	}
+	refreshAside();
+}
+
+function showAccount() {
+	if (show_account) {
+		show_account = false;
+		hideAside();
+	}
+	else {
+		show_account = true;
+		show_settings = false;
+		show_random_episode = false;
+		show_info = false;
+		refreshNavButtons();
+	}
+	refreshAside();
+}
+
 // episode info
 var info_href = document.getElementById("info_href");
 var info_img = document.getElementById("info_img");
@@ -86,9 +185,6 @@ var info_content = document.getElementById("info_content");
 
 function showInfo(array_id) {
 	var episode_id = array_id.split("_");
-	aside_content[0].style.display = "flex";
-	aside_content[1].style.display = "none";
-	aside_content[2].style.display = "none";
 
 	// img
 	if (episode_id[0] == "normal") {
@@ -116,12 +212,13 @@ function showInfo(array_id) {
 	info_name.innerHTML = episode.name;
 	info_content.innerHTML = episode.content;
 
-	aside.style.height = "340px";
-
-	if (!show_aside) {
-		show_aside = true;
-		aside.style.overflow = "visible";
-	}
+	// Settings
+	show_info = true;
+	show_settings = false;
+	show_account = false;
+	show_random_episode = false;
+	refreshAside();
+	refreshNavButtons();
 
 	// calc hight of text for scroll
 	setTimeout(function(){ info_content.style.height = (aside.clientHeight - info_name.parentElement.parentElement.clientHeight - 92) + "px"; }, 500);
@@ -131,120 +228,6 @@ function showInfo(array_id) {
 	info_history.disabled = true;
 	edit_history.style.display = "inline-block";
 	done_history.style.display = "none";
-
-	// Settings
-	show_settings = false;
-	show_account = false;
-	show_random_episode = false;
-	settings_button.classList.remove("set_active");
-	account_button.classList.remove("set_active");
-}
-
-
-// settings
-var show_settings = false;
-
-function showSettings() {
-	aside_content[0].style.display = "none";
-	aside_content[1].style.display = "block";
-	aside_content[2].style.display = "none";
-	settings_button.classList.add("set_active");
-	account_button.classList.remove("set_active");
-
-	aside.style.height = "340px";
-
-	if (!show_aside) {
-		show_aside = true;
-		aside.style.overflow = "visible";
-	}
-	if (show_settings) {
-		show_settings = false;
-		hideAside();
-	}
-	else {
-		show_settings = true;
-		show_account = false;
-		show_random_episode = false;
-	}
-}
-
-
-// account settings
-var show_account = false;
-
-function showAccount() {
-	aside_content[0].style.display = "none";
-	aside_content[1].style.display = "none";
-	aside_content[2].style.display = "block";
-	account_button.classList.add("set_active");
-	settings_button.classList.remove("set_active");
-
-	aside.style.height = "340px";
-
-	if (!show_aside) {
-		show_aside = true;
-		aside.style.overflow = "visible";
-	}
-	if (show_account) {
-		show_account = false;
-		hideAside();
-	}
-	else {
-		show_account = true;
-		show_settings = false;
-		show_random_episode = false;
-	}
-}
-
-
-// random episode
-var show_random_episode = false;
-
-function showRandomEpisode() {
-	aside_content[0].style.display = "block";
-	aside_content[1].style.display = "none";
-	aside_content[2].style.display = "none";
-	account_button.classList.add("set_active");
-	settings_button.classList.remove("set_active");
-
-	aside.style.height = "340px";
-
-	if (!show_aside) {
-		show_aside = true;
-		aside.style.overflow = "visible";
-	}
-	if (show_random_episode) {
-		show_random_episode = false;
-		hideAside();
-	}
-	else {
-		show_random_episode = true;
-		show_account = false;
-		show_settings = false;
-	}
-}
-
-
-//#################################################################################################
-// Nav
-var watch_list_button = document.getElementById("nav_watch_list");
-var history_button = document.getElementById("nav_history");
-var random_episode_button = document.getElementById("nav_random_episode");
-var settings_button = document.getElementById("nav_settings");
-var account_button = document.getElementById("nav_account");
-
-function refreshNavButtons() {
-	watch_list_button.classList.remove("nav_active");
-	history_button.classList.remove("nav_active");
-	random_episode_button.classList.remove("nav_active");
-	settings_button.classList.remove("nav_active");
-	account_button.classList.remove("nav_active");
-
-	if (show_watch_list) { watch_list_button.classList.add("nav_active"); }
-	if (show_history) { history_button.classList.add("nav_active"); }
-	if (show_random_episode) { random_episode_button.classList.add("nav_active"); }
-	if (show_settings) { settings_button.classList.add("nav_active"); }
-	if (show_account) { account_button.classList.add("nav_active"); }
 }
 
 //#################################################################################################
@@ -327,13 +310,5 @@ function startSearch() {
 		input.value = "";
 		siteSearch();
 		// loadEpisodes(active_type); // main.js
-	}
-}
-
-function removeSelNav(sel_button) {
-	var set_active = document.getElementsByClassName("set_active");
-
-	for (var i = 0; i < set_active.length; i++) {
-		set_active[i].classList.remove("set_active")
 	}
 }
