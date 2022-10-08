@@ -250,12 +250,12 @@ function loadEpisodes(load_type) {
 			var b_date = b.slice(49, 73);
 
 			if (backwards) {
-				if (a_date < b_date) { return -1; }
-				if (a_date > b_date){ return 1; }
-			}
-			else {
 				if (a_date < b_date) { return 1; }
 				if (a_date > b_date){ return -1; }
+			}
+			else {
+				if (a_date < b_date) { return -1; }
+				if (a_date > b_date){ return 1; }
 			}
 			return 0;
 		});
@@ -343,28 +343,6 @@ function toggleWatchList(el_button) {
 	}
 }
 
-var show_watch_list = false;
-
-function showWatchList(el) {
-	removeActiveNav("watch_list");
-	if (show_watch_list) {
-		document.querySelector(":root").style.setProperty("--watch_list", "block");
-		show_watch_list = false;
-		no_watch_list.style.display = "none";
-		// loadEpisodes(active_type);
-	}
-	else {
-		document.querySelector(":root").style.setProperty("--watch_list", "none");
-		show_watch_list = true;
-		el.classList.add("nav_active");
-		// loadEpisodes("all");
-		if (watch_list_count == 0) {
-			no_watch_list.style.display = "block";
-		}
-	}
-}
-
-
 //#################################################################################################
 // History
 var info_history = document.getElementById("info_history");
@@ -415,8 +393,15 @@ function saveEditHistory() {
 }
 
 // https://stackoverflow.com/a/43473017/14225364
-info_history.onkeydown = function(evt) {
+info_history.onkeyup = function(evt) {
 	var size = info_history.value.length;
+	console.log(size)
+	if (size <= 9 && finished_input) {
+		finished_input = false;
+		edit_history.style.display = "inline-block";
+		done_history.style.display = "none";
+	}
+
 	if ((evt.keyCode >= 48 && evt.keyCode <= 57) || (evt.keyCode >= 96 && evt.keyCode <= 105)) {
 		if (size == 2 && info_history.value > 31) {
 			info_history.value = "31";
@@ -424,10 +409,10 @@ info_history.onkeydown = function(evt) {
 		if (size == 5 && Number(info_history.value.split('.')[1]) > 12) {
 			info_history.value = info_history.value.slice(0, -2) + "12";
 		}
-		if (size == 10 && Number(info_history.value.split('.')[2]) < 2000) {
+		if (size == 10 && Number(info_history.value.split('.')[2]) < 1900) {
 			info_history.value = info_history.value.slice(0, -4) + this_year;
 		}
-		if (size == 9) {
+		if (size == 10) {
 			finished_input = true;
 			edit_history.style.display = "none";
 			done_history.style.display = "inline-block";
@@ -437,52 +422,55 @@ info_history.onkeydown = function(evt) {
 			info_history.value += '.';        
 		}
 	}
-	else if (evt.keyCode != 8 && evt.keyCode != 46 && evt.keyCode != 37 && evt.keyCode != 39) {
+	
+}
+
+info_history.onkeydown = function(evt) {
+	if (evt.keyCode != 8 &&
+		evt.keyCode != 46 &&
+		evt.keyCode != 37 &&
+		evt.keyCode != 3 &&
+		!(evt.keyCode >= 48 && evt.keyCode <= 57) &&
+		!(evt.keyCode >= 96 && evt.keyCode <= 105)) {
 		evt.preventDefault();
 	}
 }
 
-info_history.onkeyup = function() {
-	var size = info_history.value.length;
-	if (size <= 9 && finished_input) {
-		finished_input = false;
-		edit_history.style.display = "inline-block";
-		done_history.style.display = "none";
-	}
-}
-
+//#################################################################################################
+// Show Watch list, History
+var show_watch_list = false;
 var show_history = false;
 
-function showHistory(el) {
-	removeActiveNav("history");
-	if (show_history) {
-		show_history = false;
-		episoden_list.classList.remove("show_history");
-		loadEpisodes(active_type);
-	}
-	else {
-		show_history = true;
-		el.classList.add("nav_active");
-		episoden_list.classList.add("show_history");
-		loadEpisodes("history");
-	}
+function showWatchList() {
+	show_watch_list = !show_watch_list;
+	show_history = false;
+	refreshList();
 }
 
-// remove active nav
-function removeActiveNav(sel_button) {
-	var nav_active = document.getElementsByClassName("nav_active");
-	loadEpisodes(active_type);
+function showHistory() {
+	show_history = !show_history;
+	show_watch_list = false;
+	refreshList();
+}
 
-	for (var i = 0; i < nav_active.length; i++) {
-		nav_active[i].classList.remove("nav_active")
-	}
+function refreshList() {
+	no_watch_list.style.display = "none";
+	no_history.style.display = "none";
 
-	if (sel_button != "watch_list") {
-		show_watch_list = false;
-		document.querySelector(":root").style.setProperty("--watch_list", "block");
-		no_watch_list.style.display = "none";
+	episoden_list.classList.remove("show_history");
+	episoden_list.classList.remove("show_watch_list");
+
+	if (show_watch_list) {
+		loadEpisodes(active_type);
+		episoden_list.classList.add("show_watch_list");
+		if (watch_list_count == 0) { no_watch_list.style.display = "block"; }
 	}
-	if (sel_button != "history") {
-		show_history = false;
+	else if (show_history) {
+		loadEpisodes("history");
+		episoden_list.classList.add("show_history");
 	}
+	else {
+		loadEpisodes(active_type);
+	}
+	refreshNavButtons(); // actions.js
 }

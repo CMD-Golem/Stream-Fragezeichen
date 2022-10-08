@@ -222,11 +222,15 @@ ol {
 }
 
 ol div {
-	display: var(--watch_list);
+	/* display: var(--watch_list); */
 	margin: 12px;
 	margin-bottom: 15px;
 	position: relative;
 	cursor: pointer;
+}
+
+ol.show_watch_list div {
+	display: none;
 }
 
 ol img {
@@ -521,10 +525,10 @@ nav {
 .active_white.nav_active {
 	background-color: #dadada;
 }
-.active_red.set_active {
+.active_red.nav_active {
 	background-color: #e91b24;
 }
-.active_blue.set_active {
+.active_blue.nav_active {
 	background-color: #02abeb;
 }
 
