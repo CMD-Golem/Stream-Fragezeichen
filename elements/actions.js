@@ -1,9 +1,9 @@
 // var serie = JSON.parse(spezial_json);
 
-function main() {
-	var folges = episoden_list.getElementsByTagName("div");
-	for (var i = 0; i < folges.length; i++) {
-		console.log(folges[i].dataset.release);
+// function main() {
+// 	var folges = episoden_list.getElementsByTagName("div");
+// 	for (var i = 0; i < folges.length; i++) {
+// 		console.log(folges[i].dataset.release);
 
 
 
@@ -12,7 +12,7 @@ function main() {
 		// 		seri = special[j];
 		// 		break;
 		// 	}
-		}
+		// }
 
 // 		if (serie.content == "") {
 // 			serie.content = seri.
@@ -29,13 +29,12 @@ function main() {
 // 			console.error(episode.name);
 // 		}
 // 	}
-}
+// }
 
 //#################################################################################################
 // settings, aside
 // hideAside(); showInfo(); showSettings();
 // selectProvider(); siteSearch(); startSearch();
-// removeActiveNav();
 
 
 //#################################################################################################
@@ -44,30 +43,52 @@ var aside = document.getElementsByTagName("aside")[0];
 var aside_content = document.getElementsByClassName("aside_content");
 var show_aside = false;
 
+function refreshAside() {
+	if (!show_aside) {
+		show_aside = true;
+		aside.style.height = "340px";
+		aside.style.overflow = "visible";
+	}
+
+	aside_content[0].style.display = "none";
+	aside_content[1].style.display = "none";
+	aside_content[2].style.display = "none";
+
+	if (show_settings) { aside_content[1].style.display = "block"; }
+	else if (show_account) { aside_content[2].style.display = "block"; }
+	else { aside_content[0].style.display = "flex"; }
+}
+
 function hideAside() {
 	show_aside = false;
 	show_settings = false;
+	show_account = false;
+	show_random_episode = false;
 	aside.style.height = "0";
 	settings_button.classList.remove("set_active");
+	account_button.classList.remove("set_active");
 
 	setTimeout(function(){
 		aside.style.overflow = "hidden";
 		aside_content[0].style.display = "none";
 		aside_content[1].style.display = "none";
+		aside_content[2].style.display = "none";
 	}, 200);
 }
 
-// show episode info
+//#################################################################################################
+// Show Aside Tabs
+// episode info
 var info_href = document.getElementById("info_href");
 var info_img = document.getElementById("info_img");
 var info_name = document.getElementById("info_name");
-var info_history = document.getElementById("info_history");
 var info_content = document.getElementById("info_content");
 
 function showInfo(array_id) {
 	var episode_id = array_id.split("_");
 	aside_content[0].style.display = "flex";
 	aside_content[1].style.display = "none";
+	aside_content[2].style.display = "none";
 
 	// img
 	if (episode_id[0] == "normal") {
@@ -88,7 +109,7 @@ function showInfo(array_id) {
 	else {
 		var history = new Date(history).toLocaleDateString("fr-CH");
 	}
-	info_history.value = history;
+	info_history.value = history; // main.js
 
 	// link and text
 	info_href.href = episode.href[provider_link];
@@ -102,27 +123,35 @@ function showInfo(array_id) {
 		aside.style.overflow = "visible";
 	}
 
-	// Prepare Edit History
+	// calc hight of text for scroll
+	setTimeout(function(){ info_content.style.height = (aside.clientHeight - info_name.parentElement.parentElement.clientHeight - 92) + "px"; }, 500);
+
+	// Prepare Edit History (defined in main.js)
 	info_history.dataset.array = array_id;
-	date_input.disabled = true;
+	info_history.disabled = true;
 	edit_history.style.display = "inline-block";
 	done_history.style.display = "none";
 
 	// Settings
 	show_settings = false;
+	show_account = false;
+	show_random_episode = false;
 	settings_button.classList.remove("set_active");
+	account_button.classList.remove("set_active");
 }
 
-// show settings
-var settings_button = document.getElementsByClassName("active_blue")[0];
+
+// settings
 var show_settings = false;
 
 function showSettings() {
 	aside_content[0].style.display = "none";
 	aside_content[1].style.display = "block";
+	aside_content[2].style.display = "none";
 	settings_button.classList.add("set_active");
+	account_button.classList.remove("set_active");
 
-	aside.style.height = "400px";
+	aside.style.height = "340px";
 
 	if (!show_aside) {
 		show_aside = true;
@@ -134,7 +163,88 @@ function showSettings() {
 	}
 	else {
 		show_settings = true;
+		show_account = false;
+		show_random_episode = false;
 	}
+}
+
+
+// account settings
+var show_account = false;
+
+function showAccount() {
+	aside_content[0].style.display = "none";
+	aside_content[1].style.display = "none";
+	aside_content[2].style.display = "block";
+	account_button.classList.add("set_active");
+	settings_button.classList.remove("set_active");
+
+	aside.style.height = "340px";
+
+	if (!show_aside) {
+		show_aside = true;
+		aside.style.overflow = "visible";
+	}
+	if (show_account) {
+		show_account = false;
+		hideAside();
+	}
+	else {
+		show_account = true;
+		show_settings = false;
+		show_random_episode = false;
+	}
+}
+
+
+// random episode
+var show_random_episode = false;
+
+function showRandomEpisode() {
+	aside_content[0].style.display = "block";
+	aside_content[1].style.display = "none";
+	aside_content[2].style.display = "none";
+	account_button.classList.add("set_active");
+	settings_button.classList.remove("set_active");
+
+	aside.style.height = "340px";
+
+	if (!show_aside) {
+		show_aside = true;
+		aside.style.overflow = "visible";
+	}
+	if (show_random_episode) {
+		show_random_episode = false;
+		hideAside();
+	}
+	else {
+		show_random_episode = true;
+		show_account = false;
+		show_settings = false;
+	}
+}
+
+
+//#################################################################################################
+// Nav
+var watch_list_button = document.getElementById("nav_watch_list");
+var history_button = document.getElementById("nav_history");
+var random_episode_button = document.getElementById("nav_random_episode");
+var settings_button = document.getElementById("nav_settings");
+var account_button = document.getElementById("nav_account");
+
+function refreshNavButtons() {
+	watch_list_button.classList.remove("nav_active");
+	history_button.classList.remove("nav_active");
+	random_episode_button.classList.remove("nav_active");
+	settings_button.classList.remove("nav_active");
+	account_button.classList.remove("nav_active");
+
+	if (show_watch_list) { watch_list_button.classList.add("nav_active"); }
+	if (show_history) { history_button.classList.add("nav_active"); }
+	if (show_random_episode) { random_episode_button.classList.add("nav_active"); }
+	if (show_settings) { settings_button.classList.add("nav_active"); }
+	if (show_account) { account_button.classList.add("nav_active"); }
 }
 
 //#################################################################################################
@@ -220,20 +330,10 @@ function startSearch() {
 	}
 }
 
-function removeActiveNav(sel_button) {
-	var nav_active = document.getElementsByClassName("nav_active");
-	loadEpisodes(active_type); // main.js
+function removeSelNav(sel_button) {
+	var set_active = document.getElementsByClassName("set_active");
 
-	for (var i = 0; i < nav_active.length; i++) {
-		nav_active[i].classList.remove("nav_active")
-	}
-
-	if (sel_button != "watch_list") {
-		show_watch_list = false;
-		document.querySelector(":root").style.setProperty("--watch_list", "block");
-		no_watch_list.style.display = "none";
-	}
-	if (sel_button != "history") {
-		show_history = false;
+	for (var i = 0; i < set_active.length; i++) {
+		set_active[i].classList.remove("set_active")
 	}
 }
