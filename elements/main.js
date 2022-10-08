@@ -2,7 +2,7 @@
 // setup(); storeUserData(); changeUserData(); loadEpisodes();
 // toggleOrder(); toggleSort();
 // toggleWatchList(); showWatchList();
-// refreshHistory(); editHistory(); saveEditHistory(); showHistory();
+// refreshHistory(); editHistory(); saveEditHistory(); showHistory(); removeActiveNav();
 
 var provider, provider_link, backwards, sort_date, active_type, user_data = {list:[]}, watch_list_count = 0;
 
@@ -141,6 +141,7 @@ function changeUserData(array_id, history, list) {
 //#################################################################################################
 // load episodes
 var episoden_list = document.getElementsByTagName("ol")[0];
+var test;
 
 function loadEpisodes(load_type) {
 	var html = [];
@@ -151,7 +152,7 @@ function loadEpisodes(load_type) {
 		for (var i = 0; i < episoden.length; i++) {
 			var episode = episoden[i];
 			var number = parseInt(episode.number);
-			var episode_class = episode.class
+			var episode_class = episode.class;
 	
 			if (episode.href[provider_link] != "#" && episode.href[0] != "#new") {
 				var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('normal_${i}')"`;
@@ -163,8 +164,11 @@ function loadEpisodes(load_type) {
 			}
 			else {
 				var href = 'href="#"';
-				episode_class += "not_aviable ";
+				episode_class += " not_aviable";
 				var info = "";
+			}
+			if (episode.history == undefined || episode.history == "") {
+				episode_class += " no_history";
 			}
 	
 			html.push(`
@@ -190,7 +194,7 @@ function loadEpisodes(load_type) {
 	if (load_type != "normal") {
 		for (var i = 0; i < special.length; i++) {
 			var episode = special[i];
-			var episode_class = episode.class
+			var episode_class = episode.class;
 	
 			if (episode.href[provider_link] != "#" || episode.href[0] != "#new") {
 				var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('special_${i}')"`;
@@ -202,8 +206,11 @@ function loadEpisodes(load_type) {
 			}
 			else {
 				var href = 'href="#"';
-				episode_class += "not_aviable ";
+				episode_class += " not_aviable";
 				var info = "";
+			}
+			if (episode.history == undefined || episode.history == "") {
+				episode_class += " no_history";
 			}
 
 			html.push(`
@@ -220,46 +227,41 @@ function loadEpisodes(load_type) {
 		}
 	}
 
+	if (sort_date && !show_history) {
+		html.sort((a, b) => {
+			var a_date = a.slice(23, 33);
+			var b_date = b.slice(23, 33);
+
+			if (backwards) {
+				if (a_date < b_date) { return 1; }
+				if (a_date > b_date){ return -1; }
+			}
+			else {
+				if (a_date < b_date) { return -1; }
+				if (a_date > b_date){ return 1; }
+			}
+			return 0;
+		});
+	}
+
 	if (show_history) {
 		html.sort((a, b) => {
-			var a_date = a.slice(45, 69);
-			var b_date = b.slice(45, 69);
-
-			if (new Date(a_date) == "Invalid Date") {
-				a_date = "2000-01-01T00:00:00.000Z"
-			}
-			if (new Date(b_date) == "Invalid Date") {
-				b_date = "2000-01-01T00:00:00.000Z"
-			}
+			var a_date = a.slice(49, 73);
+			var b_date = b.slice(49, 73);
 
 			if (backwards) {
-				if (a_date < b_date) { return 1; }
-				if (a_date > b_date){ return -1; }
-			}
-			else {
 				if (a_date < b_date) { return -1; }
 				if (a_date > b_date){ return 1; }
+			}
+			else {
+				if (a_date < b_date) { return 1; }
+				if (a_date > b_date){ return -1; }
 			}
 			return 0;
 		});
 	}
 
-	if (sort_date) {
-		html.sort((a, b) => {
-			var a_date = a.slice(19, 29);
-			var b_date = b.slice(19, 29);
-
-			if (backwards) {
-				if (a_date < b_date) { return 1; }
-				if (a_date > b_date){ return -1; }
-			}
-			else {
-				if (a_date < b_date) { return -1; }
-				if (a_date > b_date){ return 1; }
-			}
-			return 0;
-		});
-	}
+	test = html
 	
 	episoden_list.innerHTML = html.join("");
 }
@@ -276,8 +278,6 @@ function toggleOrder() {
 	else {
 		el_sort_list.style.transform = "scaleY(-1)";
 	}
-
-	console.log(backwards)
 	
 	if (show_history) {
 		loadEpisodes("history");
@@ -346,7 +346,7 @@ function toggleWatchList(el_button) {
 var show_watch_list = false;
 
 function showWatchList(el) {
-	removeActiveNav("watch_list"); // actions.js
+	removeActiveNav("watch_list");
 	if (show_watch_list) {
 		document.querySelector(":root").style.setProperty("--watch_list", "block");
 		show_watch_list = false;
@@ -367,7 +367,7 @@ function showWatchList(el) {
 
 //#################################################################################################
 // History
-var date_input = document.getElementById("info_history");
+var info_history = document.getElementById("info_history");
 var edit_history = document.getElementById("edit_history");
 var done_history = document.getElementById("done_history");
 var this_year = new Date().getFullYear();
@@ -389,43 +389,43 @@ function refreshHistory(array_id) {
 }
 
 function editHistory() {
-	if (date_input.disabled) {
-		if (date_input.value == "nie") {
-			date_input.value = "tt.mm.yyyy";
+	if (info_history.disabled) {
+		if (info_history.value == "nie") {
+			info_history.value = "tt.mm.yyyy";
 		}
-		date_input.disabled = false;
-		date_before_edit = date_input.value;
+		info_history.disabled = false;
+		date_before_edit = info_history.value;
 	}
 	else {
-		date_input.value = date_before_edit;
+		info_history.value = date_before_edit;
 	}
-	date_input.select();
-	date_input.focus();
+	info_history.select();
+	info_history.focus();
 }
 
 function saveEditHistory() {
-	date_input.disabled = true;
+	info_history.disabled = true;
 	edit_history.style.display = "inline-block";
 	done_history.style.display = "none";
 
-	var date_array = date_input.value.split(".");
+	var date_array = info_history.value.split(".");
 	var date = `${date_array[2]}-${date_array[1]}-${date_array[0]}T00:00:00.000Z`;
 
 	changeUserData(info_history.dataset.array, date, "");
 }
 
 // https://stackoverflow.com/a/43473017/14225364
-date_input.onkeydown = function(evt) {
-	var size = date_input.value.length;
+info_history.onkeydown = function(evt) {
+	var size = info_history.value.length;
 	if ((evt.keyCode >= 48 && evt.keyCode <= 57) || (evt.keyCode >= 96 && evt.keyCode <= 105)) {
-		if (size == 2 && date_input.value > 31) {
-			date_input.value = "31";
+		if (size == 2 && info_history.value > 31) {
+			info_history.value = "31";
 		}
-		if (size == 5 && Number(date_input.value.split('.')[1]) > 12) {
-			date_input.value = date_input.value.slice(0, -2) + "12";
+		if (size == 5 && Number(info_history.value.split('.')[1]) > 12) {
+			info_history.value = info_history.value.slice(0, -2) + "12";
 		}
-		if (size == 10 && Number(date_input.value.split('.')[2]) < 2000) {
-			date_input.value = date_input.value.slice(0, -4) + this_year;
+		if (size == 10 && Number(info_history.value.split('.')[2]) < 2000) {
+			info_history.value = info_history.value.slice(0, -4) + this_year;
 		}
 		if (size == 9) {
 			finished_input = true;
@@ -433,8 +433,8 @@ date_input.onkeydown = function(evt) {
 			done_history.style.display = "inline-block";
 		}
 
-		if ((size == 2 && date_input.value < 32) || (size == 5 && Number(date_input.value.split('.')[1]) < 13)) {
-			date_input.value += '.';        
+		if ((size == 2 && info_history.value < 32) || (size == 5 && Number(info_history.value.split('.')[1]) < 13)) {
+			info_history.value += '.';        
 		}
 	}
 	else if (evt.keyCode != 8 && evt.keyCode != 46 && evt.keyCode != 37 && evt.keyCode != 39) {
@@ -442,8 +442,8 @@ date_input.onkeydown = function(evt) {
 	}
 }
 
-date_input.onkeyup = function() {
-	var size = date_input.value.length;
+info_history.onkeyup = function() {
+	var size = info_history.value.length;
 	if (size <= 9 && finished_input) {
 		finished_input = false;
 		edit_history.style.display = "inline-block";
@@ -454,14 +454,35 @@ date_input.onkeyup = function() {
 var show_history = false;
 
 function showHistory(el) {
-	removeActiveNav("history"); // actions.js
+	removeActiveNav("history");
 	if (show_history) {
 		show_history = false;
+		episoden_list.classList.remove("show_history");
 		loadEpisodes(active_type);
 	}
 	else {
 		show_history = true;
 		el.classList.add("nav_active");
+		episoden_list.classList.add("show_history");
 		loadEpisodes("history");
+	}
+}
+
+// remove active nav
+function removeActiveNav(sel_button) {
+	var nav_active = document.getElementsByClassName("nav_active");
+	loadEpisodes(active_type);
+
+	for (var i = 0; i < nav_active.length; i++) {
+		nav_active[i].classList.remove("nav_active")
+	}
+
+	if (sel_button != "watch_list") {
+		show_watch_list = false;
+		document.querySelector(":root").style.setProperty("--watch_list", "block");
+		no_watch_list.style.display = "none";
+	}
+	if (sel_button != "history") {
+		show_history = false;
 	}
 }
