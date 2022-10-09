@@ -14,20 +14,28 @@
 <body>
 	<nav>
 		<a class="nav_button nav_home" href=""><h1>Stream Fragezeichen</h1></a>
-		<input type="checkbox" id="nav_search_button" style="display: none;">
+		<!-- <input type="checkbox" id="nav_search_button" style="display: none;">
 		<label for="nav_search_button" title="Suche" class="nav_button nav_search_button" onclick="startSearch()"></label>
 		<div class="nav_search">
 			<div class="nav_search_box"><input type="text" placeholder="Suche..." id="site_search" onkeyup="siteSearch()"></div>
-		</div>
+		</div> -->
 		<div class="nav_buttons">
-			<div class="nav_button" onclick="toggleOrder()" title="Liste umkehren"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></g></svg></div>
-			<div class="nav_button" id="episode_number" style="display: none;" onclick="toggleSort()" title="Nach Folgennummer anordnen"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/></g></svg></div>
-			<div class="nav_button" id="release_date" onclick="toggleSort()" title="Nach Erscheinungsdatum anordnen"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M 11.990234 2 C 6.4702344 2 2 6.48 2 12 C 2 17.52 6.4702344 22 11.990234 22 C 17.520234 22 22 17.52 22 12 C 22 6.48 17.520234 2 11.990234 2 z M 12 4 C 16.42 4 20 7.58 20 12 C 20 16.42 16.42 20 12 20 C 7.58 20 4 16.42 4 12 C 4 7.58 7.58 4 12 4 z M 11 7 L 11 13 L 16.25 16.150391 L 17 14.919922 L 12.5 12.25 L 12.5 7 L 11 7 z"/></g></svg></div>
+			<div class="nav_button hide_mobile" onclick="toggleOrder()" title="Liste umkehren"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></g></svg></div>
+			<div class="nav_button hide_mobile" id="episode_number" style="display: none;" onclick="toggleSort()" title="Nach Folgennummer anordnen"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/></g></svg></div>
+			<div class="nav_button hide_mobile" id="release_date" onclick="toggleSort()" title="Nach Erscheinungsdatum anordnen"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M 11.990234 2 C 6.4702344 2 2 6.48 2 12 C 2 17.52 6.4702344 22 11.990234 22 C 17.520234 22 22 17.52 22 12 C 22 6.48 17.520234 2 11.990234 2 z M 12 4 C 16.42 4 20 7.58 20 12 C 20 16.42 16.42 20 12 20 C 7.58 20 4 16.42 4 12 C 4 7.58 7.58 4 12 4 z M 11 7 L 11 13 L 16.25 16.150391 L 17 14.919922 L 12.5 12.25 L 12.5 7 L 11 7 z"/></g></svg></div>
+			<div class="nav_button show_mobile active_blue" id="overflow_menu" onclick="overflowMenu()" title="Overflow Menu"><svg viewBox="0 0 24 24"><g><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></g></svg></div>
 			<div class="nav_button active_white" id="nav_watch_list" onclick="showWatchList(this)" title="Watch List"><svg viewBox="0 0 24 24"><g><path d="M 4.0000001,6 H 2 v 14 c 0,1.1 0.9000001,2 2.0000001,2 H 18 V 20 H 4.0000001 Z M 20,2 H 8.0000001 c -1.1,0 -2,0.9 -2,2 v 12 c 0,1.1 0.9,2 2,2 H 20 c 1.1,0 2,-0.9 2,-2 V 4 C 22,2.9 21.1,2 20,2 Z m -8,12.5 v -9 l 6,4.5 z"/></g></svg></div>
 			<div class="nav_button active_red" id="nav_history" onclick="showHistory(this)" title="Verlauf"><svg viewBox="0 0 24 24"><g><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></g></svg></div>
 			<div class="nav_button active_blue" id="nav_random_episode" onclick="getRandomEpisode()" title="Zufällige Folge"><svg viewBox="0 0 24 24"><g><path d="M12 10.9c-.61 0-1.1.49-1.1 1.1s.49 1.1 1.1 1.1c.61 0 1.1-.49 1.1-1.1s-.49-1.1-1.1-1.1zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm2.19 12.19L6 18l3.81-8.19L18 6l-3.81 8.19z"/></g></svg></div>
-			<div class="nav_button active_white" id="nav_settings" onclick="showSettings()" title="Einstellungen"><svg viewBox="0 0 24 24"><g><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></g></svg></div>
-			<div class="nav_button active_red" id="nav_account" onclick="showAccount()" title="Nutzerdaten"><svg viewBox="0 0 24 24"><g><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,6c1.93,0,3.5,1.57,3.5,3.5S13.93,13,12,13 s-3.5-1.57-3.5-3.5S10.07,6,12,6z M12,20c-2.03,0-4.43-0.82-6.14-2.88C7.55,15.8,9.68,15,12,15s4.45,0.8,6.14,2.12 C16.43,19.18,14.03,20,12,20z"/></g></svg></div>
+			<div class="nav_button active_white" id="nav_search" onclick="startSearch()" title="Suche"><svg viewBox="0 0 24 24"><g><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></g></svg></div>
+			<div class="nav_button hide_mobile active_red" id="nav_settings" onclick="showSettings()" title="Einstellungen"><svg viewBox="0 0 24 24"><g><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></g></svg></div>
+			<div class="nav_button hide_mobile active_blue" id="nav_account" onclick="showAccount()" title="Nutzerdaten"><svg viewBox="0 0 24 24"><g><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,6c1.93,0,3.5,1.57,3.5,3.5S13.93,13,12,13 s-3.5-1.57-3.5-3.5S10.07,6,12,6z M12,20c-2.03,0-4.43-0.82-6.14-2.88C7.55,15.8,9.68,15,12,15s4.45,0.8,6.14,2.12 C16.43,19.18,14.03,20,12,20z"/></g></svg></div>
+			
+			<div class="nav_search" id="search_box">
+				<div class="nav_search_box">
+					<input type="text" placeholder="Suche..." id="site_search" onkeyup="siteSearch()">
+				</div>
+			</div>
 		</div>
 	</nav>
 
@@ -41,7 +49,7 @@
 				<div>
 					<h1>Die drei ??? <span id="info_name"></span></h1>
 					<header>
-						<div id="info_panel">André Marx - 2022 - 2h 15min</div>
+						<div id="info_panel"></div>
 						<div class="placeholder">&#160;-&#160;</div>
 						<div>zuletzt gehört: <input id="info_history" data-array="" type="text" value="tt.mm.yyyy" disabled maxlength="10"></input>
 							<button id="edit_history" onclick="editHistory()" title="Zuletzt gehört bearbeiten"><svg viewBox="0 0 24 24"><g><path d="M 0,19.000694 V 24 H 4.9993057 L 19.743924,9.2553812 14.744619,4.2560755 Z M 23.610054,5.3892515 c 0.519928,-0.5199278 0.519928,-1.3598111 0,-1.8797389 L 20.490487,0.38994584 c -0.519927,-0.51992779 -1.359811,-0.51992779 -1.879738,0 L 16.171087,2.829607 21.170393,7.8289127 Z"/></g></svg></button>
@@ -80,9 +88,9 @@
 				<div>
 					<p>Nutzerdaten verwalten:</p>
 					<div class="settings_center">
-						<button onclick="" class="border_button">Export</button>
-						<button onclick="" class="border_button">Import</button>
-						<button onclick="" class="border_button">Zurücksetzen</button>
+						<button onclick="exportUserData()" class="border_button">Export</button>
+						<button onclick="import_user_data.click();" class="border_button">Import</button>
+						<button onclick="resetUserData()" class="border_button">Zurücksetzen</button>
 					</div>
 				</div>
 				<div class="create_account">
@@ -122,7 +130,7 @@
 	</footer>
 	
 	<script src="elements/episoden.js"></script>
-	<script src="elements/main.js"></script>
 	<script src="elements/actions.js"></script>
+	<script src="elements/main.js"></script>
 </body>
 </html>
