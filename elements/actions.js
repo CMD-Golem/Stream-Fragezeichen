@@ -57,10 +57,11 @@ var aside = document.getElementsByTagName("aside")[0];
 var aside_content = document.getElementsByClassName("aside_content");
 var show_aside = false;
 
+
 function refreshAside() {
 	if (!show_aside) {
 		show_aside = true;
-		aside.style.height = "340px";
+		aside.style.height = aside_height + "px";
 		aside.style.overflow = "visible";
 	}
 
@@ -240,7 +241,7 @@ function showInfo(array_id, is_random_episode) {
 	refreshNavButtons();
 
 	// calc hight of text for scroll
-	setTimeout(function(){ info_content.style.height = (aside.clientHeight - info_name.parentElement.parentElement.clientHeight - 92) + "px"; }, 500);
+	setTimeout(function(){ info_content.style.height = info_height - info_name.parentElement.parentElement.clientHeight + "px" }, 500);
 
 	// Prepare Edit History (defined in main.js)
 	info_history.dataset.array = array_id;
@@ -248,6 +249,28 @@ function showInfo(array_id, is_random_episode) {
 	edit_history.style.display = "inline-block";
 	done_history.style.display = "none";
 }
+
+//#################################################################################################
+// calc height
+var info_height, aside_height;
+
+function calcHeight() {
+	var height = window.innerHeight;
+	var width = window.innerWidth;
+	console.log("resize");
+
+	if (width > 862) {
+		aside_height = 340;
+		info_height = (aside_height - 92);
+	}
+	else {
+		aside_height = height - 122 - 100;
+		info_height = (aside_height - 232);
+	}
+}
+
+calcHeight();
+window.addEventListener("resize", calcHeight);
 
 //#################################################################################################
 // Settings

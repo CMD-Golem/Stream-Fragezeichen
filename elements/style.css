@@ -148,8 +148,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @media (pointer: coarse) {
-	ol div .play,
-	ol div .info,
+	.play,
+	.info,
 	ol div:not(.in_watch_list) .add,
 	ol div.in_watch_list .remove {
 		display: block;
@@ -369,16 +369,40 @@ aside .play {
 	}
 }
 
+aside .img_play_box img {
+	border-radius: 5px;
+	width: 260px;
+	margin-right: 50px;
+	margin-left: 12px;
+}
+
+aside .play {
+	top: 140px;
+	right: unset;
+	left: 112px;
+}
+
 @media (max-width: 682px) {
 	.aside_content {
 		width: unset;
-		padding: 40px 20px;
+		flex-direction: column;
+		height: calc(100% - 55px);
+		padding: 20px;
+		padding-bottom: 35px;
 	}
-	.info_description p {
+	.info_description {
 		margin-right: 0;
 	}
-	aside .img_play_box {
-		display: none;
+	aside .img_play_box img {
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 15px;
+		width: 150px;
+	}
+	aside .play {
+		top: 110px;
+		right: unset;
+		left: calc(100% / 2 + 15px);
 	}
 	.placeholder {
 		display: block;
@@ -440,6 +464,8 @@ nav {
 /* Button */
 .nav_buttons {
 	display: flex;
+	transition: height 0.2s;
+	align-items: flex-end;
 	float: right;
 }
 
@@ -453,6 +479,8 @@ nav {
 
 .nav_button {
 	display: flex;
+	position: static;
+	height: 30px;
 	font-size: 17px;
 	padding: 15px 16px;
 }
@@ -528,6 +556,7 @@ footer {
 footer img {
 	height: 14px;
 	width: 14px;
+	vertical-align: top;
 }
 
 .footer_flex {
@@ -555,6 +584,7 @@ footer img {
 		background-color: var(--background-color);
 		border-top: var(--text-color) solid 1px;
 		overflow: hidden;
+
 	}
 	.nav_search {
 		margin-right: 186px;
@@ -588,6 +618,12 @@ footer img {
 	.nav_buttons:not(.overflow_menu) .hide_mobile {
 		display: none !important;
 	}
+	.overflow_menu .hide_mobile {
+		position: absolute;
+		top: 0;
+		left: 0;
+		margin-left: calc((100% - 310px)/2);
+	}
 	.show_mobile {
 		display: flex !important;
 	}
@@ -600,8 +636,8 @@ footer img {
 	}
 	.overflow_menu {
 		height: 120px;
-		padding-left: calc((100% - 310px)/2);
-		padding-right: calc((100% - 310px)/2);
+		/* padding-left: calc((100% - 310px)/2);
+		padding-right: calc((100% - 310px)/2); */
 	}
 	.active_white.nav_active {
 		background-color: #e91b24;
