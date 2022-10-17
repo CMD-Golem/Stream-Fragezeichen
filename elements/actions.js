@@ -61,7 +61,6 @@ var show_aside = false;
 function refreshAside() {
 	if (!show_aside) {
 		show_aside = true;
-		aside.style.height = aside_height + "px";
 		aside.style.overflow = "visible";
 	}
 
@@ -89,7 +88,7 @@ function hideAside() {
 
 	refreshNavButtons();
 
-	aside.style.height = "0";
+	aside.style.height = 0;
 	setTimeout(function(){
 		aside.style.overflow = "hidden";
 		aside_content[0].style.display = "none";
@@ -117,6 +116,7 @@ function getRandomEpisode() {
 			show_account = false;
 			show_settings = false;
 			show_info = false;
+			aside.style.height = aside_height + "px";
 			refreshNavButtons();
 			refreshAside();
 		}
@@ -151,6 +151,7 @@ function getRandomEpisode() {
 function showSettings() {
 	if (show_settings) {
 		show_settings = false;
+		aside.style.height = 0;
 		hideAside();
 	}
 	else {
@@ -158,6 +159,7 @@ function showSettings() {
 		show_account = false;
 		show_random_episode = false;
 		show_info = false;
+		aside.style.height = "400px";
 		refreshNavButtons();
 	}
 	refreshAside();
@@ -166,6 +168,7 @@ function showSettings() {
 function showAccount() {
 	if (show_account) {
 		show_account = false;
+		aside.style.height = 0;
 		hideAside();
 	}
 	else {
@@ -173,6 +176,7 @@ function showAccount() {
 		show_settings = false;
 		show_random_episode = false;
 		show_info = false;
+		aside.style.height = "400px";
 		refreshNavButtons();
 	}
 	refreshAside();
@@ -237,6 +241,7 @@ function showInfo(array_id, is_random_episode) {
 	
 	show_settings = false;
 	show_account = false;
+	aside.style.height = aside_height + "px";
 	refreshAside();
 	refreshNavButtons();
 
@@ -257,12 +262,12 @@ var info_height, aside_height;
 function calcHeight() {
 	var height = window.innerHeight;
 	var width = window.innerWidth;
-	console.log("resize");
 
-	if (width > 862) {
+	if (width > 682) {
 		aside_height = 340;
 		info_height = (aside_height - 92);
 	}
+	
 	else {
 		aside_height = height - 122 - 100;
 		info_height = (aside_height - 232);
@@ -393,7 +398,11 @@ function startSearch() {
 		refreshList(); // main.js
 
 		search_box.style.display = "flex";
-		if (window.screen.width <= 506) { nav_buttons.style.justifyContent = "flex-end"; }
+		if (window.screen.width <= 506) {
+			nav_buttons.style.justifyContent = "flex-end";
+			hideAside();
+		}
+		if (show_overflow_menu) { overflowMenu(); }
 		setTimeout(function(){ input.focus() }, 100);
 	}
 	else {

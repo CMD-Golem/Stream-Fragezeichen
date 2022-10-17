@@ -61,9 +61,8 @@
 			</div>
 		</div>
 		<div class="aside_content center"> <!-- Settings Box -->
-			<p>Stream-Fragezeichen.de - Deine Seite um drei Fragezeichen Hörbücher aus deinem Streaming auszuwählen und zu hören.<br>Suche nach einzelnen Folgen und speichere sie in deiner Watch List oder verfolge deinen Hörverlauf.</p>
-			<br>
-			<p>Wähle deinen Streaming Anbieter aus:</p>
+			<div>Stream-Fragezeichen.de - Deine Seite um drei Fragezeichen Hörbücher aus deinem Streaming auszuwählen und zu hören.<br>Suche nach einzelnen Folgen und speichere sie in deiner Watch List oder verfolge deinen Hörverlauf.</div>
+			<div class="settings_text">Wähle deinen Streaming Anbieter aus:</div>
 			<div class="settings_center">
 				<div class="provider_sel" onclick="selectProvider(this)" id="spotify" title="Spotify">
 					<img src="nav/spotify.svg">
@@ -81,6 +80,23 @@
 					<img src="nav/apple.svg">
 					<span>Apple Music</span>
 				</div>
+			</div>
+			<div class="switch_box">
+				<label class="switch">
+					<input type="checkbox">
+					<span class="slider"></span>
+					<span class="slider_text">Titel auf dieser Webseite abspielen</span>
+				</label><br>
+				<label class="switch">
+					<input type="checkbox" onclick="toggleOrder()" id="settings_sort_list">
+					<span class="slider"></span>
+					<span class="slider_text">Erste Episode zuoberst</span>
+				</label><br>
+				<label class="switch">
+					<input type="checkbox" onclick="toggleSort()" id="settings_episode_number">
+					<span class="slider"></span>
+					<span class="slider_text">Nach Erscheinungsdatum sortieren</span>
+				</label>
 			</div>
 		</div>
 		<div class="aside_content center"> <!-- Account Box -->

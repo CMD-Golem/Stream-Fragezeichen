@@ -19,6 +19,7 @@ function setup(json_user_data) {
 
 		// int list sorting
 		backwards = user_data.backwards;
+		set_sort_list.checked = !backwards;
 		if (backwards == false) {
 			el_sort_list.style.transform = "scaleY(-1)";
 		}
@@ -29,6 +30,7 @@ function setup(json_user_data) {
 
 		// int list sort type
 		sort_date = user_data.sort_date;
+		set_episode_number.checked = sort_date;
 		if (sort_date == true) {
 			episode_number.style.display = "flex";
 			release_date.style.display = "none";
@@ -118,25 +120,25 @@ function loadEpisodes(load_type) {
 			var episode_class = episode.class;
 			episoden[i].array_link = "normal_" + i;
 	
-			if (episode.href[provider_link] != "#" && episode.href[0] != "#new") {
-				var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('normal_${i}', new Date())"`;
-				var info = `showInfo('normal_${i}')`
+			if (episode.href[provider_link] == "#") {
+				var href = 'href="#"';
+				episode_class += " not_aviable";
+				var info = "";
 			}
 			else if (episode.href[0] == "#new") {
 				var href = `href="#" onclick="alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.');"`;
 				var info = `alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')`
 			}
 			else {
-				var href = 'href="#"';
-				episode_class += " not_aviable";
-				var info = "";
+				var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('normal_${i}', new Date())"`;
+				var info = `showInfo('normal_${i}')`
 			}
 			if (episode.history == undefined || episode.history == "1899-01-01T00:00:00.000Z") {
 				episode_class += " no_history";
 			}
 	
 			html.push(`
-			<div data-release="${episode.release}" data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="normal_${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name} ${episode.book_author} ${episode.track_author}">
+			<div data-release="${episode.release}" data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="normal_${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author} ${episode.track_author}">
 				<a ${href} class="img_play_box">
 					<img src="img/episode_${number}.jpg" alt="Folge ${episode.number}: ${episode.name}">
 					<p><b>Folge ${episode.number}</b>: ${episode.name}</p>
@@ -161,25 +163,25 @@ function loadEpisodes(load_type) {
 			var episode_class = episode.class;
 			special[i].array_link = "special_" + i;
 	
-			if (episode.href[provider_link] != "#" || episode.href[0] != "#new") {
-				var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('special_${i}', new Date())"`;
-				var info = `showInfo('special_${i}')`
+			if (episode.href[provider_link] == "#") {
+				var href = 'href="#"';
+				episode_class += " not_aviable";
+				var info = "";
 			}
 			else if (episode.href[0] == "#new") {
 				var href = `href="#" onclick="alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')"`;
 				var info = `alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')`
 			}
 			else {
-				var href = 'href="#"';
-				episode_class += " not_aviable";
-				var info = "";
+				var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('special_${i}', new Date())"`;
+				var info = `showInfo('special_${i}')`
 			}
 			if (episode.history == undefined || episode.history == "") {
 				episode_class += " no_history";
 			}
 
 			html.push(`
-			<div data-release="${episode.release}" data-history="${episode.history}" id="${episode.number}" class="${episode_class}" data-array="special_${i}" data-filter="die drei fragezeichen ??? ${episode.search} ${episode.name} ${episode.book_author} ${episode.track_author}">
+			<div data-release="${episode.release}" data-history="${episode.history}" id="${episode.number}" class="${episode_class}" data-array="special_${i}" data-filter="die drei fragezeichen ??? ${episode.search} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author} ${episode.track_author}">
 				<a ${href} class="img_play_box">
 					<img src="img_special/special_${episode.number.toLowerCase()}.jpg" alt="${episode.name}">
 					<p>${episode.name}</p>
@@ -234,9 +236,12 @@ function loadEpisodes(load_type) {
 //#################################################################################################
 // change direction of episode list
 var el_sort_list = document.getElementById("sort_list");
+var set_sort_list = document.getElementById("settings_sort_list");
 
 function toggleOrder() {
 	backwards = !backwards;
+	set_sort_list.checked = !backwards;
+
 	if (backwards) {
 		el_sort_list.style.transform = "scaleY(1)";
 	}
@@ -254,10 +259,13 @@ function toggleOrder() {
 
 // sort episode list for date or numbering
 var episode_number = document.getElementById("episode_number");
+var set_episode_number = document.getElementById("settings_episode_number");
 var release_date = document.getElementById("release_date");
 
 function toggleSort() {
 	sort_date = !sort_date;
+	set_episode_number.checked = sort_date;
+
 	if (sort_date) {
 		episode_number.style.display = "flex";
 		release_date.style.display = "none";
