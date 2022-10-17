@@ -97,7 +97,8 @@ button:focus, input:focus {
 	background-color: var(--background-color);
 	border: var(--text-color) solid 1px;
 	border-radius: 5px;
-	margin: 0 20px;
+	/* margin: 0 20px; */
+	margin: 0 auto;
 	padding: 0 20px;
 	height: 30px;
 }
@@ -106,15 +107,10 @@ button:focus, input:focus {
 	background-color: var(--nav-hover-color);
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-	display: none;
-}
-
 @media (max-width: 1240px) { main, .aside_content { width: 896px; } }
 @media (max-width: 906px) { main, .aside_content { width: 672px; } }
 @media (max-width: 682px) { main, .aside_content { width: 448px; } }
 @media (max-width: 458px) { main, .aside_content { width: 288px; } }
-
 
 /* ####################################################################### */
 /* img play box */
@@ -318,6 +314,19 @@ aside .play {
 	fill: var(--nav-hover-color);
 }
 
+aside .img_play_box img {
+	border-radius: 5px;
+	width: 260px;
+	margin-right: 50px;
+	margin-left: 12px;
+}
+
+aside .play {
+	top: 140px;
+	right: unset;
+	left: 112px;
+}
+
 /* Settings */
 .settings_box {
 	display: flex;
@@ -332,6 +341,15 @@ aside .play {
 .settings_center {
 	display: flex;
 	justify-content: center;
+}
+
+.settings_box .settings_center {
+	flex-direction: column;
+	gap: 10px;
+}
+
+.settings_text {
+	margin-top: 30px;
 }
 
 .provider_sel {
@@ -360,6 +378,65 @@ aside .play {
 	filter: grayscale(100%);
 }
 
+/* Switches */
+.switch_box {
+	margin-top: 20px;
+}
+
+.switch input {
+	display: none;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	text-align: left;
+	width: 270px;
+	margin: 5px 0;
+}
+
+.slider {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 40px;
+	height: 20px;
+	border: 1px solid var(--text-color);
+	border-radius: 26px;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 16px;
+	width: 16px;
+	left: 2px;
+	bottom: 2px;
+	background-color: var(--text-color);
+	transition: left 0.1s;
+	border-radius: 50%;
+}
+
+.slider_text {
+	display: inline-block;
+	padding-top: 4.5px;
+	padding-left: 50px;
+}
+
+input:checked + .slider {
+	width: 42px;
+	height: 22px;
+	background-color: #02abeb;
+	border: none;
+}
+
+input:checked + .slider:before {
+	left: calc(42px - 16px - 3px);
+	bottom: 3px;
+}
+
 @media (max-width: 906px) {
 	.placeholder {
 		display: none;
@@ -367,19 +444,6 @@ aside .play {
 	header {
 		flex-direction: column;
 	}
-}
-
-aside .img_play_box img {
-	border-radius: 5px;
-	width: 260px;
-	margin-right: 50px;
-	margin-left: 12px;
-}
-
-aside .play {
-	top: 140px;
-	right: unset;
-	left: 112px;
 }
 
 @media (max-width: 682px) {
@@ -444,6 +508,25 @@ aside .play {
 	}
 	header {
 		flex-direction: column;
+	}
+
+	.settings_box {
+		display: block;
+	}
+	.settings_box > div {
+		padding: 0 10px;
+		max-width: 450px;
+		width: unset;
+		margin: 0 auto;
+	}
+	.create_account, .manage_account {
+		margin-top: 40px !important;
+	}
+}
+
+@media (max-width: 403px) {
+	.switch_box {
+		margin-top: 40px;
 	}
 }
 

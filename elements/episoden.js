@@ -2305,7 +2305,7 @@ var special = [
         track_author: "André Minninger"
     },
     {
-        number: "AK12",
+        number: "AK13",
         name: "und der 5. Advent",
         search: "Adventskalender Kalender",
         href: ["https://www.deezer.com/de/album/14924739", "https://music.youtube.com/browse/MPREb_xqQYIFXpbwT", "https://open.spotify.com/album/2qFuUJMx8w4VEO0Zdf8jFJ", "https://music.apple.com/ch/album/der-5-advent/1174866876"],
@@ -2316,7 +2316,7 @@ var special = [
         track_author: "André Minninger"
     },
     {
-        number: "AK15",
+        number: "AK16",
         name: "Stille Nacht, düstere Nacht",
         search: "Adventskalender Kalender",
         href: ["https://www.deezer.com/de/album/49725642", "https://music.youtube.com/browse/MPREb_7Zx1bSM4Rwc", "https://open.spotify.com/album/5iobM2gNVymvP8XqnRnHVR", "https://music.apple.com/ch/album/adventskalender-stille-nacht-d%C3%BCstere-nacht/1295117431"],
@@ -2335,6 +2335,17 @@ var special = [
         release: "2020-10-09",
         track_length: 9948853,
         book_author: "Hendrik Buchna",
+        track_author: "André Minninger"
+    },
+    {
+        number: "AK22",
+        name: "Eine schreckliche Bescherung",
+        search: "Adventskalender Kalender",
+        href: ["https://www.deezer.com/de/album/358679137", "https://music.youtube.com/browse/MPREb_xnFnStqzCsO", "https://open.spotify.com/album/5u2wd0lYukcINw8dUFCREq", "https://music.apple.com/ch/album/adventskalender-eine-schreckliche-bescherung/1646211883"],
+        content: "Beim Einkaufsbummel im Kaufhaus werden Justus, Peter und Bob Zeugen eines Überfalls. Kein geringerer als der Weihnachtsmann des Shopping-Centers wird angegriffen. Jemand hat es auf den Sack voller Geschenke abgesehen und dieser jemand ist ausgerechnet als Weihnachtself verkleidet. Die drei ??? heften sich an die Fersen des Diebes und finden heraus, auf welches Weihnachtsgeschenk es der Elf abgesehen hat.",
+        release: "2022-10-14",
+        track_length: 9319000,
+        book_author: "Marco Sonnleitner",
         track_author: "André Minninger"
     },
     {
