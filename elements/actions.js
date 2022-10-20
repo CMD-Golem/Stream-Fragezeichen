@@ -55,6 +55,7 @@ function refreshNavButtons() {
 // Aside
 var aside = document.getElementsByTagName("aside")[0];
 var aside_content = document.getElementsByClassName("aside_content");
+var css_root = document.querySelector(':root');
 var show_aside = false;
 
 
@@ -80,6 +81,18 @@ function refreshAside() {
 }
 
 function hideAside() {
+	css_root.style.setProperty("--aside_height", "0");
+	if (show_random_episode || show_info) {
+		css_root.style.setProperty("--description_height", "unset");
+	}
+	
+	setTimeout(function(){
+		aside.style.overflow = "hidden";
+		aside_content[0].style.display = "none";
+		aside_content[1].style.display = "none";
+		aside_content[2].style.display = "none";
+	}, 200);
+
 	show_aside = false;
 	show_random_episode = false;
 	show_settings = false;
@@ -87,14 +100,7 @@ function hideAside() {
 	show_info = false;
 
 	refreshNavButtons();
-
-	aside.style.height = 0;
-	setTimeout(function(){
-		aside.style.overflow = "hidden";
-		aside_content[0].style.display = "none";
-		aside_content[1].style.display = "none";
-		aside_content[2].style.display = "none";
-	}, 200);
+	preventScroll(false);
 }
 
 //#################################################################################################
@@ -106,52 +112,39 @@ var show_info = false;
 var test2 = [];
 
 function getRandomEpisode() {
-	// if (show_random_episode) {
-	// 	show_random_episode = false;
-	// 	hideAside();
-	// }
-	// else {
-		if (!show_random_episode) {
-			show_random_episode = true;
-			show_account = false;
-			show_settings = false;
-			show_info = false;
-			aside.style.height = aside_height + "px";
-			refreshNavButtons();
-			refreshAside();
+	// random episode from the 20 longest not heard
+	var history_array = episoden.slice(); //.concat(special)
+
+	history_array.sort((a, b) => {
+		if (a.history == undefined || a.history == "") {a.history = "1899-01-01T00:00:00.000Z";}
+		if (b.history == undefined || b.history == "") { b.history = "1899-01-01T00:00:00.000Z";}
+
+		var a_date = a.history;
+		var b_date = b.history;
+
+		if (a_date < b_date) { return -1; }
+		if (a_date > b_date){ return 1; }
+		return 0;
+	});
+	var oldest_index = 19;
+	for (var i = 20; i < history_array.length; i++) {
+		if (history_array[i].history == history_array[oldest_index].history) {
+			oldest_index = i;
 		}
-		
-		// random episode from the 20 longest not heard
-		var history_array = episoden.slice(); //.concat(special)
+		else {break;}
+	}
+	history_array.length = oldest_index + 1;
+	var random_index = Math.floor(Math.random() * oldest_index + 1);
 
-		history_array.sort((a, b) => {
-			if (a.history == undefined || a.history == "") {a.history = "1899-01-01T00:00:00.000Z";}
-			if (b.history == undefined || b.history == "") { b.history = "1899-01-01T00:00:00.000Z";}
-
-			var a_date = a.history;
-			var b_date = b.history;
-
-			if (a_date < b_date) { return -1; }
-			if (a_date > b_date){ return 1; }
-			return 0;
-		});
-		var oldest_index = 19;
-		for (var i = 20; i < history_array.length; i++) {
-			if (history_array[i].history == history_array[oldest_index].history) {
-				oldest_index = i;
-			}
-			else {break;}
-		}
-		history_array.length = oldest_index + 1;
-		var random_index = Math.floor(Math.random() * oldest_index + 1);
-		showInfo(history_array[random_index].array_link, true);
-	// }
+	// show aside
+	show_random_episode = true;
+	showInfo(history_array[random_index].array_link, true);
 }
 
 function showSettings() {
 	if (show_settings) {
 		show_settings = false;
-		aside.style.height = 0;
+		css_root.style.setProperty("--aside_height", "0");
 		hideAside();
 	}
 	else {
@@ -159,7 +152,7 @@ function showSettings() {
 		show_account = false;
 		show_random_episode = false;
 		show_info = false;
-		aside.style.height = "400px";
+		css_root.style.setProperty("--aside_height", "400px");
 		refreshNavButtons();
 	}
 	refreshAside();
@@ -168,7 +161,7 @@ function showSettings() {
 function showAccount() {
 	if (show_account) {
 		show_account = false;
-		aside.style.height = 0;
+		css_root.style.setProperty("--aside_height", "0");
 		hideAside();
 	}
 	else {
@@ -176,7 +169,7 @@ function showAccount() {
 		show_settings = false;
 		show_random_episode = false;
 		show_info = false;
-		aside.style.height = "400px";
+		css_root.style.setProperty("--aside_height", "400px");
 		refreshNavButtons();
 	}
 	refreshAside();
@@ -241,13 +234,10 @@ function showInfo(array_id, is_random_episode) {
 	
 	show_settings = false;
 	show_account = false;
-	aside.style.height = aside_height + "px";
 	refreshAside();
+	infoHeight();
 	refreshNavButtons();
-
-	// calc hight of text for scroll
-	setTimeout(function(){ info_content.style.height = info_height - info_name.parentElement.parentElement.clientHeight + "px" }, 500);
-
+	
 	// Prepare Edit History (defined in main.js)
 	info_history.dataset.array = array_id;
 	info_history.disabled = true;
@@ -257,25 +247,62 @@ function showInfo(array_id, is_random_episode) {
 
 //#################################################################################################
 // calc height
-var info_height, aside_height;
+var window_height = window.innerHeight;
+var window_width = window.innerWidth;
 
-function calcHeight() {
-	var height = window.innerHeight;
-	var width = window.innerWidth;
+function infoHeight() {
+	var aside_needed_height = aside.firstElementChild.scrollHeight;
+	var description_header_height = info_name.parentElement.parentElement.scrollHeight;
+	var window_without_nav = window_height - 220;
 
-	if (width > 682) {
-		aside_height = 340;
-		info_height = (aside_height - 92);
+	if (window_width > 682) {
+		var aside_height = 340;
+		var info_height = (340 - 92 - description_header_height) + "px";
+		// console.log("Normal PC view")
 	}
-	
-	else {
-		aside_height = height - 122 - 100;
-		info_height = (aside_height - 232);
+	else if (window_height <= 600 && window_width <= 682) {
+		var aside_height = window_height - 120;
+		var info_height = "unset";
+		preventScroll(true);
+		// console.log("Use max hight")
 	}
+	else if (aside_needed_height >= window_without_nav) {
+		var aside_height = window_without_nav;
+		var info_height = (window_without_nav - description_header_height - 238) + "px";
+		// console.log("Normal Mobile view with big text")
+	}
+	else if (aside_needed_height < window_without_nav) {
+		var aside_height = aside_needed_height;
+		var info_height = "unset";
+		// console.log("Normal Mobile View with small text")
+	}
+
+	// console.warn("Window Height: " + window_height)
+	// console.warn("Aside Height: " + aside_needed_height)
+
+	css_root.style.setProperty("--aside_height", aside_height + "px");
+	css_root.style.setProperty("--description_height", info_height);
 }
 
-calcHeight();
-window.addEventListener("resize", calcHeight);
+window.addEventListener("resize", function(){
+	window_height = window.innerHeight;
+	window_width = window.innerWidth;
+	if (show_info || show_random_episode) { infoHeight(); }
+});
+
+var body = document.getElementsByTagName("body")[0];
+var prevents_scroll = false;
+
+function preventScroll(prevent_scroll) {
+	if (prevent_scroll && !prevents_scroll) {
+		body.style.overflow = "hidden";
+		prevents_scroll = true;
+	}
+	else if (!prevent_scroll && prevents_scroll) {
+		body.style.overflow = "visible";
+		prevents_scroll = false;
+	}
+}
 
 //#################################################################################################
 // Settings
