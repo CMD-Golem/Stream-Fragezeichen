@@ -34,7 +34,8 @@
 }
 
 :root {
-	--watch_list: block;
+	--aside_height: 0;
+	--description_height: unset;
 }
 
 html {
@@ -230,6 +231,31 @@ ol div.in_watch_list:hover .remove {
 	display: none !important;
 }
 
+
+/* ####################################################################### */
+/* Dialog */
+dialog {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 4;
+	margin: 0;
+	min-width: 171px;
+	transform: translate(-50%, -50%);
+	background-color: var(--aside-background-color);
+	backdrop-filter: blur(20px);
+	color: inherit;
+	padding: 30px 40px;
+	padding-bottom: 15px;
+	border: 1px solid var(--text-color);
+	border-radius: 5px;
+}
+
+dialog p {
+	margin: 0;
+	margin-bottom: 20px;
+}
+
 /* ####################################################################### */
 /* Aside */
 aside {
@@ -237,13 +263,15 @@ aside {
 	z-index: 1;
 	right: 0;
 	top: 60px;
-	height: 0;
+	height: var(--aside_height);
 	overflow: hidden;
 	border-bottom: var(--text-color) solid 1px;
 	background-color: var(--aside-background-color);
 	backdrop-filter: blur(20px);
 	transition: height 0.5s;
 }
+
+
 
 .aside_content {
 	display: none;
@@ -263,7 +291,15 @@ aside {
 	margin: 0;
 }
 
+.hide_aside_small {
+	display: none;
+}
+
 /* Info Box */
+.aside_info {
+	overflow-y: auto;
+}
+
 aside .img_play_box img {
 	border-radius: 5px;
 	width: 260px;
@@ -286,17 +322,21 @@ aside .play {
 .info_description p {
 	overflow-y: auto;
 	margin: 0;
-	height: 150px;
+	height: var(--description_height);
 	margin-top: 12px;
 }
 
-.info_description header {
+.info_description section {
 	font-size: small;
 	display: flex;
 }
 
 #info_panel, .placeholder {
 	padding-top: 4px;
+}
+
+.info_description input {
+	width: 70px;
 }
 
 .info_description svg {
@@ -306,25 +346,21 @@ aside .play {
 	fill-opacity: 1;
 }
 
-.info_description input {
-	width: 70px;
+.hide_info {
+	display: none;
+	position: absolute;
+	right: 20px;
 }
 
-.info_description svg:hover {
+.hide_info svg {
+	width: 35px;
+	height: 35px;
+	fill: var(--text-color);
+	fill-opacity: 1;
+}
+
+.hover_svg:hover svg {
 	fill: var(--nav-hover-color);
-}
-
-aside .img_play_box img {
-	border-radius: 5px;
-	width: 260px;
-	margin-right: 50px;
-	margin-left: 12px;
-}
-
-aside .play {
-	top: 140px;
-	right: unset;
-	left: 112px;
 }
 
 /* Settings */
@@ -441,7 +477,7 @@ input:checked + .slider:before {
 	.placeholder {
 		display: none;
 	}
-	header {
+	section {
 		flex-direction: column;
 	}
 }
@@ -457,10 +493,13 @@ input:checked + .slider:before {
 	.info_description {
 		margin-right: 0;
 	}
-	aside .img_play_box img {
+	aside .img_play_box {
 		display: block;
 		margin: 0 auto;
 		margin-bottom: 15px;
+	}
+	aside .img_play_box img {
+		margin: 0;
 		width: 150px;
 	}
 	aside .play {
@@ -471,7 +510,7 @@ input:checked + .slider:before {
 	.placeholder {
 		display: block;
 	}
-	header {
+	section {
 		flex-direction: row;
 	}
 }
@@ -506,7 +545,7 @@ input:checked + .slider:before {
 	.placeholder {
 		display: none;
 	}
-	header {
+	section {
 		flex-direction: column;
 	}
 
@@ -527,6 +566,23 @@ input:checked + .slider:before {
 @media (max-width: 403px) {
 	.switch_box {
 		margin-top: 40px;
+	}
+}
+
+@media (max-height: 600px) and (max-width: 682px) {
+	aside {
+		bottom: 60px;
+		border-bottom: none;
+		overflow-y: auto;
+	}
+	.hide_aside {
+		display: none;
+	}
+	.hide_aside_small, .hide_info {
+		display: block;
+	}
+	.info_description p {
+		height: unset;
 	}
 }
 
