@@ -169,7 +169,7 @@ function showAccount() {
 		show_settings = false;
 		show_random_episode = false;
 		show_info = false;
-		css_root.style.setProperty("--aside_height", "400px");
+		css_root.style.setProperty("--aside_height", "370px");
 		refreshNavButtons();
 	}
 	refreshAside();
@@ -205,7 +205,10 @@ function showInfo(array_id, is_random_episode) {
 	}
 	if (min_length < 10) { min_length = "0" + min_length; }
 
-	info_panel.innerHTML = `${episode.book_author} - ${episode.release.slice(0, 4)} - ${Math.trunc(hours_length)}h ${min_length}min`
+	if (hours_length != 0) { hours_length = hours_length + "h " }
+	else {hours_length = ""}
+
+	info_panel.innerHTML = `${episode.book_author} - ${episode.release.slice(0, 4)} - ${hours_length}${min_length}min`
 
 	// history
 	info_href.setAttribute("onclick", "refreshHistory(" + array_id + ")");
@@ -284,14 +287,19 @@ function infoHeight() {
 	css_root.style.setProperty("--description_height", info_height);
 }
 
+var body = document.getElementsByTagName("body")[0];
+var main_el = document.getElementsByTagName("main")[0];
+var prevents_scroll = false;
+
 window.addEventListener("resize", function(){
 	window_height = window.innerHeight;
 	window_width = window.innerWidth;
 	if (show_info || show_random_episode) { infoHeight(); }
 });
 
-var body = document.getElementsByTagName("body")[0];
-var prevents_scroll = false;
+if (navigator.maxTouchPoints > 0 ) {
+	main_el.addEventListener("touchmove", function(){ if (show_aside) { hideAside(); }});
+}
 
 function preventScroll(prevent_scroll) {
 	if (prevent_scroll && !prevents_scroll) {
@@ -312,12 +320,8 @@ function selectProvider(el_button) {
 	el_button.classList.add("provider_selected");
 
 	last_provider_selected = el_button;
-	provider = el_button.id;
-	
-	if (provider == "deezer") { provider_link = 0; } 
-	else if (provider == "spotify") { provider_link = 2; }
-	else if (provider == "apple") { provider_link = 3; }
-	else { provider_link = 1; } // Youtube
+	provider_link = parseInt(el_button.id.replace("provider_", ""));
+	console.log(provider_link)
 
 	loadEpisodes(active_type); // main.js
 }

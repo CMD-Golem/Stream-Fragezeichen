@@ -2413,7 +2413,7 @@ var special = [
         track_author: "André Minninger"
     },
     {
-        number: "MC",
+        number: "L02",
         name: "Master of Chess",
         href: ["https://www.deezer.com/de/album/12761804", "https://music.youtube.com/browse/MPREb_zSanf1hlYJR", "https://open.spotify.com/album/4uJPgDMOIRfoAumwwmpRbR", "https://music.apple.com/ch/album/master-of-chess-live-unplugged/1092551485"],
         content: "Eine Autopanne im strömenden Regen zwingt die Drei ??? - Justus, Peter und Bob - dazu, Zuflucht auf Schloss Blackstone zu suchen. Ein Blitz trifft die Stromleitung und hüllt das Schloss in Dunkelheit. Das alte Gemäuer macht einen gespenstischen Eindruck. Das bestätigt auch Graf Gallagher, der Schlossherr, der den Drei ??? erzählt, dass es in seinem Schloss spukt: Die Figuren auf einem Jahrhunderte alten, marmornen Schachtisch bewegen sich jede Nacht wie von Geisterhand geführt. Doch immer nur um einen Zug - einen genialen durchdachten Schachzug. Der Graf wird offensichtlich zum Spiel herausgefordert. Doch warum und von wem? Die drei Detektive ahnen schnell, dass es hier um viel mehr als nur eine Partie Schach geht...",
@@ -2496,6 +2496,17 @@ var special = [
         content: "Alfred Hitchcock hat zur Klärung unwahrscheinlicher Ereignisse Helfer bekommen: Die drei ???, hinter denen sich die jungen Detektive Justus, Peter und Bob verbergen. Wer könnte ein Interesse daran haben, den Spuk im Schloß zu veranstalten? Wer möchte unbedingt Besucher vom Schloß fernhalten? Zusammen mit seinen Freunden versucht Justus dem Geheimnis auf die Spur zu kommen. Werden sie es schaffen, sich als jüngste Detektei ihre Sponsoren zu verdienen? Wird es ihnen gelingen, das Geheimnis des Gespensterschlosses aufzuklären?",
         release: "2019-11-22",
         track_length: 16349400,
+        book_author: "Robert Arthur",
+        track_author: ""
+    },
+    {
+        number: "HB02",
+        name: "Jan Böhmermann liest… und die flüsternde Mumie",
+        search: "Hörbuch Hörbücher",
+        href: ["https://www.deezer.com/de/album/364910397", "https://music.youtube.com/browse/MPREb_bnGfqbLddwd", "https://open.spotify.com/album/4qHjQN4qvZu9x27O5LOn2G", "#"],
+        content: "Alfred Hitchcock hat einen neuen Fall für die drei Detektive aus Rocky Beach. Doch als sie den Brief des großen Regisseurs in den Händen halten, trauen sie ihren Augen nicht. Wie kann eine 3000 Jahre alte Mumie flüstern? Die Mumie, die sich in Besitz des Ägyptologen Professor Yarborough befindet, flüstert jedoch tatsächlich. Der Butler des Professors ist davon überzeugt, dass es sich um einen Fluch handelt. Was hat die verschwundene Katze von Mrs. Selby und ein aufgeregter lybischer Junge mit der ganzen Sache zu tun? Als zwei zwielichtige Männer die Mumie und den Sarkophag stehlen, kommt es zu einer Verfolgungsjagd quer durch Hollywood mit einem überraschenden Ziel...",
+        release: "2022-10-21",
+        track_length: 15013000,
         book_author: "Robert Arthur",
         track_author: ""
     },

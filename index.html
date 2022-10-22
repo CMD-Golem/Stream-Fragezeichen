@@ -9,16 +9,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="elements/style.css"/>
-	<link rel="icon" href="nav/favicon.png">
+	<link rel="stylesheet" type="text/css" href="elements/main.css"/>
+	<link rel="icon" href="graphics/favicon.png">
 </head>
 <body>
 	<nav>
 		<a class="nav_button nav_home" href=""><h1>Stream Fragezeichen</h1></a>
-		<!-- <input type="checkbox" id="nav_search_button" style="display: none;">
-		<label for="nav_search_button" title="Suche" class="nav_button nav_search_button" onclick="startSearch()"></label>
-		<div class="nav_search">
-			<div class="nav_search_box"><input type="text" placeholder="Suche..." id="site_search" onkeyup="siteSearch()"></div>
-		</div> -->
 		<div class="nav_buttons">
 			<div class="nav_button hide_mobile" onclick="toggleOrder()" title="Liste umkehren"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></g></svg></div>
 			<div class="nav_button hide_mobile" style="display: none; left: 60px;" id="episode_number" onclick="toggleSort()" title="Nach Folgennummer anordnen"><svg viewBox="0 0 24 24" id="sort_list"><g><path d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/></g></svg></div>
@@ -63,31 +59,63 @@
 		</div>
 		<div class="aside_content center"> <!-- Settings Box -->
 			<div>Stream-Fragezeichen.de - Deine Seite um drei Fragezeichen Hörbücher aus deinem Streaming auszuwählen und zu hören.<br>Suche nach einzelnen Folgen und speichere sie in deiner Watch List oder verfolge deinen Hörverlauf.</div>
+			<a href="informationen.html" class="border_button settings_more_info">Weitere Informationen</a>
 			<div class="settings_text">Wähle deinen Streaming Anbieter aus:</div>
 			<div class="settings_center">
-				<div class="provider_sel" onclick="selectProvider(this)" id="spotify" title="Spotify">
-					<img src="nav/spotify.svg">
+				<div class="provider_sel" onclick="selectProvider(this)" id="provider_2" title="Spotify">
+					<svg viewBox="0 0 168 168">
+						<path d="m83.996 0.277c-46.249 0-83.743 37.493-83.743 83.742 0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741 0-46.246-37.49-83.738-83.745-83.738l0.001-0.004zm38.404 120.78c-1.5 2.46-4.72 3.24-7.18 1.73-19.662-12.01-44.414-14.73-73.564-8.07-2.809 0.64-5.609-1.12-6.249-3.93-0.643-2.81 1.11-5.61 3.926-6.25 31.9-7.291 59.263-4.15 81.337 9.34 2.46 1.51 3.24 4.72 1.73 7.18zm10.25-22.805c-1.89 3.075-5.91 4.045-8.98 2.155-22.51-13.839-56.823-17.846-83.448-9.764-3.453 1.043-7.1-0.903-8.148-4.35-1.04-3.453 0.907-7.093 4.354-8.143 30.413-9.228 68.222-4.758 94.072 11.127 3.07 1.89 4.04 5.91 2.15 8.976v-0.001zm0.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684-4.138 1.255-8.514-1.081-9.768-5.219-1.254-4.14 1.08-8.513 5.221-9.771 29.581-8.98 78.756-7.245 109.83 11.202 3.73 2.209 4.95 7.016 2.74 10.733-2.2 3.722-7.02 4.949-10.73 2.739z" fill="#1ED760"/>
+					</svg>
 					<span>Spotify</span>
 				</div>
-				<div class="provider_sel" onclick="selectProvider(this)" id="youtube" title="Youtube Music">
-					<img src="nav/youtube.svg">
+				<div class="provider_sel" onclick="selectProvider(this)" id="provider_1" title="Youtube Music">
+					<svg viewBox="0 0 200 200">
+						<path class="background" d="M154 46H46V154H154V46Z" fill="white"/>
+						<path d="M99.7891 5.55716e-05C73.3041 0.0558992 47.9228 10.6162 29.2147 29.3638C10.5067 48.1114 -5.87765e-05 73.5149 2.46605e-10 100C-1.36547e-07 113.132 2.58658 126.136 7.61205 138.268C12.6375 150.401 20.0035 161.425 29.2893 170.711C38.5752 179.997 49.5991 187.362 61.7317 192.388C73.8642 197.413 86.8678 200 100 200C113.132 200 126.136 197.413 138.268 192.388C150.401 187.362 161.425 179.997 170.711 170.711C179.997 161.425 187.362 150.401 192.388 138.268C197.413 126.136 200 113.132 200 100C200 86.8678 197.413 73.8642 192.388 61.7317C187.362 49.5991 179.997 38.5752 170.711 29.2894C161.425 20.0035 150.401 12.6376 138.268 7.6121C126.136 2.58663 113.132 5.50244e-05 100 5.55716e-05C99.9297 -1.85239e-05 99.8594 -1.85239e-05 99.7891 5.55716e-05V5.55716e-05ZM100 47.7273C128.875 47.7273 152.273 71.125 152.273 100C152.273 128.875 128.875 152.273 100 152.273C71.125 152.273 47.7273 128.875 47.7273 100C47.7273 71.125 71.125 47.7273 100 47.7273V47.7273ZM100 52.3172C73.7045 52.3172 52.3171 73.7046 52.3171 100C52.3171 126.295 73.7045 147.683 100 147.683C126.295 147.683 147.683 126.295 147.683 100C147.683 73.7046 126.295 52.3172 100 52.3172V52.3172ZM81.8182 73.8637L126.136 98.8637L81.8182 126.136V73.8637Z" fill="#FF0000"/>
+					</svg>
 					<span>Youtube Music</span>
 				</div>
-				<div class="provider_sel" onclick="selectProvider(this)" id="deezer" title="Deezer">
-					<img src="nav/deezer.svg">
+				<div class="provider_sel" onclick="selectProvider(this)" id="provider_0" title="Deezer">
+					<svg viewBox="0 0 200 200"><g>
+						<path d="M199.2 45.25H156.3V70.35H199.2V45.25Z" fill="#40AB5D";/>
+						<path d="M199.2 80.05H156.3V105.15H199.2V80.05Z" fill="url(#gradient0)"/>
+						<path d="M199.2 114.85H156.3V139.95H199.2V114.85Z" fill="url(#gradient1)"/>
+						<path d="M43.7 149.65H0.800003V174.75H43.7V149.65Z" fill="url(#gradient2)"/>
+						<path d="M95.5 149.65H52.6V174.75H95.5V149.65Z" fill="url(#gradient3)"/>
+						<path d="M147.4 149.65H104.5V174.75H147.4V149.65Z" fill="url(#gradient4)"/>
+						<path d="M199.2 149.65H156.3V174.75H199.2V149.65Z" fill="url(#gradient5)"/>
+						<path d="M147.4 114.85H104.5V139.95H147.4V114.85Z" fill="url(#gradient6)"/>
+						<path d="M95.5 114.85H52.6V139.95H95.5V114.85Z" fill="url(#gradient7)"/>
+						<path d="M95.5 80.05H52.6V105.15H95.5V80.05Z" fill="url(#gradient8)"/>
+						<defs>
+							<linearGradient id="gradient0" x1="177.96" y1="105.367" x2="177.557" y2="79.6814" gradientUnits="userSpaceOnUse"><stop stop-color="#358C7B"/><stop offset="0.5256" stop-color="#33A65E"/></linearGradient>
+							<linearGradient id="gradient1" x1="155.669" y1="138.661" x2="199.85" y2="116.15" gradientUnits="userSpaceOnUse"><stop stop-color="#222B90"/><stop offset="1" stop-color="#367B99"/></linearGradient>
+							<linearGradient id="gradient2" x1="0.807849" y1="162.21" x2="43.6719" y2="162.21" gradientUnits="userSpaceOnUse"><stop stop-color="#FF9900"/><stop offset="1" stop-color="#FF8000"/></linearGradient>
+							<linearGradient id="gradient3" x1="52.6478" y1="162.21" x2="95.5119" y2="162.21" gradientUnits="userSpaceOnUse"><stop stop-color="#FF8000"/><stop offset="1" stop-color="#CC1953"/></linearGradient>
+							<linearGradient id="gradient4" x1="104.488" y1="162.21" x2="147.352" y2="162.21" gradientUnits="userSpaceOnUse"><stop stop-color="#CC1953"/><stop offset="1" stop-color="#241284"/></linearGradient>
+							<linearGradient id="gradient5" x1="156.277" y1="162.21" x2="199.141" y2="162.21" gradientUnits="userSpaceOnUse"><stop stop-color="#222B90"/><stop offset="1" stop-color="#3559A6"/></linearGradient>
+							<linearGradient id="gradient6" x1="102.796" y1="134.167" x2="149.044" y2="120.644" gradientUnits="userSpaceOnUse"><stop stop-color="#CC1953"/><stop offset="1" stop-color="#241284"/></linearGradient>
+							<linearGradient id="gradient7" x1="51.1221" y1="119.05" x2="97.0376" y2="135.762" gradientUnits="userSpaceOnUse"><stop offset="0.00266984" stop-color="#FFCC00"/><stop offset="0.9999" stop-color="#CE1938"/></linearGradient>
+							<linearGradient id="gradient8" x1="56.2506" y1="76.1492" x2="91.9091" y2="109.054" gradientUnits="userSpaceOnUse"><stop offset="0.00266984" stop-color="#FFD100"/><stop offset="1" stop-color="#FD5A22"/></linearGradient>
+						</defs>
+					</g></svg>
 					<span>Deezer</span>
 				</div>
-				<div class="provider_sel" onclick="selectProvider(this)" id="apple" title="Apple Music">
-					<img src="nav/apple.svg">
+				<div class="provider_sel" onclick="selectProvider(this)" id="provider_3" title="Apple Music">
+					<svg viewBox="0 0 120 120">
+						<path d="M100 0H20C8.9543 0 0 8.9543 0 20V100C0 111.046 8.9543 120 20 120H100C111.046 120 120 111.046 120 100V20C120 8.9543 111.046 0 100 0Z" fill="url(#gradient)"/>
+						<path class="background" d="M49.2056 83.5578V45.1578C49.2056 43.7178 50.0056 42.8378 51.6056 42.5178L84.7256 35.7978C86.4856 35.4778 87.4456 36.2778 87.6056 38.1978V67.4778C87.6056 69.8778 84.0056 71.4778 76.8056 72.2778C63.1256 74.4378 65.2856 97.4778 84.0056 91.2378C91.2056 88.5978 92.4056 81.6378 92.4056 74.6778V18.5178C92.4056 18.5178 92.4056 13.7178 88.3256 14.9178L47.5256 23.3178C47.5256 23.3178 44.4056 23.7978 44.4056 27.6378V76.3578C44.4056 78.7578 40.8056 80.3578 33.6056 81.1578C19.9256 83.3178 22.0856 106.358 40.8056 100.118C48.0056 97.4778 49.2056 90.5178 49.2056 83.5578V83.5578Z" fill="white"/>
+						<defs><linearGradient id="gradient" x1="120" y1="120" x2="120" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#EF263F"/><stop offset="1" stop-color="#FD5B73"/></linearGradient></defs>
+					</svg>
 					<span>Apple Music</span>
 				</div>
 			</div>
 			<div class="switch_box">
-				<label class="switch">
+				<!-- <label class="switch">
 					<input type="checkbox">
 					<span class="slider"></span>
 					<span class="slider_text">Titel auf dieser Webseite abspielen</span>
-				</label><br>
+				</label><br> -->
 				<label class="switch">
 					<input type="checkbox" onclick="toggleOrder()" id="settings_sort_list">
 					<span class="slider"></span>
@@ -136,17 +164,9 @@
 		<div id="no_history" class="not_found">Noch keine Folge gehört.</div>
 	</main>
 
-	<dialog>
-		<p>Diese Folge ist erst ab dem 18. November verfügbar.</p>
-		<form method="dialog">
-			<button class="border_button" id="dialog_confirm">Ok</button>
-			<button class="border_button" id="dialog_cancel" value="cancel">Abbrechen</button>
-		</form>
-	</dialog>
-
 	<footer>
 		<div class="footer_flex">
-			<p>Made with <img src="nav/heart.svg" alt="love"> in <a href="https://www.google.ch/maps/place/Graub%C3%BCnden/" target="_blank">Grison</a></p>
+			<p>Made with <img src="graphics/heart.svg" alt="love"> in <a href="https://www.google.ch/maps/place/Graub%C3%BCnden/" target="_blank">Grison</a></p>
 			<p class="footer_links">
 				<a href="impressum.html">Impressum</a>
 				<a href="kontakt.html">Kontakt</a>

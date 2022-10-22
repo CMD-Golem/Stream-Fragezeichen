@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<title>Stream Fragezeichen - Kontakt</title>
+	<meta name="robots" content="noindex, nofollow, noarchive"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="elements/style.css"/>
+	<link rel="stylesheet" type="text/css" href="elements/info.css"/>
+	<link rel="icon" href="graphics/favicon.png">
+</head>
+<body>
+	<nav>
+		<a class="nav_button nav_home" href="/"><h1>Stream Fragezeichen</h1></a>
+	</nav>
+
+	<main>
+		<h1>Kontakt</h1>
+
+		<form name="Contact" netlify onsubmit="return validateForm()" action="form_success.html" style="text-align: left;">
+			<p>Deine E-Mail Adresse <small>(für die Rückmeldung)</small></p>
+			<input type="email" name="Email" placeholder="Deine Antwort">
+
+			<p>Betreff</p>
+			<input type="text" name="Betreff" id="subject" list="subjects" placeholder="Deine Antwort"></input>
+
+			<p>Beschreibung</p>
+			<textarea type="text" name="Beschreibung" rows="2" class="autosize" id="description" placeholder="Deine Antwort"></textarea>
+
+			<div class="center" style="margin-top: 40px;">
+				<button type="submit" class="border_button">Senden</button>
+			</div>
+		</form>
+	</main>
+
+	<datalist id="subjects">
+		<option value="Fehler auf der Webseite">
+		<option value="Folge ist nicht auf der Webseite"></option>
+		<option value="Nutzerdaten löschen"></option>
+	</datalist>
+
+	<footer>
+		<div class="footer_flex">
+			<p>Made with <img src="graphics/heart.svg" alt="love"> in <a href="https://www.google.ch/maps/place/Graub%C3%BCnden/" target="_blank">Grison</a></p>
+			<p class="footer_links">
+				<a href="impressum.html">Impressum</a>
+				<a href="">Kontakt</a>
+			</p>
+		</div>
+	</footer>
+
+	<script src="elements/forms.js"></script>
+</body>
+</html>
