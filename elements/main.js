@@ -1,5 +1,5 @@
 // Functions to generate the list according to settings
-var provider, provider_link, last_provider_selected, backwards, sort_date, active_type, user_data = {list:[]}, watch_list_count = 0;
+var provider_link, last_provider_selected, backwards, sort_date, active_type, user_data = {list:[]}, watch_list_count = 0;
 
 // get data from storage/db
 function setup(json_user_data) {
@@ -9,13 +9,9 @@ function setup(json_user_data) {
 		active_type = "all";
 
 		// int selected provider
-		provider = user_data.provider;
-		if (user_data.provider == undefined) { provider = "deezer"; }
-
-		if (provider == "deezer") { provider_link = 0; } 
-		else if (provider == "youtube"){ provider_link = 1; }
-		else if (provider == "spotify") { provider_link = 2; }
-		else if (provider == "apple") { provider_link = 3; }
+		// deezer = 0, youtube = 1, spotify = 2, apple = 3
+		provider_link = user_data.provider;
+		if (provider_link == undefined) { provider_link = 0; }
 
 		// int list sorting
 		backwards = user_data.backwards;
@@ -72,16 +68,16 @@ function setup(json_user_data) {
 		}
 	}
 	else {
-		provider = "deezer";
 		provider_link = 0;
 		backwards = true;
 		sort_date = false;
 		active_type = "all";
 
 		showSettings();
+		if (window_width <= 506) { overflowMenu(); }
 	}
 
-	last_provider_selected = document.getElementById(provider);
+	last_provider_selected = document.getElementById("provider_" + provider_link);
 	last_provider_selected.classList.add("provider_selected");
 }
 
@@ -93,7 +89,7 @@ document.addEventListener("beforeunload", storeUserData);
 function storeUserData() {
 	console.log("Saved User data");
 
-	user_data.provider = provider;
+	user_data.provider = provider_link;
 	user_data.backwards = backwards;
 	user_data.sort_date = sort_date;
 	user_data.active_type = active_type;
@@ -138,7 +134,7 @@ function loadEpisodes(load_type) {
 			}
 	
 			html.push(`
-			<div data-release="${episode.release}" data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="normal_${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author} ${episode.track_author}">
+			<div data-release="${episode.release}" data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="normal_${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author}">
 				<a ${href} class="img_play_box">
 					<img src="img/episode_${number}.jpg" alt="Folge ${episode.number}: ${episode.name}">
 					<p><b>Folge ${episode.number}</b>: ${episode.name}</p>
@@ -181,7 +177,7 @@ function loadEpisodes(load_type) {
 			}
 
 			html.push(`
-			<div data-release="${episode.release}" data-history="${episode.history}" id="${episode.number}" class="${episode_class}" data-array="special_${i}" data-filter="die drei fragezeichen ??? ${episode.search} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author} ${episode.track_author}">
+			<div data-release="${episode.release}" data-history="${episode.history}" id="${episode.number}" class="${episode_class}" data-array="special_${i}" data-filter="die drei fragezeichen ??? ${episode.search} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author}">
 				<a ${href} class="img_play_box">
 					<img src="img_special/special_${episode.number.toLowerCase()}.jpg" alt="${episode.name}">
 					<p>${episode.name}</p>
@@ -366,6 +362,7 @@ function editHistory() {
 		}
 		info_history.disabled = false;
 		date_before_edit = info_history.value;
+		info_history.scrollIntoView({behavior: "smooth"});
 	}
 	else {
 		info_history.value = date_before_edit;
