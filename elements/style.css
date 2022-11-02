@@ -57,7 +57,6 @@ body {
 	justify-content: center;
 	margin: 0;
 	min-height: 100%;
-	user-select: none;
 }
 
 h1 {
@@ -78,6 +77,39 @@ a:link, a:visited, a:link:active, a:visited:active {
   
 a:hover {
 	text-decoration: underline;
+}
+
+details {
+	overflow: hidden;
+	background-color: var(--nav-focus-color);
+	border-radius: 5px;
+	margin-bottom: 15px;
+	transition: max-height 0.2s;
+}
+
+details > * {
+	padding: 10px 15px;
+}
+
+summary {
+	display: block !important;
+	background-color: var(--nav-hover-color);
+	border-radius: 5px;
+	position: relative;
+	user-select: none;
+}
+
+summary::after {
+	content: "+";
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	top: 6.5px;
+	right: 15px;
+}
+
+.active summary::after {
+	content: "−";
 }
 
 button, input {

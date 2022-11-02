@@ -73,8 +73,8 @@ function setup(json_user_data) {
 		sort_date = false;
 		active_type = "all";
 
-		showSettings();
-		if (window_width <= 506) { overflowMenu(); }
+		showSettings(); //actions.js
+		if (window_width <= 506) { overflowMenu(); } //actions.js
 	}
 
 	last_provider_selected = document.getElementById("provider_" + provider_link);
@@ -102,7 +102,6 @@ function storeUserData() {
 //#################################################################################################
 // load episodes
 var episoden_list = document.getElementsByTagName("ol")[0];
-var test;
 
 function loadEpisodes(load_type) {
 	var html = [];
@@ -223,8 +222,6 @@ function loadEpisodes(load_type) {
 			return 0;
 		});
 	}
-
-	test = html
 	
 	episoden_list.innerHTML = html.join("");
 }
@@ -253,7 +250,7 @@ function toggleOrder() {
 	}
 }
 
-// sort episode list for date or numbering
+// sort episode list according to release date or numbering
 var episode_number = document.getElementById("episode_number");
 var set_episode_number = document.getElementById("settings_episode_number");
 var release_date = document.getElementById("release_date");
@@ -288,6 +285,7 @@ loadEpisodes("all");
 function getUserDataIndex(array_id) {
 	var in_array = false;
 
+	// check if episode is already in user data
 	for (var i = 0; i < user_data.list.length; i++) {
 		if (user_data.list[i].array_id == array_id) {
 			in_array = i;
@@ -300,6 +298,7 @@ function getUserDataIndex(array_id) {
 		in_array--;
 	}
 
+	// return array of array_id: ["normal", "200"]
 	var episode_id = array_id.split("_");
 	episode_id.push(in_array);
 
@@ -382,7 +381,7 @@ function saveEditHistory() {
 	refreshHistory(info_history.dataset.array, history);
 }
 
-// https://stackoverflow.com/a/43473017/14225364
+// Check user input (origin: https://stackoverflow.com/a/43473017/14225364)
 info_history.onkeyup = function(evt) {
 	var size = info_history.value.length;
 	if (size <= 9 && finished_input) {
@@ -415,10 +414,10 @@ info_history.onkeyup = function(evt) {
 }
 
 info_history.onkeydown = function(evt) {
-	if (evt.keyCode != 8 &&
-		evt.keyCode != 46 &&
-		evt.keyCode != 37 &&
-		evt.keyCode != 3 &&
+	if (evt.keyCode != 8 && // backspace
+		evt.keyCode != 46 && // delete
+		evt.keyCode != 37 && // move left
+		evt.keyCode != 39 && // move right
 		!(evt.keyCode >= 48 && evt.keyCode <= 57) &&
 		!(evt.keyCode >= 96 && evt.keyCode <= 105)) {
 		evt.preventDefault();
@@ -457,6 +456,7 @@ function refreshList() {
 	else if (show_history) {
 		loadEpisodes("history");
 		episoden_list.classList.add("show_history");
+		if (episoden_list.querySelectorAll("div:not(.no_history)").length == 0) { no_history.style.display = "block"; }
 	}
 	else {
 		loadEpisodes(active_type);
