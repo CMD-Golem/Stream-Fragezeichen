@@ -1,29 +1,3 @@
-// var serie = JSON.parse(serie_json);
-
-function main() {
-	for (var i = 0; i < special.length; i++) {
-		var book_author = "";
-		var track_author = "";
-
-		for (var j = 0; j < serie.length; j++) {
-			if (special[i].name == serie[j].titel) {
-				book_author = serie[j].autor;
-				track_author = serie[j].hörspielskriptautor;
-				break;
-			}
-		}
-
-		special[i].book_author = book_author;
-		special[i].track_author = track_author;
-	}
-}
-
-//#################################################################################################
-// settings, aside
-
-
-
-//#################################################################################################
 // Nav
 var overflow_menu_button = document.getElementById("overflow_menu");
 var watch_list_button = document.getElementById("nav_watch_list");
@@ -60,24 +34,22 @@ var show_aside = false;
 
 
 function refreshAside() {
+	// if aside isnt' visible, make it visible
 	if (!show_aside) {
 		show_aside = true;
 		aside.style.overflow = "visible";
 	}
 
+	// hide content of aside
 	aside_content[0].style.display = "none";
 	aside_content[1].style.display = "none";
 	aside_content[2].style.display = "none";
 
+	// show content of needed aside again
 	if (show_settings) { aside_content[1].style.display = "block"; }
 	else if (show_account) { aside_content[2].style.display = "block"; }
 	else if (show_info || show_random_episode) { aside_content[0].style.display = "flex"; }
 	else { hideAside(); }
-
-	// console.log("show_random_episode: " + show_random_episode)
-	// console.log("show_settings: " + show_settings)
-	// console.log("show_account: " + show_account)
-	// console.log("show_info: " + show_info)
 }
 
 function hideAside() {
@@ -109,12 +81,13 @@ var show_random_episode = false;
 var show_settings = false;
 var show_account = false;
 var show_info = false;
-var test2 = [];
 
 function getRandomEpisode() {
-	// random episode from the 20 longest not heard
+	// random episode from the select_random_amount longest not heard
 	var history_array = episoden.slice(); //.concat(special)
+	var select_random_amount = 20;
 
+	// sort history array by the history
 	history_array.sort((a, b) => {
 		if (a.history == undefined || a.history == "") {a.history = "1899-01-01T00:00:00.000Z";}
 		if (b.history == undefined || b.history == "") { b.history = "1899-01-01T00:00:00.000Z";}
@@ -122,17 +95,22 @@ function getRandomEpisode() {
 		var a_date = a.history;
 		var b_date = b.history;
 
-		if (a_date < b_date) { return -1; }
-		if (a_date > b_date){ return 1; }
+		if (a.href[0] == "#new") { a_date = "3000-01-01T00:00:00.000Z"}
+
+		if (a_date < b_date) { return -1; } // sort a before b
+		if (a_date > b_date) { return 1; } // sort a after b
 		return 0;
 	});
-	var oldest_index = 19;
-	for (var i = 20; i < history_array.length; i++) {
+
+	var oldest_index = select_random_amount - 1;
+	// increase oldest_index by one if element in array has same date
+	for (var i = select_random_amount; i < history_array.length; i++) {
 		if (history_array[i].history == history_array[oldest_index].history) {
 			oldest_index = i;
 		}
 		else {break;}
 	}
+
 	history_array.length = oldest_index + 1;
 	var random_index = Math.floor(Math.random() * oldest_index + 1);
 
@@ -258,34 +236,33 @@ function infoHeight() {
 	var description_header_height = info_name.parentElement.parentElement.scrollHeight;
 	var window_without_nav = window_height - 220;
 
+	// Height for Desktop view
 	if (window_width > 682) {
 		var aside_height = 340;
 		var info_height = (340 - 92 - description_header_height) + "px";
-		// console.log("Normal PC view")
 	}
+	// Height for small screens (mobile with open keyboard)
 	else if (window_height <= 600 && window_width <= 682) {
 		var aside_height = window_height - 120;
 		var info_height = "unset";
 		preventScroll(true);
-		// console.log("Use max hight")
 	}
+	// Height for small screens but text doesn't fit on page without scrolling
 	else if (aside_needed_height >= window_without_nav) {
 		var aside_height = window_without_nav;
 		var info_height = (window_without_nav - description_header_height - 238) + "px";
-		// console.log("Normal Mobile view with big text")
 	}
+	// Height for small screens but text fits on page without scrolling
 	else if (aside_needed_height < window_without_nav) {
 		var aside_height = aside_needed_height;
 		var info_height = "unset";
-		// console.log("Normal Mobile View with small text")
 	}
-
-	// console.warn("Window Height: " + window_height)
-	// console.warn("Aside Height: " + aside_needed_height)
 
 	css_root.style.setProperty("--aside_height", aside_height + "px");
 	css_root.style.setProperty("--description_height", info_height);
 }
+
+
 
 var body = document.getElementsByTagName("body")[0];
 var main_el = document.getElementsByTagName("main")[0];
@@ -297,6 +274,7 @@ window.addEventListener("resize", function(){
 	if (show_info || show_random_episode) { infoHeight(); }
 });
 
+// hide aside on touchmove
 if (navigator.maxTouchPoints > 0 ) {
 	main_el.addEventListener("touchmove", function(){ if (show_aside) { hideAside(); }});
 }
@@ -445,19 +423,13 @@ function startSearch() {
 	}
 }
 
-
+// Overflow menu for navbar on mobile
 var show_overflow_menu = false;
 
 function overflowMenu() {
 	show_overflow_menu = !show_overflow_menu;
 	refreshNavButtons();
 
-	if (show_overflow_menu) {
-		// open
-		nav_buttons.classList.add("overflow_menu");
-	}
-	else {
-		// close
-		nav_buttons.classList.remove("overflow_menu");
-	}
+	if (show_overflow_menu) { nav_buttons.classList.add("overflow_menu"); }
+	else { nav_buttons.classList.remove("overflow_menu"); }
 }

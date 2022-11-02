@@ -1,3 +1,7 @@
+body {
+	user-select: none;
+}
+
 main, .aside_content {
 	width: 1120px;
 	margin: 20px auto;
