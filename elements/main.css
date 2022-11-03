@@ -127,7 +127,7 @@ ol div.in_watch_list:hover .remove {
 	display: block !important;
 }
 
-.hide_search, .not_aviable, .show_history .no_history, .show_mobile {
+.hide_search, .not_aviable, .show_history .no_history {
 	display: none !important;
 }
 
