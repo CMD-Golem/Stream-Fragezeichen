@@ -14,11 +14,14 @@
 	:root {
 		--background-color: #030303;
 		--text-color: #CCCCCC;
+		--background-text: #808080;
 		--nav-hover-color: #333333;
 		--nav-focus-color: #1C1C1C;
 		--aside-background-color: rgba(0, 0, 0, 0.8);
 		--provider_color: #CCCCCC;
 		--provider_background: #111111;
+
+		--search_svg: url('../graphics/search_light.svg');
 	}
 	.active_white.nav_active svg, .active_red.nav_active svg, .active_blue.nav_active svg {
 		fill: var(--nav-hover-color) !important;
@@ -29,11 +32,14 @@
 	:root {
 		--background-color: #f7f7f7;
 		--text-color: #111111;
+		--background-text: #e4e4e4;
 		--nav-hover-color: #e4e4e4;
 		--nav-focus-color: white;
 		--aside-background-color: #f7f7f7;
 		--provider_color: #111111;
 		--provider_background: white;
+
+		--search_svg: url('../graphics/search_dark.svg');
 	}
 }
 
@@ -74,8 +80,12 @@ a:link, a:visited, a:link:active, a:visited:active {
 	color: inherit;
 	text-decoration: none;
 }
+
+.visible_links a:link, .visible_links a:visited, .visible_links a:link:active, .visible_links a:visited:active {
+	text-decoration: underline var(--background-text);
+}
   
-a:hover {
+a:hover, .visible_links a:hover {
 	text-decoration: underline;
 }
 
@@ -282,7 +292,7 @@ nav {
 	border: none;
 	border-radius: 4px;
 	font-size: 16px;
-	background: var(--nav-hover-color) url('../graphics/search.svg') 10px 7px/27px no-repeat;
+	background: var(--nav-hover-color) var(--search_svg) 10px 7px/27px no-repeat;
 	padding: 12px 20px 12px 45px;
 	margin: 0;
 	color: var(--text-color);
@@ -307,10 +317,11 @@ footer {
 	border-top: var(--text-color) solid 1px;
 }
 
-footer img {
+footer svg {
 	height: 14px;
 	width: 14px;
 	vertical-align: top;
+	fill: var(--text-color);
 }
 
 .footer_flex {
@@ -324,6 +335,10 @@ footer img {
 
 .footer_links a:not(:last-child) {
 	margin-right: 40px;
+}
+
+.show_mobile {
+	display: none !important;
 }
 
 @media (max-width: 710px) {
