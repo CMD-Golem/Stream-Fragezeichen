@@ -2709,6 +2709,17 @@ var special = [
         track_author: ""
     },
     {
+        number: "HB26",
+        name: "Nicholas Müller liest… und die silberne Spinne",
+        search: "Hörbuch Hörbücher",
+        href: ["https://www.deezer.com/de/album/368540737", "https://music.youtube.com/browse/MPREb_ESULqAJ0pJt", "https://open.spotify.com/album/0lwfVPSf5Zs5PTGkcSgSeo", "#"],
+        content: "Verschwörung in Magnusstad: Der junge Lars Holmqvist soll um sein Erbe gebracht werden. Seine Freunde, Justus, Bob und Peter wollen ihm helfen, geraten dabei aber selbst in eine gefährliche Lage: plötzlich ist die legendäre silberne Spinne, die für Lars und ganz Magnusstad eine besondere Bedeutung hat, in ihrem Zimmer. Die Feinde von Lars möchten den drei ??? offensichtlich einen Raub in die Schuhe schieben. Eine abenteuerliche Verfolgungsjagd beginnt. Schaffen es die drei Freunde auch diesmal wieder?",
+        release: "2022-11-04",
+        track_length: 12844000,
+        book_author: "Robert Arthur",
+        track_author: ""
+    },
+    {
         number: "HB27",
         name: "Jessica Schwarz liest… und der magische Kreis",
         search: "Hörbuch Hörbücher",

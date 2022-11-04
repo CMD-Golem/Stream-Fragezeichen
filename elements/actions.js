@@ -433,3 +433,8 @@ function overflowMenu() {
 	if (show_overflow_menu) { nav_buttons.classList.add("overflow_menu"); }
 	else { nav_buttons.classList.remove("overflow_menu"); }
 }
+
+// Calc ms
+function calcDuration(min, s) {
+	return (min * 60 + s) * 1000;
+}
