@@ -434,7 +434,20 @@ function overflowMenu() {
 	else { nav_buttons.classList.remove("overflow_menu"); }
 }
 
+
+
+
+//#################################################################################################
 // Calc ms
 function calcDuration(min, s) {
 	return (min * 60 + s) * 1000;
 }
+
+
+// User counter
+// var was_counted = window.sessionStorage.getItem("user_counter");
+
+// if (was_counted != "true") {
+// 	window.sessionStorage.setItem("user_counter", "true");
+// 	fetch(`/.netlify/functions/user_counter`, { method: 'POST' });
+// }
