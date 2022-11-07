@@ -37,9 +37,10 @@ exports.handler = async (event, context) => {
 	}
 
 	// update db
-	data.counter = data.counter + 1;
+	return data;
+	// data.counter = data.counter + 1;
 
-	data = JSON.parse(JSON.stringify(data));
+	// data = JSON.parse(JSON.stringify(data));
 
-	await client.query(q.Update(q.Ref(`classes/stream-fragezeichen/${ts}`), {data}));
+	// await client.query(q.Update(q.Ref(`classes/stream-fragezeichen/${ts}`), {data}));
 }
