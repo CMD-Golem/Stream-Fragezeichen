@@ -1,5 +1,5 @@
-var faunadb = require('faunadb')
-var q = faunadb.query
+var faunadb = require("faunadb");
+var q = faunadb.query;
 
 exports.handler = async (event, context) => {
 	// get FaunaDB secret key
@@ -8,10 +8,12 @@ exports.handler = async (event, context) => {
 	});
 
 	// get contry of user
-	var current_country = await fetch("stream-fragezeichen.netlify.app/get/country");
+	var country = await fetch("stream-fragezeichen.netlify.app/get-country");
+	console.log(country)
+	var current_country = country.geo.country.name;
 
 	// get counter from db
-	var response = await client.query(q.Paginate(q.Match(q.Ref(`indexes/get_stream-fragezeichen`))));
+	var response = await client.query(q.Paginate(q.Match(q.Ref("indexes/get_stream-fragezeichen"))));
 	var todoRefs = response.data;
 	var getAllTodoDataQuery = todoRefs.map((ref) => {
 		return q.Get(ref);
@@ -26,7 +28,7 @@ exports.handler = async (event, context) => {
 			var data = counter_db[i].data;
 		}
 		else if (counter_db.length == i - 1) {
-			var new_doc = await client.query(q.Create(q.Collection('stream-fragezeichen'),{data:{country:current_country, counter:0}}));
+			var new_doc = await client.query(q.Create(q.Collection("stream-fragezeichen"),{data:{country:current_country, counter:0}}));
 			var ts = new_doc.ts;
 			var data = {country:current_country, counter:0};
 		}
@@ -37,5 +39,5 @@ exports.handler = async (event, context) => {
 
 	data = JSON.parse(JSON.stringify(data));
 
-	await client.query(q.Update(q.Ref(`classes/stream-fragezeichen/${ts}`), data));
+	await client.query(q.Update(q.Ref(`classes/stream-fragezeichen/${ts}`), {data}));
 }
