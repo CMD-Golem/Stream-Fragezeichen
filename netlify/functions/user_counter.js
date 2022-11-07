@@ -8,17 +8,18 @@ exports.handler = async (event, context) => {
 	});
 
 	// get contry of user
-	var country = await fetch("stream-fragezeichen.netlify.app/get-country");
-	console.log(country)
-	var current_country = country.geo.country.name;
+	var country_response = await fetch("https://stream-fragezeichen.netlify.app/get-country");
+	var geo_data = await country_response.json();
+	var current_country = geo_data.geo.geo.country.name;
 
 	// get counter from db
 	var response = await client.query(q.Paginate(q.Match(q.Ref("indexes/get_stream-fragezeichen"))));
-	var todoRefs = response.data;
-	var getAllTodoDataQuery = todoRefs.map((ref) => {
+	console.log(response.data)
+	var getAllTodoDataQuery = response.data.map((ref) => {
 		return q.Get(ref);
 	})
 
+	console.log(getAllTodoDataQuery)
 	var counter_db = client.query(getAllTodoDataQuery);
 
 	// get ts of existing country or create new doc for country
