@@ -1,4 +1,3 @@
-var fetch = require("node-fetch");
 var faunadb = require("faunadb");
 var q = faunadb.query;
 
@@ -9,38 +8,39 @@ exports.handler = async (event, context) => {
 	});
 
 	// get contry of user
-	var country_response = await fetch("https://stream-fragezeichen.netlify.app/get-country");
-	var geo_data = await country_response.json();
-	var current_country = geo_data.geo.geo.country.name;
+	var current_country = event.path.match(/([^\/]*)\/*$/)[0];
 
-	// get counter from db
-	var response = await client.query(q.Paginate(q.Match(q.Ref("indexes/get_stream-fragezeichen"))));
-	console.log(response.data)
-	var getAllTodoDataQuery = response.data.map((ref) => {
-		return q.Get(ref);
-	})
+	// get counter ids
+	var db_ids = [];
+	var response = await client.query(q.Paginate(q.Match(q.Ref("indexes/all_stream-fragezeichen"))));
 
-	console.log(getAllTodoDataQuery)
-	var counter_db = client.query(getAllTodoDataQuery);
+	for (var i = 0; i < response.data.length; i++) {
+		db_ids.push(response.data[i].value.id);
+	}
 
-	// get ts of existing country or create new doc for country
-	for (var i = 0; i < counter_db.length; i++) {
-		if (counter_db[i].data.country == current_country) {
-			var ts = counter_db[i].ts;
-			var data = counter_db[i].data;
+	// get data of existing stream-fragezeichen or create new doc for country
+	for (var i = 0; i < db_ids.length; i++) {
+		var db_id = db_ids[i];
+		var counter_db = await client.query(q.Get(q.Ref(`classes/stream-fragezeichen/${db_id}`)));
+
+		if (counter_db.data.country == current_country) {
+			var data = counter_db.data;
+			var new_id = db_id;
+			break;
 		}
-		else if (counter_db.length == i - 1) {
-			var new_doc = await client.query(q.Create(q.Collection("stream-fragezeichen"),{data:{country:current_country, counter:0}}));
-			var ts = new_doc.ts;
+		else if (db_ids.length == i + 1) {
 			var data = {country:current_country, counter:0};
+			var new_doc = await client.query(q.Create(q.Collection("stream-fragezeichen"), {data:data}));
+			var new_id = new_doc.ref.value.id;
 		}
 	}
 
 	// update db
-	return data;
-	// data.counter = data.counter + 1;
+	data.counter = data.counter + 1;
 
-	// data = JSON.parse(JSON.stringify(data));
+	data = JSON.parse(JSON.stringify(data));
 
-	// await client.query(q.Update(q.Ref(`classes/stream-fragezeichen/${ts}`), {data}));
+	await client.query(q.Update(q.Ref(`classes/stream-fragezeichen/${new_id}`), {data:data}));
+
+	return { statusCode: 200 };
 }

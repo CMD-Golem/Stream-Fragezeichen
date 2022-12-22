@@ -1,3 +1,5 @@
+// user_role: "hidden" -> don't count clicks and user analytics
+
 // Functions to generate the list according to settings
 var provider_link, last_provider_selected, backwards, sort_date, active_type, user_data = {list:[]}, watch_list_count = 0;
 
@@ -352,6 +354,11 @@ function refreshHistory(array_id, history) {
 
 	episode.history = history;
 	user_data.list[data[2]].history = history;
+
+	// Click counter
+	if (user_role != "hidden") {
+		fetch("/.netlify/functions/episode_counter/");
+	}
 }
 
 function editHistory() {

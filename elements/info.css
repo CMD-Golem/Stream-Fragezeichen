@@ -57,6 +57,7 @@ input:focus, input:focus:hover, textarea:focus, textarea:focus:hover {
 /* Info */
 .info_buttons {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 }
 

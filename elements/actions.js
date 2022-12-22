@@ -445,9 +445,20 @@ function calcDuration(min, s) {
 
 
 // User counter
-// var was_counted = window.sessionStorage.getItem("user_counter");
+var local_date = new Date();
+var user_role = window.localStorage.getItem("user_role"); // window.localStorage.setItem("user_role", "hidden")
 
-// if (was_counted != "true") {
-// 	window.sessionStorage.setItem("user_counter", "true");
-// 	fetch(`/.netlify/functions/user_counter`, { method: 'POST' });
-// }
+async function userCounter() {
+	var current_day = local_date.getFullYear + "." + local_date.getMonth + "." + local_date.getDay;
+	var was_counted = window.localStorage.getItem("user_counter");
+
+	if (was_counted != current_day && user_role != "hidden") {
+		window.localStorage.setItem("user_counter", current_day);
+
+		var country_response = await fetch("/get-country");
+		var geo_data = await country_response.json();
+		fetch(`/.netlify/functions/user_counter/` + geo_data.geo.geo.country.name);
+	}
+}
+
+userCounter();
