@@ -1,4 +1,4 @@
-// zeile 2191
+// zeile 2205
 
 var episoden = [
     {
@@ -345,7 +345,7 @@ var episoden = [
         number: "035",
         name: "und der Höhlenmensch",
         href: ["https://www.deezer.com/de/album/13032732", "https://music.youtube.com/rowse/MPREb_aDmlRmASXVk", "https://open.spotify.com/album/2REEfC6tVMiYv1eKMlGiOX", "https://music.apple.com/ch/album/folge-35-und-der-h%C3%B6hlenmensch/1092542351"],
-        content: "Das Skelett eines Urzeitmenschen lockt Justus, Bob und Peter in den kleinen Ort Citrus Grove. Kaum sind sie dort, als es auch schon zu rätselhaften Zwischenfällen kommt. Erwacht der Urmensch zu geheimnisvollem Leben? Und wieso legen sich plötzlich alle Bewohner von Citrus Grove zum Schlafen in den Park …?",
+        content: "Das Skelett eines Urzeitmenschen lockt Justus, Bob und Peter in den kleinen Ort Citrus Grove. Kaum sind sie dort, als es auch schon zu rätselhaften Zwischenfällen kommt. Erwacht der Urmensch zu geheimnisvollem Leben? Und wieso legen sich plötzlich alle Bewohner von Citrus Grove zum Schlafen in den Park?",
         release: "1984-10-16",
         track_length: 3255933,
         book_author: "M. V. Carey",
@@ -2183,10 +2183,10 @@ var episoden = [
     {
         number: "219",
         name: "und die Teufelsklippe",
-        href: ["#new", "18. November", "", ""],
-        content: "",
+        href: ["https://www.deezer.com/de/album/364176207", "https://music.youtube.com/browse/MPREb_O8PBlrDNMlN", "https://open.spotify.com/album/6ewdyVIW2LurJhYGU0UBAa", "https://music.apple.com/ch/album/folge-219-und-die-teufelsklippe/1643687102"],
+        content: "Peter Shaw – ein Mörder? Ganz bestimmt nicht! Da sind sich Justus und Bob sicher. Können die beiden die Unschuld des Zweiten Detektivs beweisen?\nPeter sieht ihn fallen, doch die Teufelsklippe gibt ihn nicht wieder her. Verschluckt von den tosenden Wellen bleibt der Mann verschwunden … Was ist passiert? Ausgerechnet der Zweite Detektiv wird beschuldigt, Paul Forsters ins Meer gestoßen zu haben. Im Verhör wird Peter bis ins kleinste Detail befragt. Justus und Bob versuchen derweil mehr über den seltsamen Fall herauszufinden. Können die beiden ihrem Freund helfen?",
         release: "2022-11-18",
-        track_length: 0,
+        track_length: 4330000,
         book_author: "Ben Nevis",
         track_author: "André Minninger"
     },
@@ -2198,7 +2198,7 @@ var episoden = [
         release: "2023-01-27",
         track_length: 0,
         book_author: "André Marx",
-        track_author: ""
+        track_author: "André Minninger"
     }
 ]
 
@@ -2738,6 +2738,17 @@ var special = [
         content: "Eine Vogelscheuche erwacht plötzlich zum Leben und stürzt sich auf alles, was ihr in die Quere kommt. Letitia Radford beginnt zu verzweifeln. In ihrer Todesangst beauftragt sie die drei Detektive, das Rätsel der wandelnden Vogelscheuche zu lösen. Justus, Bob und Peter nehmen den Auftrag an und geraten unversehens selbst in Lebensgefahr.",
         release: "2021-04-23",
         track_length: 15753000,
+        book_author: "M. V. Carey",
+        track_author: ""
+    },
+    {
+        number: "HB34",
+        name: "Eckart Dux liest… und der Höhlenmensch",
+        search: "Hörbuch Hörbücher",
+        href: ["https://www.deezer.com/de/album/378635537", "https://music.youtube.com/browse/MPREb_TUcwz3lZxw5", "https://open.spotify.com/album/3IxPhnYxh3qACTa2GBYVUw", "#"],
+        content: "Das Skelett eines Urzeitmenschen lockt Justus, Bob und Peter in den kleinen Ort Citrus Grove. Kaum sind sie dort, als es auch schon zu rätselhaften Zwischenfällen kommt. Erwacht der Urmensch zu geheimnisvollem Leben? Und wieso legen sich plötzlich alle Bewohner von Citrus Grove zum Schlafen in den Park?",
+        release: "2022-12-09",
+        track_length: 20664000,
         book_author: "M. V. Carey",
         track_author: ""
     },
