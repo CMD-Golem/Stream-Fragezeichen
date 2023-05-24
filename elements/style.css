@@ -122,6 +122,10 @@ summary::after {
 	content: "−";
 }
 
+details:not(.active) *:not(summary) {
+	display: none;
+}
+
 button, input {
 	appearance: none;
 	background-color: transparent;
