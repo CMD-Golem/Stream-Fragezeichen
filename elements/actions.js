@@ -216,6 +216,7 @@ function showInfo(array_id, is_random_episode) {
 var new_id = document.getElementById("new_id");
 var delete_id = document.getElementById("delete_id");
 var check_id = document.getElementById("check_id");
+var remove_id = document.getElementById("remove_id");
 
 function showAccount() {
 	if (show_account) {
@@ -244,12 +245,14 @@ function changeAccountButton(button) {
 	new_id.style.display = "none";
 	delete_id.style.display = "none";
 	check_id.style.display = "none";
+	remove_id.style.display = "none";
 
 	if (button == "new_id") {
 		new_id.style.display = "inline-block";
 	}
 	else if (button == "delete_id") {
 		delete_id.style.display = "inline-block";
+		remove_id.style.display = "inline-block";
 	}
 	else if (button == "check_id") {
 		check_id.style.display = "inline-block";
@@ -420,6 +423,13 @@ async function createDatabase() {
 	changeAccountButton("delete_id");
 }
 
+// disconnect from db
+function disconnectId() {
+	input_user_id.value = "";
+	window.localStorage.removeItem("user_id");
+	user_id = null;
+}
+
 
 // delete db
 async function deleteDatabase() {
@@ -430,6 +440,7 @@ async function deleteDatabase() {
 			body: user_id,
 		});
 		window.localStorage.removeItem("user_id");
+		user_id = null;
 
 		console.log(await response.json());
 	

@@ -137,10 +137,11 @@
 				<div>
 					<p>ID für geräteübergreifende Synchronisation:</p>
 					<div class="settings_center">
-						<input onchange="importNewIdShow()" class="border_input" placeholder="Vorhandene ID einfügen" style="width: 190px" id="user_id" maxlength="18"></input>
+						<input oninput="importNewIdShow()" class="border_input" placeholder="Vorhandene ID einfügen" style="width: 190px" id="user_id" maxlength="18"></input>
 						<button onclick="importNewId()" class="border_button" id="check_id">Anwenden</button>
 						<button onclick="createDatabase()" class="border_button" id="new_id">Neue ID erstellen</button>
 						<button onclick="deleteDatabase()" class="border_button" id="delete_id">ID löschen</button>
+						<button onclick="disconnectId()" class="border_button" id="remove_id">Von ID trennen</button>
 					</div>
 				</div>
 			</div>

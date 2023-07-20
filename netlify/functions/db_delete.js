@@ -11,5 +11,8 @@ exports.handler = async (event, context) => {
 
 	var response = await client.query(q.Delete(q.Ref(`classes/user_data/${user_id}`)));
 
-	return response;
+	return {
+		statusCode: 200,
+		body: JSON.stringify(response)
+	}
 }
