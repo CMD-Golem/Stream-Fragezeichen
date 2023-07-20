@@ -7,11 +7,9 @@ exports.handler = async (event, context) => {
 		secret: process.env.FAUNADB_NEW_SERVER_SECRET
 	});
 
-	console.log(event)
+	var user_data = JSON.parse(event.body);
 
-	var data = JSON.parse(event.body);
-
-	var new_doc = await client.query(q.Create(q.Collection("user_data"), {data:data}));
+	var new_doc = await client.query(q.Create(q.Collection("user_data"), {data:user_data}));
 	var new_id = new_doc.ref.value.id;
 
 	return {

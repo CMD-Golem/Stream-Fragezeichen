@@ -11,8 +11,15 @@ exports.handler = async (event, context) => {
 
 	var response = await client.query(q.Get(q.Ref(`classes/user_data/${user_id}`)));
 	
-	return {
-		statusCode: 200,
-		body: JSON.stringify(response.data)
+	if (response == undefined) {
+		return {
+			statusCode: 404
+		}
+	}
+	else {
+		return {
+			statusCode: 200,
+			body: JSON.stringify(response.data)
+		}
 	}
 }

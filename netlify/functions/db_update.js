@@ -7,10 +7,13 @@ exports.handler = async (event, context) => {
 		secret: process.env.FAUNADB_NEW_SERVER_SECRET
 	});
 
-	var user_id = event.body.id;
-	var data = JSON.parse(event.body.data);
+	var body = JSON.parse(event.body);
+	console.log(event)
 
-	var response = await client.query(q.Update(q.Ref(`classes/user_data/${user_id}`), {data:data}));
+	var user_id = body.id;
+	var user_data = body.user_data;
+
+	var response = await client.query(q.Update(q.Ref(`classes/user_data/${user_id}`), {data:user_data}));
 
 	return {
 		statusCode: 200,

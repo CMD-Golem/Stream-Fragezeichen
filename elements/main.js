@@ -264,10 +264,19 @@ async function loadData() {
 			body: user_id,
 		});
 	
-		json_user_data = await response.json();
-		console.log(json_user_data)
+		var response_object = await response.json();
 
-		input_user_id.value = user_id;
+		if (response_object.statusCode == 200) {
+			json_user_data = JSON.stringify(response_object.body);
+			console.log(json_user_data);
+
+			input_user_id.value = user_id;
+		}
+		else {
+			alert("Die registierte ID ist fehlerhaft!");
+		}
+		
+		
 	}
 
 	// setup according to user data

@@ -439,11 +439,10 @@ async function deleteDatabase() {
 			method: "POST",
 			body: user_id,
 		});
-		window.localStorage.removeItem("user_id");
-		user_id = null;
-
+		
 		console.log(await response.json());
 	
+		disconnectId();
 		changeAccountButton("new_id");
 	}
 }
