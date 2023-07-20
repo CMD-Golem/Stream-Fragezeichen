@@ -119,6 +119,8 @@ function getRandomEpisode() {
 	showInfo(history_array[random_index].array_link, true);
 }
 
+
+// settings tab
 function showSettings() {
 	if (show_settings) {
 		show_settings = false;
@@ -131,23 +133,6 @@ function showSettings() {
 		show_random_episode = false;
 		show_info = false;
 		css_root.style.setProperty("--aside_height", "400px");
-		refreshNavButtons();
-	}
-	refreshAside();
-}
-
-function showAccount() {
-	if (show_account) {
-		show_account = false;
-		css_root.style.setProperty("--aside_height", "0");
-		hideAside();
-	}
-	else {
-		show_account = true;
-		show_settings = false;
-		show_random_episode = false;
-		show_info = false;
-		css_root.style.setProperty("--aside_height", "370px");
 		refreshNavButtons();
 	}
 	refreshAside();
@@ -189,7 +174,7 @@ function showInfo(array_id, is_random_episode) {
 	info_panel.innerHTML = `${episode.book_author} - ${episode.release.slice(0, 4)} - ${hours_length}${min_length}min`
 
 	// history
-	info_href.setAttribute("onclick", "refreshHistory(" + array_id + ")");
+	info_href.setAttribute("onclick", `refreshHistory("${array_id}", new Date())`);
 	var history = episode.history;
 	if (history == "1899-01-01T00:00:00.000Z" || history == undefined) {
 		history = "nie";
@@ -224,6 +209,66 @@ function showInfo(array_id, is_random_episode) {
 	info_history.disabled = true;
 	edit_history.style.display = "inline-block";
 	done_history.style.display = "none";
+}
+
+
+// account tab
+var new_id = document.getElementById("new_id");
+var delete_id = document.getElementById("delete_id");
+var check_id = document.getElementById("check_id");
+
+function showAccount() {
+	if (show_account) {
+		show_account = false;
+		css_root.style.setProperty("--aside_height", "0");
+		hideAside();
+	}
+	else {
+		show_account = true;
+		show_settings = false;
+		show_random_episode = false;
+		show_info = false;
+		css_root.style.setProperty("--aside_height", "270px");
+		refreshNavButtons();
+
+		if (user_id != null) {
+			changeAccountButton("delete_id");
+			input_user_id.value = user_id;
+		}
+		else { changeAccountButton("new_id"); }
+	}
+	refreshAside();
+}
+
+function changeAccountButton(button) {
+	new_id.style.display = "none";
+	delete_id.style.display = "none";
+	check_id.style.display = "none";
+
+	if (button == "new_id") {
+		new_id.style.display = "inline-block";
+	}
+	else if (button == "delete_id") {
+		delete_id.style.display = "inline-block";
+	}
+	else if (button == "check_id") {
+		check_id.style.display = "inline-block";
+	}
+}
+
+// use new id
+function importNewIdShow() {
+	if (input_user_id.value.length == 18) {
+		changeAccountButton("check_id");
+	}
+}
+
+function importNewId() {
+	var confirm_msg = confirm("Durch das Einfügen dieser ID werden deine lokalen Daten überschrieben!");
+	if (confirm_msg == true) {
+		window.localStorage.setItem("user_id", input_user_id.value);
+		document.location.reload();
+	}
 }
 
 //#################################################################################################
@@ -314,8 +359,15 @@ function exportUserData() {
 }
 
 function resetUserData() {
-	user_data = null;
-	window.localStorage.removeItem("user_data");
+	provider_link = 0;
+	backwards = true;
+	sort_date = false;
+	user_data.list = [];
+
+	if (user_id != null) {
+		storeUserData();
+	}
+
 	document.location.reload();
 }
 
@@ -337,7 +389,7 @@ import_user_data.onchange = e => {
 				alert("Die Datei enthält keine Nutzerdaten!");
 			}
 			else { // all in main.js
-				setup(json_user_data);
+				setupUserData(json_user_data);
 				storeUserData();
 				document.location.reload();
 			}
@@ -347,6 +399,43 @@ import_user_data.onchange = e => {
 }
 
 
+// create new db id
+async function createDatabase() {
+	if (user_id != null) {
+		return
+	}
+
+	storeUserData();
+	var json_user_data = window.localStorage.getItem("user_data");
+
+	var response = await fetch("/.netlify/functions/db_create", {
+		method: "POST",
+		body: json_user_data,
+	});
+
+	user_id = await response.json();
+	input_user_id.value = user_id;
+	window.localStorage.setItem("user_id", user_id);
+
+	changeAccountButton("delete_id");
+}
+
+
+// delete db
+async function deleteDatabase() {
+	var confirm_msg = confirm("Deine ID und die dazugehörigen Daten werden unwiederruflich gelöscht! Lokale Daten beleiben aber weiterhin bestehen.");
+	if (confirm_msg == true) {
+		var response = await fetch("/.netlify/functions/db_delete", {
+			method: "POST",
+			body: user_id,
+		});
+		window.localStorage.removeItem("user_id");
+
+		console.log(await response.json());
+	
+		changeAccountButton("new_id");
+	}
+}
 
 //#################################################################################################
 // Search
@@ -445,20 +534,20 @@ function calcDuration(min, s) {
 
 
 // User counter
-var local_date = new Date();
-var user_role = window.localStorage.getItem("user_role"); // window.localStorage.setItem("user_role", "hidden")
+// var local_date = new Date();
+// var user_role = window.localStorage.getItem("user_role"); // window.localStorage.setItem("user_role", "hidden")
 
-async function userCounter() {
-	var current_day = local_date.getFullYear + "." + local_date.getMonth + "." + local_date.getDay;
-	var was_counted = window.localStorage.getItem("user_counter");
+// async function userCounter() {
+// 	var current_day = local_date.getFullYear + "." + local_date.getMonth + "." + local_date.getDay;
+// 	var was_counted = window.localStorage.getItem("user_counter");
 
-	if (was_counted != current_day && user_role != "hidden") {
-		window.localStorage.setItem("user_counter", current_day);
+// 	if (was_counted != current_day && user_role != "hidden") {
+// 		window.localStorage.setItem("user_counter", current_day);
 
-		var country_response = await fetch("/get-country");
-		var geo_data = await country_response.json();
-		fetch(`/.netlify/functions/user_counter/` + geo_data.geo.geo.country.name);
-	}
-}
+// 		var country_response = await fetch("/get-country");
+// 		var geo_data = await country_response.json();
+// 		fetch(`/.netlify/functions/user_counter/` + geo_data.geo.geo.country.name);
+// 	}
+// }
 
-userCounter();
+// userCounter();

@@ -266,7 +266,7 @@ aside .play {
 /* Settings */
 .settings_box {
 	display: flex;
-	margin-top: 30px;
+	/* margin-top: 30px; */
 }
 
 .settings_box > div {

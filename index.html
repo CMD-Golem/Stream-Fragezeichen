@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="elements/style.css"/>
 	<link rel="stylesheet" type="text/css" href="elements/main.css"/>
 	<link rel="icon" href="graphics/favicon.png">
+	<script src="https://cdn.jsdelivr.net/npm/faunadb@latest/dist/faunadb.js"></script>
 </head>
 <body>
 	<nav>
@@ -111,11 +112,6 @@
 				</div>
 			</div>
 			<div class="switch_box">
-				<!-- <label class="switch">
-					<input type="checkbox">
-					<span class="slider"></span>
-					<span class="slider_text">Titel auf dieser Webseite abspielen</span>
-				</label><br> -->
 				<label class="switch">
 					<input type="checkbox" onclick="toggleOrder()" id="settings_sort_list">
 					<span class="slider"></span>
@@ -138,18 +134,13 @@
 						<button onclick="resetUserData()" class="border_button">Zurücksetzen</button>
 					</div>
 				</div>
-				<div class="create_account">
-					<p>Account für geräteübergreifende Synchronisation erstellen:</p>
+				<div>
+					<p>ID für geräteübergreifende Synchronisation:</p>
 					<div class="settings_center">
-						<button title="Noch in Entwicklung" class="border_button" style="cursor: not-allowed;">Log in</button>
-					</div>
-					<p><small>(Noch in Entwicklung)</small></p>
-				</div>
-				<div class="manage_account" style="display: none;">
-					<p>Account für geräteübergreifende Synchronisation erstellen:</p>
-					<div class="settings_center">
-						<button onclick="" class="border_button">Log out</button>
-						<button onclick="" class="border_button">Account löschen</button>
+						<input onchange="importNewIdShow()" class="border_input" placeholder="Vorhandene ID einfügen" style="width: 190px" id="user_id" maxlength="18"></input>
+						<button onclick="importNewId()" class="border_button" id="check_id">Anwenden</button>
+						<button onclick="createDatabase()" class="border_button" id="new_id">Neue ID erstellen</button>
+						<button onclick="deleteDatabase()" class="border_button" id="delete_id">ID löschen</button>
 					</div>
 				</div>
 			</div>

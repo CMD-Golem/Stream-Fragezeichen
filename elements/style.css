@@ -157,6 +157,19 @@ button:focus, input:focus {
 	background-color: var(--nav-hover-color);
 }
 
+.border_input {
+	display: inline-block;
+	box-sizing: border-box;
+	color: inherit;
+	background-color: var(--background-color);
+	border: var(--text-color) solid 1px;
+	border-radius: 5px;
+	/* margin: 0 20px; */
+	margin: 0 auto;
+	padding: 0 20px;
+	height: 30px;
+	line-height: 30px;
+}
 
 /* ####################################################################### */
 /* Switches */

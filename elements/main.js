@@ -2,102 +2,73 @@
 
 // Functions to generate the list according to settings
 var provider_link, last_provider_selected, backwards, sort_date, active_type, user_data = {list:[]}, watch_list_count = 0;
+var user_id;
 
 // get data from storage/db
-function setup(json_user_data) {
-	if (json_user_data != null) {
-		user_data = JSON.parse(json_user_data);
+function setupUserData(json_user_data) {
+	user_data = JSON.parse(json_user_data);
 
-		active_type = "all";
+	// int selected provider
+	// deezer = 0, youtube = 1, spotify = 2, apple = 3
+	provider_link = user_data.provider;
+	if (provider_link == undefined) { provider_link = 0; }
 
-		// int selected provider
-		// deezer = 0, youtube = 1, spotify = 2, apple = 3
-		provider_link = user_data.provider;
-		if (provider_link == undefined) { provider_link = 0; }
-
-		// int list sorting
-		backwards = user_data.backwards;
-		set_sort_list.checked = !backwards;
-		if (backwards == false) {
-			el_sort_list.style.transform = "scaleY(-1)";
-		}
-		else {
-			backwards = true;
-			el_sort_list.style.transform = "scaleY(1)";
-		}
-
-		// int list sort type
-		sort_date = user_data.sort_date;
-		set_episode_number.checked = sort_date;
-		if (sort_date == true) {
-			episode_number.style.display = "flex";
-			release_date.style.display = "none";
-		}
-		else {
-			sort_date = false;
-			episode_number.style.display = "none";
-			release_date.style.display = "flex";
-		}
-
-		// int user list
-		for (var i = 0; i < user_data.list.length; i++) {
-			var episode = user_data.list[i];
-			var add_class = "";
-
-			// int history
-			var history = undefined;
-
-			if (episode.history != "") {
-				history = episode.history;
-			}
-
-			// int watch list
-			if (episode.list != "") {
-				add_class += "in_watch_list ";
-				watch_list_count++;
-			}
-
-			// load in episode array
-			var episode_id = episode.array_id.split("_");
-			if (episode_id[0] == "normal") {
-				episoden[episode_id[1]].class = add_class;
-				episoden[episode_id[1]].history = history;
-			}
-			else {
-				special[episode_id[1]].class = add_class;
-				special[episode_id[1]].history = history;
-			}
-		}
+	// int list sorting
+	backwards = user_data.backwards;
+	set_sort_list.checked = !backwards;
+	if (backwards == false) {
+		el_sort_list.style.transform = "scaleY(-1)";
 	}
 	else {
-		provider_link = 0;
 		backwards = true;
-		sort_date = false;
-		active_type = "all";
+		el_sort_list.style.transform = "scaleY(1)";
+	}
 
-		showSettings(); //actions.js
-		if (window_width <= 506) { overflowMenu(); } //actions.js
+	// int list sort type
+	sort_date = user_data.sort_date;
+	set_episode_number.checked = sort_date;
+	if (sort_date == true) {
+		episode_number.style.display = "flex";
+		release_date.style.display = "none";
+	}
+	else {
+		sort_date = false;
+		episode_number.style.display = "none";
+		release_date.style.display = "flex";
+	}
+
+	// int user list
+	for (var i = 0; i < user_data.list.length; i++) {
+		var episode = user_data.list[i];
+		var add_class = "";
+
+		// int history
+		var history = undefined;
+
+		if (episode.history != "") {
+			history = episode.history;
+		}
+
+		// int watch list
+		if (episode.list != "") {
+			add_class += "in_watch_list ";
+			watch_list_count++;
+		}
+
+		// load in episode array
+		var episode_id = episode.array_id.split("_");
+		if (episode_id[0] == "normal") {
+			episoden[episode_id[1]].class = add_class;
+			episoden[episode_id[1]].history = history;
+		}
+		else {
+			special[episode_id[1]].class = add_class;
+			special[episode_id[1]].history = history;
+		}
 	}
 
 	last_provider_selected = document.getElementById("provider_" + provider_link);
 	last_provider_selected.classList.add("provider_selected");
-}
-
-//#################################################################################################
-// store user data on storage/db
-document.addEventListener("visibilitychange", function() { if (document.hidden) { storeUserData() } });
-document.addEventListener("beforeunload", storeUserData);
-
-function storeUserData() {
-	console.log("Saved User data");
-
-	user_data.provider = provider_link;
-	user_data.backwards = backwards;
-	user_data.sort_date = sort_date;
-	user_data.active_type = active_type;
-
-	var json_user_data = JSON.stringify(user_data);
-	window.localStorage.setItem("user_data", json_user_data);
 }
 
 
@@ -279,10 +250,86 @@ function toggleSort() {
 }
 
 //#################################################################################################
-// init
-setup(window.localStorage.getItem("user_data"));
-loadEpisodes("all");
+// load user data
+var input_user_id = document.getElementById("user_id");
 
+async function loadData() {
+	var json_user_data = window.localStorage.getItem("user_data");
+	user_id = window.localStorage.getItem("user_id");
+
+	// read data from db
+	if (user_id != null) {
+		var response = await fetch("/.netlify/functions/db_read", {
+			method: "POST",
+			body: user_id,
+		});
+	
+		json_user_data = await response.json();
+		console.log(json_user_data)
+
+		input_user_id.value = user_id;
+	}
+
+	// setup according to user data
+	if (json_user_data != null) {
+		setupUserData(json_user_data);
+	}
+	else {
+		provider_link = 0;
+		backwards = true;
+		sort_date = false;
+
+		showSettings(); //actions.js
+		if (window_width <= 506) { overflowMenu(); } //actions.js
+	
+		last_provider_selected = document.getElementById("provider_0");
+		last_provider_selected.classList.add("provider_selected");
+	}
+
+	// load html
+	
+	active_type = "all";
+	loadEpisodes(active_type);
+}
+
+loadData();
+
+// store user data on storage/db
+document.addEventListener("visibilitychange", function() { if (document.hidden) { storeUserData() } });
+document.addEventListener("beforeunload", storeUserData);
+
+async function storeUserData() {
+	console.log("Saved User data");
+
+	user_data.provider = provider_link;
+	user_data.backwards = backwards;
+	user_data.sort_date = sort_date;
+	// user_data.active_type = active_type;
+
+	var json_user_data = JSON.stringify(user_data);
+	window.localStorage.setItem("user_data", json_user_data);
+	
+	// store on db
+	if (user_id != null) {
+		var fetch_body = {
+			id: user_id,
+			data: user_data
+		}
+	
+		var json_fetch_body = JSON.stringify(fetch_body);
+	
+		var response = await fetch("/.netlify/functions/db_update", {
+			method: "POST",
+			body: json_fetch_body,
+		});
+	
+		var result = await response.json();
+		console.log(result);
+	}
+}
+
+
+//#################################################################################################
 // make changes to user data list
 function getUserDataIndex(array_id) {
 	var in_array = false;
@@ -356,9 +403,9 @@ function refreshHistory(array_id, history) {
 	user_data.list[data[2]].history = history;
 
 	// Click counter
-	if (user_role != "hidden") {
-		fetch("/.netlify/functions/episode_counter/");
-	}
+	// if (user_role != "hidden") {
+	// 	fetch("/.netlify/functions/episode_counter/");
+	// }
 }
 
 function editHistory() {

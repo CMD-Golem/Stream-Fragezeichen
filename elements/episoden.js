@@ -2163,7 +2163,7 @@ var episoden = [
     {
         number: "217",
         name: "und der Kristallschädel",
-        href: ["https://www.deezer.com/de/album/329567827", "https://music.youtube.com/browse/MPREb_NWyDP2QNprQ", "https://open.spotify.com/album/1WlRnNunbHpnRTTVkxMRnd", "https://music.apple.com/ch/album/folge-217-und-der-kristallsch%C3%A4del/1623598148"],
+        href: ["https://www.deezer.com/de/album/431879487", "https://music.youtube.com/browse/MPREb_NWyDP2QNprQ", "https://open.spotify.com/album/1WlRnNunbHpnRTTVkxMRnd", "https://music.apple.com/ch/album/folge-217-und-der-kristallsch%C3%A4del/1623598148"],
         content: "Ein harmloser Trödeleinkauf endet für die drei ??? in einer Verfolgungsjagd. Die Suche nach einem wertvollen Kristallschädel beginnt! Der kürzlich verstorbene Hunter Scott soll einen solchen Schädel besessen haben. Von den Maya gefertigt hat er angeblich heilende Kräfte. Doch wo in seiner Villa könnte er versteckt sein? Das fragen sich nicht nur Justus, Peter und Bob - denn einige zwielichtige Gestalten haben es auf den Kristallschädel abgesehen. Sind die drei Detektive schneller?",
         release: "2022-07-15",
         track_length: 4520653,
@@ -2173,7 +2173,7 @@ var episoden = [
     {
         number: "218",
         name: "Im Netz der Lügen",
-        href: ["https://www.deezer.com/de/album/344322087", "https://music.youtube.com/browse/MPREb_I2WOfzN8gC4", "https://open.spotify.com/album/2WwOKZLpFWrvw3O9CISod1", "https://music.apple.com/ch/album/folge-218-im-netz-der-l%C3%BCgen/1633596746"],
+        href: ["https://www.deezer.com/de/album/431878377", "https://music.youtube.com/browse/MPREb_I2WOfzN8gC4", "https://open.spotify.com/album/2WwOKZLpFWrvw3O9CISod1", "https://music.apple.com/ch/album/folge-218-im-netz-der-l%C3%BCgen/1633596746"],
         content: "Ein Einbrecher, der nichts stiehlt, sondern Gegenstände hinterlässt? In Rocky Beach gehen seltsame Dinge vor, wenn das kein Fall für die drei ??? ist!<br>Was zunächst harmlos erscheint, verfolgt ein Muster, und genau dieses versuchen Justus, Peter und Bob zu entschlüsseln. Doch jemand will mit aller Kraft verhindern, dass die Detektive Licht ins Dunkel bringen. Werden die drei Freunde den Fall lösen, bevor es zu einer Katastrophe kommt, oder verstricken sie sich im Netz der Lügen?",
         release: "2022-09-16",
         track_length: 4372133,
@@ -2183,7 +2183,7 @@ var episoden = [
     {
         number: "219",
         name: "und die Teufelsklippe",
-        href: ["https://www.deezer.com/de/album/364176207", "https://music.youtube.com/browse/MPREb_O8PBlrDNMlN", "https://open.spotify.com/album/6ewdyVIW2LurJhYGU0UBAa", "https://music.apple.com/ch/album/folge-219-und-die-teufelsklippe/1643687102"],
+        href: ["https://www.deezer.com/de/album/431878927", "https://music.youtube.com/browse/MPREb_O8PBlrDNMlN", "https://open.spotify.com/album/6ewdyVIW2LurJhYGU0UBAa", "https://music.apple.com/ch/album/folge-219-und-die-teufelsklippe/1643687102"],
         content: "Peter Shaw - ein Mörder? Ganz bestimmt nicht! Da sind sich Justus und Bob sicher. Können die beiden die Unschuld des Zweiten Detektivs beweisen?<br>Peter sieht ihn fallen, doch die Teufelsklippe gibt ihn nicht wieder her. Verschluckt von den tosenden Wellen bleibt der Mann verschwunden … Was ist passiert? Ausgerechnet der Zweite Detektiv wird beschuldigt, Paul Forsters ins Meer gestoßen zu haben. Im Verhör wird Peter bis ins kleinste Detail befragt. Justus und Bob versuchen derweil mehr über den seltsamen Fall herauszufinden. Können die beiden ihrem Freund helfen?",
         release: "2022-11-18",
         track_length: 4330000,
@@ -2193,7 +2193,7 @@ var episoden = [
     {
         number: "220",
         name: "Im Wald der Gefahren",
-        href: ["https://www.deezer.com/de/album/369694907", "https://music.youtube.com/browse/MPREb_fx3xgUx153q", "https://open.spotify.com/album/01i4iyB40EU7Qgd6EgKoZt", "https://music.apple.com/ch/album/folge-220-im-wald-der-gefahren/1651435586"],
+        href: ["https://www.deezer.com/de/album/431878087", "https://music.youtube.com/browse/MPREb_fx3xgUx153q", "https://open.spotify.com/album/01i4iyB40EU7Qgd6EgKoZt", "https://music.apple.com/ch/album/folge-220-im-wald-der-gefahren/1651435586"],
         content: "Von Rocky Beach in die Rocky Mountains - die drei ??? freuen sich auf ein Wander-Wochenende. Was harmlos beginnt, wird zum Kampf ums nackte Überleben<br>Noch bevor die Wandergruppe aufbricht, wittern die drei Detektive einen neuen Fall: Ein toter Briefkasten und eine Stolperfalle - will jemand die Tour verhindern? Schon auf der ersten Etappe wird es brenzlig. Ein Bach wird zum reißenden Fluss, und Pilze sollte man mit Vorsicht genießen. Als Peter verschwindet, wird klar: Die Wildnis hat etwas zu verbergen. Die drei ??? finden sich im Wald der Gefahren wieder …",
         release: "2023-01-27",
         track_length: 4602000,
@@ -2203,7 +2203,7 @@ var episoden = [
     {
         number: "221",
         name: "Manuskript des Satans",
-        href: ["https://www.deezer.com/de/album/399989577", "https://music.youtube.com/browse/MPREb_Y4rh3FYDtwC", "https://open.spotify.com/album/1KpVSqapKAUAtAepWWxPWs", "https://music.apple.com/ch/album/folge-221-manuskript-des-satans/1660262900"],
+        href: ["https://www.deezer.com/de/album/459465105", "https://music.youtube.com/browse/MPREb_Y4rh3FYDtwC", "https://open.spotify.com/album/1KpVSqapKAUAtAepWWxPWs", "https://music.apple.com/ch/album/folge-221-manuskript-des-satans/1660262900"],
         content: "Ein Manuskript des leibhaftigen Satans und teuflische Lärmattacken - dieser Fall hat es in sich! Begeben die drei ??? sich in höllische Gefahr?<br>Wer steckt hinter dem entsetzlichen Lärmangriff auf das Haus von Professor Bancroft? Während der Wissenschaftler versucht, eine geheimnisvolle alte Handschrift zu übersetzen, machen sich Justus, Peter und Bob auf die Suche nach der Lärmquelle. Haben die Attacken etwas mit dem Manuskript des Satans zu tun, an dem der Professor gerade arbeitet? Die drei Detektive werden es herausfinden.",
         release: "2023-03-03",
         track_length: 4071000,
@@ -2706,6 +2706,17 @@ var special = [
         track_author: ""
     },
     {
+        number: "HB16",
+        name: "Mai Thi Nguyen-Kim liest… und die rätselhaften Bilder",
+        search: "Hörbuch Hörbücher",
+        href: ["https://www.deezer.com/de/album/426276407", "https://music.youtube.com/browse/MPREb_jnRejy2gGL4", "https://open.spotify.com/album/77aMP5aTkzIaVW1SPxvLxy", "#"],
+        content: "Allzu viel ist es ja nicht, was der alte Maler Joshua Cameron hinterlassen hat - und obendrein blieb er die Miete schuldig! Aber ein merkwürdiger Kauz muß er gewesen sein: zeigen doch die 20 numerierten Ölbilder aus seinem Nachlaß alle dasselbe Motiv, nämlich sein Wohnhaus. Dies und die Tatsache, daß sich nicht nur eine Gräfin und ihr Verwalter, sondern auch mehrere Unbekannte und ein Kunsthändler auffällig für die Bilder interessieren, bringen die drei ??? auf den Plan. Sind die Gemälde vielleicht doch nicht ganz so wertlos? Vielleicht besteht da auch irgendein Zusammenhang mit den wirren Worten, die Cameron vor seinem Tod im Fieber gestammelt hatte … Während Justus, Peter und Bob ermitteln, versucht ihr alter Rivale Skinny Norris, ihnen Steine in den Weg zu legen. Das wird am Ende für ihn selbst gefährlich. Nur gut, daß Justus rechtzeitig eine Erleuchtung kommt!",
+        release: "2023-04-21",
+        track_length: 13206000,
+        book_author: "William Arden",
+        track_author: ""
+    },
+    {
         number: "HB18",
         name: "Jannik Schümann liest… und der Phantomsee",
         search: "Hörbuch Hörbücher",
@@ -2813,6 +2824,17 @@ var special = [
         release: "2021-10-29",
         track_length: 14004000,
         book_author: "Marc Brandel",
+        track_author: ""
+    },
+    {
+        number: "HB45",
+        name: "Klaas Heufer-Umlauf liest… und der schrullige Millionär",
+        search: "Hörbuch Hörbücher",
+        href: ["https://www.deezer.com/de/album/445486795", "https://music.youtube.com/browse/MPREb_u2Aur036tvV", "https://open.spotify.com/album/6xZHTtiSBFxKdV2rJVHj2V", "#"],
+        content: "Als bei der Verlobung seiner Tochter ein Teller zu Boden fällt, erleidet der geizige Millionär Pilcher einen Herzanfall. Er scheint dem Tode nahe, doch dann ist er plötzlich verschwunden. Wurde er entführt? Die drei Detektive versuchen, das Rätsel zu lösen, und Justus fordert seine Kollegen zum logischen Denken auf …",
+        release: "2023-06-16",
+        track_length: 14633000,
+        book_author: "M. V. Carey",
         track_author: ""
     },
     {
