@@ -347,7 +347,6 @@ function selectProvider(el_button) {
 
 	last_provider_selected = el_button;
 	provider_link = parseInt(el_button.id.replace("provider_", ""));
-	console.log(provider_link)
 
 	loadEpisodes(active_type); // main.js
 }
@@ -417,10 +416,20 @@ async function createDatabase() {
 	});
 
 	user_id = await response.json();
-	input_user_id.value = user_id;
-	window.localStorage.setItem("user_id", user_id);
 
-	changeAccountButton("delete_id");
+	if (response.status == 200) {
+		input_user_id.value = user_id;
+		window.localStorage.setItem("user_id", user_id);
+
+		changeAccountButton("delete_id");
+	}
+	else {
+		alert("ID konnte nicht erstellt werden!");
+		console.log(response);
+		console.log(user_id);
+
+		user_id = null;
+	}
 }
 
 // disconnect from db
@@ -440,10 +449,14 @@ async function deleteDatabase() {
 			method: "POST",
 			body: user_id,
 		});
-		
-		console.log(await response.json());
-	
+
 		disconnectId();
+
+		if (response.status != 200) {
+			alert("ID konnte nicht gelöscht werden!");
+			console.log(response);
+			console.log(await response.json());
+		}
 	}
 }
 
@@ -544,20 +557,20 @@ function calcDuration(min, s) {
 
 
 // User counter
-// var local_date = new Date();
-// var user_role = window.localStorage.getItem("user_role"); // window.localStorage.setItem("user_role", "hidden")
+const local_date = new Date();
+const user_role = window.localStorage.getItem("user_role"); // window.localStorage.setItem("user_role", "hidden")
 
-// async function userCounter() {
-// 	var current_day = local_date.getFullYear + "." + local_date.getMonth + "." + local_date.getDay;
-// 	var was_counted = window.localStorage.getItem("user_counter");
+async function userCounter() {
+	var current_day = local_date.getFullYear + "." + local_date.getMonth + "." + local_date.getDay;
+	var was_counted = window.localStorage.getItem("user_counter");
 
-// 	if (was_counted != current_day && user_role != "hidden") {
-// 		window.localStorage.setItem("user_counter", current_day);
+	if (was_counted != current_day && user_role != "hidden") {
+		window.localStorage.setItem("user_counter", current_day);
 
-// 		var country_response = await fetch("/get-country");
-// 		var geo_data = await country_response.json();
-// 		fetch(`/.netlify/functions/user_counter/` + geo_data.geo.geo.country.name);
-// 	}
-// }
+		var country_response = await fetch("/get-country");
+		var geo_data = await country_response.json();
+		fetch(`/.netlify/functions/user_counter/` + geo_data.geo.geo.country.name);
+	}
+}
 
-// userCounter();
+userCounter();

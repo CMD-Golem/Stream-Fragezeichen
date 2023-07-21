@@ -8,7 +8,6 @@ exports.handler = async (event, context) => {
 	});
 
 	var body = JSON.parse(event.body);
-	console.log(event)
 
 	var user_id = body.id;
 	var user_data = body.data;

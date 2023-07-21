@@ -264,24 +264,23 @@ async function loadData() {
 			method: "POST",
 			body: user_id,
 		});
-	
+
 		var response_object = await response.json();
 
-		load_data_response = response_object
-		console.log(response_object)
+		if (response.status == 200) {
+			json_user_data = JSON.stringify(response_object);
 
-		if (response_object.statusCode == 404) {
+			input_user_id.value = user_id;
+		}
+		else if (response.status == 502) {
 			alert("Die registierte ID ist fehlerhaft!");
 			disconnectId();
 		}
 		else {
-			json_user_data = JSON.stringify(response_object.body);
-			console.log(json_user_data);
-
-			input_user_id.value = user_id;
+			alert("Benutzer Daten konnten nicht heruntergeladen werden!");
+			console.log(response);
+			console.log(response_object);
 		}
-		
-		
 	}
 
 	// setup according to user data
@@ -331,16 +330,17 @@ async function storeUserData() {
 		}
 	
 		var json_fetch_body = JSON.stringify(fetch_body);
-
-		console.log(json_fetch_body)
 	
 		var response = await fetch("/.netlify/functions/db_update", {
 			method: "POST",
 			body: json_fetch_body,
 		});
-	
-		var result = await response.json();
-		console.log(result);
+
+		if (response.status != 200) {
+			alert("Benutzer Daten konnte nicht hochgeladen werden!");
+			console.log(response);
+			console.log(await response.json());
+		}
 	}
 }
 
@@ -419,9 +419,9 @@ function refreshHistory(array_id, history) {
 	user_data.list[data[2]].history = history;
 
 	// Click counter
-	// if (user_role != "hidden") {
-	// 	fetch("/.netlify/functions/episode_counter/");
-	// }
+	if (user_role != "hidden") {
+		fetch("/.netlify/functions/episode_counter/");
+	}
 }
 
 function editHistory() {
