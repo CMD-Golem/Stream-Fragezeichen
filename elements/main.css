@@ -63,10 +63,7 @@ ol {
 }
 
 ol div {
-	margin: 12px;
-	margin-bottom: 15px;
 	position: relative;
-	cursor: pointer;
 }
 
 ol.show_watch_list div {
@@ -80,6 +77,8 @@ ol img {
 
 ol a {
 	display: block;
+	margin: 12px;
+	margin-bottom: 15px;
 }
 
 ol p {
@@ -92,19 +91,19 @@ ol span {
 }
 
 .add, .remove {
-	top: 145px;
-	left: 5px;
+	top: 157px;
+	left: 17px;
 }
 
 .info {
-	top: 90px;
-	left: 5px;
+	top: 102px;
+	left: 17px;
 }
 
 .play {
 	cursor: pointer;
-	top: 125px;
-	right: 15px;
+	top: 137px;
+	right: 27px;
 	width: 60px;
 	height: 60px;
 	padding-left: 18px;

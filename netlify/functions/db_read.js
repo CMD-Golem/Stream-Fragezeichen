@@ -9,11 +9,16 @@ exports.handler = async (event, context) => {
 
 	var user_id = event.body;
 
+	console.log(user_id)
+
 	var response = await client.query(q.Get(q.Ref(`classes/user_data/${user_id}`)));
+
+	console.log(response)
 	
 	if (response == undefined) {
 		return {
-			statusCode: 404
+			statusCode: 404,
+			body: JSON.stringify(response)
 		}
 	}
 	else {

@@ -266,14 +266,17 @@ async function loadData() {
 	
 		var response_object = await response.json();
 
-		if (response_object.statusCode == 200) {
+		console.log(response_object)
+
+		if (response_object.statusCode == 404) {
+			alert("Die registierte ID ist fehlerhaft!");
+			disconnectId();
+		}
+		else {
 			json_user_data = JSON.stringify(response_object.body);
 			console.log(json_user_data);
 
 			input_user_id.value = user_id;
-		}
-		else {
-			alert("Die registierte ID ist fehlerhaft!");
 		}
 		
 		
@@ -326,6 +329,8 @@ async function storeUserData() {
 		}
 	
 		var json_fetch_body = JSON.stringify(fetch_body);
+
+		console.log(json_fetch_body)
 	
 		var response = await fetch("/.netlify/functions/db_update", {
 			method: "POST",

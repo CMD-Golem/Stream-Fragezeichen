@@ -428,6 +428,7 @@ function disconnectId() {
 	input_user_id.value = "";
 	window.localStorage.removeItem("user_id");
 	user_id = null;
+	changeAccountButton("new_id");
 }
 
 
@@ -443,7 +444,6 @@ async function deleteDatabase() {
 		console.log(await response.json());
 	
 		disconnectId();
-		changeAccountButton("new_id");
 	}
 }
 
