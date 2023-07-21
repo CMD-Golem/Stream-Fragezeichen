@@ -415,9 +415,10 @@ async function createDatabase() {
 		body: json_user_data,
 	});
 
-	user_id = await response.json();
+	var response_object = await response.json();
 
 	if (response.status == 200) {
+		user_id = response_object.user_id;
 		input_user_id.value = user_id;
 		window.localStorage.setItem("user_id", user_id);
 
@@ -426,9 +427,7 @@ async function createDatabase() {
 	else {
 		alert("ID konnte nicht erstellt werden!");
 		console.log(response);
-		console.log(user_id);
-
-		user_id = null;
+		console.log(response_object);
 	}
 }
 

@@ -1,4 +1,5 @@
-// zeile 2205
+// Bing Chat suche für Daten
+// Gib mir den Link zum Album vom "Folge 222: und die Gesetzlosen" drei Fragezeichen Hörbuch auf Spotify, Deezer, Apple Music und Youtube Music als Tabelle formatiert. Suche mir ausserdem noch das Erscheinungsdatum dieser Folge auf den Tag genau.
 
 var episoden = [
     {
