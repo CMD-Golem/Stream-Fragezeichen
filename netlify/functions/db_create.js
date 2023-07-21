@@ -12,6 +12,8 @@ exports.handler = async (event, context) => {
 	var new_doc = await client.query(q.Create(q.Collection("user_data"), {data:user_data}));
 	var new_id = new_doc.ref.value.id;
 
+	console.log(new_id)
+
 	return {
 		statusCode: 200,
 		body: new_id

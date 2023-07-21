@@ -2,7 +2,7 @@
 
 // Functions to generate the list according to settings
 var provider_link, last_provider_selected, backwards, sort_date, active_type, user_data = {list:[]}, watch_list_count = 0;
-var user_id;
+var user_id = null;
 
 // get data from storage/db
 function setupUserData(json_user_data) {
@@ -252,6 +252,7 @@ function toggleSort() {
 //#################################################################################################
 // load user data
 var input_user_id = document.getElementById("user_id");
+var load_data_response;
 
 async function loadData() {
 	var json_user_data = window.localStorage.getItem("user_data");
@@ -266,6 +267,7 @@ async function loadData() {
 	
 		var response_object = await response.json();
 
+		load_data_response = response_object
 		console.log(response_object)
 
 		if (response_object.statusCode == 404) {

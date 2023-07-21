@@ -11,7 +11,7 @@ exports.handler = async (event, context) => {
 	console.log(event)
 
 	var user_id = body.id;
-	var user_data = body.user_data;
+	var user_data = body.data;
 
 	var response = await client.query(q.Update(q.Ref(`classes/user_data/${user_id}`), {data:user_data}));
 
