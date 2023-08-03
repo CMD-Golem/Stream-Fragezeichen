@@ -207,6 +207,7 @@ var set_sort_list = document.getElementById("settings_sort_list");
 function toggleOrder() {
 	backwards = !backwards;
 	set_sort_list.checked = !backwards;
+	storeUserData();
 
 	if (backwards) {
 		el_sort_list.style.transform = "scaleY(1)";
@@ -231,6 +232,7 @@ var release_date = document.getElementById("release_date");
 function toggleSort() {
 	sort_date = !sort_date;
 	set_episode_number.checked = sort_date;
+	storeUserData();
 
 	if (sort_date) {
 		episode_number.style.display = "flex";
@@ -308,8 +310,8 @@ async function loadData() {
 loadData();
 
 // store user data on storage/db
-document.addEventListener("visibilitychange", function() { if (document.hidden) { storeUserData() } });
-document.addEventListener("beforeunload", storeUserData);
+// document.addEventListener("visibilitychange", function() { if (document.hidden) { storeUserData() } });
+// document.addEventListener("beforeunload", storeUserData);
 
 async function storeUserData() {
 	console.log("Saved User data");
@@ -343,7 +345,6 @@ async function storeUserData() {
 		}
 	}
 }
-
 
 //#################################################################################################
 // make changes to user data list
@@ -399,6 +400,8 @@ function toggleWatchList(el_button) {
 	// Refresh arrays
 	if (data[0] == "normal") { episoden[data[1]].class = add_class; }
 	else { special[data[1]].class = add_class; }
+
+	storeUserData();
 }
 
 //#################################################################################################
@@ -422,6 +425,8 @@ function refreshHistory(array_id, history) {
 	if (user_role != "hidden") {
 		fetch("/.netlify/functions/episode_counter/");
 	}
+
+	storeUserData();
 }
 
 function editHistory() {

@@ -2214,7 +2214,7 @@ var episoden = [
     {
         number: "222",
         name: "und die Gesetzlosen",
-        href: ["https://www.deezer.com/de/album/436922917", "https://music.youtube.com/browse/MPREb_u7xikUNb2sN", "https://open.spotify.com/intl-de/album/3o2Gwvg8lqLNRnlV1v1s5K", "https://music.apple.com/ch/album/folge-222-und-die-gesetzlosen/1686089070"],
+        href: ["https://www.deezer.com/de/album/436922917", "https://music.youtube.com/browse/MPREb_u7xikUNb2sN", "https://open.spotify.com/album/3o2Gwvg8lqLNRnlV1v1s5K", "https://music.apple.com/ch/album/folge-222-und-die-gesetzlosen/1686089070"],
         content: "Peter wird in der Rocky Beach Highschool unfreiwillig Zeuge eines dubiosen Telefonats. Hat seine Lehrerin Amanda Blunt ein dunkles Geheimnis?<br>Als die unscheinbare Frau dann auch noch verdächtige Utensilien in ihr Auto packt und losfährt, nimmt Peter die Verfolgung auf. Natürlich nicht ohne seine beiden Freunde zu informieren. Die drei ??? begeben sich auf einen gefährlichen Roadtrip durch die verlassene Prärie. Hoffentlich wird ihnen diese Fahrt nicht zum Verhängnis …",
         release: "2023-05-12",
         track_length: 4781000,
@@ -2224,7 +2224,7 @@ var episoden = [
     {
         number: "223",
         name: "und der Knochenmann",
-        href: ["#new", "28. Juli", "", ""],
+        href: ["https://www.deezer.com/de/album/447848865", "https://music.youtube.com/browse/MPREb_V1C8nUZQQ4M", "https://open.spotify.com/album/451jKBwuSNrNgLlqEAZfra", "https://music.apple.com/de/album/folge-223-und-der-knochenmann/1686187662"],
         content: "Eine Frau verschwindet nach einem Erdbeben plötzlich spurlos. Was ist mit ihr geschehen? Die drei ??? begeben sich auf die gefährliche Suche.<br>Die junge Schneiderin Maya erscheint nicht zur Arbeit am Camelot Theatre. Justus, Peter und Bob haben den Verdacht, dass das Rätsel, das die Theaterleitung veranstaltet, etwas damit zu tun hat. Denn ein hohes Preisgeld ist zu gewinnen. Ist des Rätsels Lösung auch die Spur zu Maya? Die drei Detektive ermitteln, während erneut die Erde bebt …",
         release: "2023-07-28",
         track_length: 0,
@@ -2846,6 +2846,17 @@ var special = [
         content: "Wusstet ihr, dass Skinny Norris und Morton etwas gemeinsam haben? Dass Bobs Vater ganze vier uns seine Mutter gar keinen Vornamen hat? Wer den Ausdruck \"spezialgelagerter Sonderfall\" erfand? Und ob Hugenay eigentlich noch mal aus dem Gefängnis kommt?<br>Autor C.R. Rodenwald fasst nun endlich (fast) alles zusammen, was über die drei Detektive aus Rocky Beach und ihre abenteuerlichen Erlebnisse bekannt ist: Wissenswertes zu allen wichtigen Figuren der Serie, die Hintergründe der Entstehung, Fakten und kuriose Gegebenheiten - und  klärt unter anderem auch die hypothetische Frage \"Wie groß müsste die Kleinstadt Rocky Beach eigentlich wirklich sein?\".<br>Ein Audio-Feature basierend auf dem gleichnamigen von C.R. Rodenwald. Mit O-Tönen, Statements, Zwischenrufen und Hörspielsequenzen. Erzählt von Daniel Finger.",
         release: "2019-08-23",
         track_length: 32645000,
+        book_author: "C. R. Rodenwald",
+        track_author: "C. R. Rodenwald"
+    },
+    {
+        number: "WH",
+        name: "Die drei ??? und die Welt der Hörspiele",
+        search: "Dokumentation",
+        href: ["https://www.deezer.com/de/album/369304967", "https://music.youtube.com/browse/MPREb_V5Ed5sVXTcb", "https://open.spotify.com/album/0oc88urkb6D32E1I5hM2sg", "https://music.apple.com/ch/album/die-drei-und-die-welt-der-h%C3%B6rspiele/1651211724"],
+        content: "Seit über einem halben Jahrhundert begeistern die Geschichten der drei ??? und seit mehr als 40 Jahren gibt es sie auch in der Hörspielfassung. Die drei ???, die Hörspiele und ihre Sprecher haben Kultstatus erlangt - und das generationsübergreifend. Statistisch gesehen gibt es in Deutschland keinen Haushalt ohne ein Die drei ???-Hörspiel.<br>Wie ist dieser Kult entstanden? Autor C.R. Rodenwald blickt zurück auf die Anfänge und erzählt die Geschichte der Die drei ???-Hörspiele bis in die Gegenwart.",
+        release: "2022-12-02",
+        track_length: 33618000,
         book_author: "C. R. Rodenwald",
         track_author: "C. R. Rodenwald"
     }

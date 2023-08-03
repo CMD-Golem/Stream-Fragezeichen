@@ -349,6 +349,7 @@ function selectProvider(el_button) {
 	provider_link = parseInt(el_button.id.replace("provider_", ""));
 
 	loadEpisodes(active_type); // main.js
+	storeUserData(); // main.js
 }
 
 // reset/ export settings
@@ -366,9 +367,7 @@ function resetUserData() {
 	sort_date = false;
 	user_data.list = [];
 
-	if (user_id != null) {
-		storeUserData();
-	}
+	storeUserData(); // main.js
 
 	document.location.reload();
 }
