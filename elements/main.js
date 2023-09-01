@@ -75,9 +75,10 @@ function setupUserData(json_user_data) {
 //#################################################################################################
 // load episodes
 var episoden_list = document.getElementsByTagName("ol")[0];
+var episode_html = [];
 
 function loadEpisodes(load_type) {
-	var html = [];
+	episode_html = [];
 
 	// load_type: normal, special, all, history (all but with special sort)
 	// load normal episods if load type isnt special
@@ -85,87 +86,32 @@ function loadEpisodes(load_type) {
 		for (var i = 0; i < episoden.length; i++) {
 			var episode = episoden[i];
 			var number = parseInt(episode.number);
-			var episode_class = episode.class;
-			episoden[i].array_link = "normal_" + i;
-	
-			if (episode.href[provider_link] == "#") {
-				var href = 'href="#"';
-				episode_class += " not_aviable";
-				var info = "";
-			}
-			else if (episode.href[0] == "#new") {
-				var href = `href="#" onclick="alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.');"`;
-				var info = `alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')`
-			}
-			else {
-				var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('normal_${i}', new Date())"`;
-				var info = `showInfo('normal_${i}')`
-			}
-			if (episode.history == undefined || episode.history == "1899-01-01T00:00:00.000Z") {
-				episode_class += " no_history";
-			}
-	
-			html.push(`
-			<div data-release="${episode.release}" data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="normal_${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author}">
-				<a ${href} class="img_play_box">
-					<img src="img/episode_${number}.jpg" alt="Folge ${episode.number}: ${episode.name}">
-					<p><b>Folge ${episode.number}</b>: ${episode.name}</p>
-					<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-				</a>
-				<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(this, 'normal')"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-				<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(this, 'normal')"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-				<button class="control_button info" title="Folgeninhalt anzeigen" onclick="${info}"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0Zm1.2 18h-2.4v-7.2h2.4zm0-9.6h-2.4V6h2.4z" style="fill:#fff;stroke-width:1.20001"></path></g></svg></button>
-			</div>`);
+			var title = `<b>Folge ${number}</b>: ${episode.name}`;
+
+			generateEpisodes(i, episode, number, "normal", "img/episode_", title);
 		}
+
 		if (backwards && !show_history) {
-			html.reverse();
+			episode_html.reverse();
 		}
 		else if (show_history) {
-			html.reverse();
+			episode_html.reverse();
 		}
 	}
-	// load special episods if load type isnt normal
+
 	if (load_type != "normal") {
 		for (var i = 0; i < special.length; i++) {
 			var episode = special[i];
-			var episode_class = episode.class;
-			special[i].array_link = "special_" + i;
-	
-			if (episode.href[provider_link] == "#") {
-				var href = 'href="#"';
-				episode_class += " not_aviable";
-				var info = "";
-			}
-			else if (episode.href[0] == "#new") {
-				var href = `href="#" onclick="alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')"`;
-				var info = `alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')`
-			}
-			else {
-				var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('special_${i}', new Date())"`;
-				var info = `showInfo('special_${i}')`
-			}
-			if (episode.history == undefined || episode.history == "") {
-				episode_class += " no_history";
-			}
+			var number = episode.number.toLowerCase();
 
-			html.push(`
-			<div data-release="${episode.release}" data-history="${episode.history}" id="${episode.number}" class="${episode_class}" data-array="special_${i}" data-filter="die drei fragezeichen ??? ${episode.search} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author}">
-				<a ${href} class="img_play_box">
-					<img src="img_special/special_${episode.number.toLowerCase()}.jpg" alt="${episode.name}">
-					<p>${episode.name}</p>
-					<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-				</a>
-				<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(this, 'special')"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-				<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(this, 'special')"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-				<button class="control_button info" title="Folgeninhalt anzeigen" onclick="${info}"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0Zm1.2 18h-2.4v-7.2h2.4zm0-9.6h-2.4V6h2.4z" style="fill:#fff;stroke-width:1.20001"></path></g></svg></button>
-			</div>`);
+			generateEpisodes(i, episode, number, "special", "img_special/special_", episode.name);
 		}
 	}
 
 	if (sort_date && !show_history) {
-		html.sort((a, b) => {
-			var a_date = a.slice(23, 33);
-			var b_date = b.slice(23, 33);
+		episode_html.sort((a, b) => {
+			var a_date = a.slice(21, 31);
+			var b_date = b.slice(21, 31);
 
 			if (backwards) {
 				if (a_date < b_date) { return 1; }
@@ -180,9 +126,9 @@ function loadEpisodes(load_type) {
 	}
 
 	if (show_history) {
-		html.sort((a, b) => {
-			var a_date = a.slice(49, 73);
-			var b_date = b.slice(49, 73);
+		episode_html.sort((a, b) => {
+			var a_date = a.slice(47, 71);
+			var b_date = b.slice(47, 71);
 
 			if (backwards) {
 				if (a_date < b_date) { return 1; }
@@ -196,7 +142,42 @@ function loadEpisodes(load_type) {
 		});
 	}
 	
-	episoden_list.innerHTML = html.join("");
+	episoden_list.innerHTML = episode_html.join("");
+}
+
+function generateEpisodes(i, episode, number, link_pre, img_folder, title) {
+	episoden[i].array_link = link_pre + "_" + i;
+	var episode_class = episode.class;
+
+	if (episode.href[provider_link] == "#") {
+		var href = 'href="#"';
+		episode_class += " not_aviable";
+		var info = "";
+	}
+	else if (episode.href[0] == "#new") {
+		var href = `href="#" onclick="alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.');"`;
+		var info = `alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')`;
+	}
+	else {
+		var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('${link_pre}_${i}', new Date())"`;
+		var info = `showInfo('${link_pre}_${i}')`
+	}
+
+	if (episode.history == undefined || episode.history == "1899-01-01T00:00:00.000Z" || episode.history == "") {
+		episode_class += " no_history";
+	}
+
+	episode_html.push(`
+	<div data-release="${episode.release}" data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="${link_pre}_${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author}">
+		<a ${href} class="img_play_box">
+			<img src="${img_folder}${number}.jpg" alt="${title}">
+			<p>${title}</p>
+			<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+		</a>
+		<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(this, '${link_pre}')"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+		<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(this, '${link_pre}')"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+		<button class="control_button info" title="Folgeninhalt anzeigen" onclick="${info}"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0Zm1.2 18h-2.4v-7.2h2.4zm0-9.6h-2.4V6h2.4z" style="fill:#fff;stroke-width:1.20001"></path></g></svg></button>
+	</div>`);
 }
 
 //#################################################################################################
