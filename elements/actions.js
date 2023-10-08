@@ -144,6 +144,7 @@ var info_img = document.getElementById("info_img");
 var info_name = document.getElementById("info_name");
 var info_content = document.getElementById("info_content");
 var info_panel = document.getElementById("info_panel");
+var play_box = document.getElementById("play_box");
 
 function showInfo(array_id, is_random_episode) {
 	var episode_id = array_id.split("_");
@@ -188,6 +189,9 @@ function showInfo(array_id, is_random_episode) {
 	info_href.href = episode.href[provider_link];
 	info_name.innerHTML = episode.name;
 	info_content.innerHTML = episode.content;
+
+	// Ignore List
+	play_box.setAttribute("data-array", array_id);
 
 	// Settings
 	if (is_random_episode) {

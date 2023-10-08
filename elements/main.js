@@ -1,7 +1,7 @@
 // user_role: "hidden" -> don't count clicks and user analytics
 
 // Functions to generate the list according to settings
-var provider_link, last_provider_selected, backwards, sort_date, active_type, user_data = {list:[]}, watch_list_count = 0;
+var provider_link, last_provider_selected, backwards, sort_date, active_type, user_data = {list:[]}, watch_list_count = 0, ignore_list_count = 0;
 var user_id = null;
 
 // get data from storage/db
@@ -41,6 +41,7 @@ function setupUserData(json_user_data) {
 	for (var i = 0; i < user_data.list.length; i++) {
 		var episode = user_data.list[i];
 		var add_class = "";
+		var add_ignore = "";
 
 		// int history
 		var history = undefined;
@@ -55,13 +56,21 @@ function setupUserData(json_user_data) {
 			watch_list_count++;
 		}
 
+		// int ignore list
+		if (episode.ignored != "") {
+			add_ignore = "true";
+			ignore_list_count++;
+		}
+
 		// load in episode array
 		var episode_id = episode.array_id.split("_");
 		if (episode_id[0] == "normal") {
+			episoden[episode_id[1]].ignored = add_ignore;
 			episoden[episode_id[1]].class = add_class;
 			episoden[episode_id[1]].history = history;
 		}
 		else {
+			special[episode_id[1]].ignored = add_ignore;
 			special[episode_id[1]].class = add_class;
 			special[episode_id[1]].history = history;
 		}
@@ -341,7 +350,7 @@ function getUserDataIndex(array_id) {
 
 	// add episode to user list if not existing
 	if (in_array === false) {
-		var in_array = user_data.list.push({array_id:array_id, history:undefined, list:""});
+		var in_array = user_data.list.push({array_id:array_id, history:undefined, list:"", ignored:""});
 		in_array--;
 	}
 
@@ -381,6 +390,37 @@ function toggleWatchList(el_button) {
 	// Refresh arrays
 	if (data[0] == "normal") { episoden[data[1]].class = add_class; }
 	else { special[data[1]].class = add_class; }
+
+	storeUserData();
+}
+
+//#################################################################################################
+// Ignore List
+var no_ignore_list = document.getElementById("no_ignore_list");
+
+function toggleIgnoreList(el_button) {
+	var element = el_button.parentNode;
+	var data = getUserDataIndex(element.dataset.array);
+
+	if (user_data.list[data[2]].ignored == "") {
+		// Add to Ignore list
+		ignore_list_count++;
+		user_data.list[data[2]].ignored = "true";
+		add_ignore = "true";
+	}
+	else {
+		// Remove from Ignore list
+		ignore_list_count--;
+		user_data.list[data[2]].ignored = "";
+		add_ignore = "";
+
+		if (ignore_list_count == 0 && show_ignore_list) {
+			no_ignore_list.style.display = "block";
+		}
+	}
+	// Refresh arrays
+	if (data[0] == "normal") { episoden[data[1]].ignored = add_ignore; }
+	else { special[data[1]].ignored = add_ignore; }
 
 	storeUserData();
 }

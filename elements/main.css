@@ -170,14 +170,17 @@ aside {
 	transition: height 0.5s;
 }
 
-
-
 .aside_content {
 	display: none;
 	position: relative;
 	height: calc(100% - 80px);
 	padding: 40px 0;
+	margin: 0 auto;
 	overflow: hidden;
+}
+
+.aside_scroll {
+	overflow-y: auto;
 }
 
 .hide_aside {
@@ -206,7 +209,37 @@ aside .img_play_box img {
 	margin-left: 12px;
 }
 
+aside .control_button {
+	display: block;
+	/* width: 40px;
+	height: 40px; */
+}
+
 aside .play {
+	top: 140px;
+	right: unset;
+	left: 112px;
+}
+
+aside .add {
+	top: 300px;
+	right: 0;
+	left: 0;
+}
+
+aside .remove {
+	top: 140px;
+	right: unset;
+	left: 112px;
+}
+
+aside .ignore {
+	top: 140px;
+	right: unset;
+	left: 112px;
+}
+
+aside .reactivate {
 	top: 140px;
 	right: unset;
 	left: 112px;
@@ -273,6 +306,11 @@ aside .play {
 	width: calc(50% - 20px);
 }
 
+.settings_box span {
+	display: inline-block;
+	padding-bottom: 10px;
+}
+
 .settings_center {
 	display: flex;
 	justify-content: center;
@@ -283,12 +321,13 @@ aside .play {
 	gap: 10px;
 }
 
-.settings_text {
-	margin-top: 30px;
+.settings_ignored {
+	margin-top: 20px;
 }
 
 .settings_more_info {
 	margin-top: 20px;
+	margin-bottom: 30px;
 }
 
 .provider_sel {
