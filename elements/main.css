@@ -209,42 +209,33 @@ aside .img_play_box img {
 	margin-left: 12px;
 }
 
+#play_box {
+	position: relative;
+}
+
 aside .control_button {
 	display: block;
+	top: unset;
+	left: unset;
 	/* width: 40px;
 	height: 40px; */
 }
 
 aside .play {
-	top: 140px;
+	top: 100px;
 	right: unset;
 	left: 112px;
 }
 
-aside .add {
-	top: 300px;
-	right: 0;
-	left: 0;
+#info_control_add, #info_control_remove {
+	bottom: 10px;
+	right: 62px;
 }
 
-aside .remove {
-	top: 140px;
-	right: unset;
-	left: 112px;
+#info_control_ignore, #info_control_reactivate {
+	bottom: 10px;
+	right: 122px;
 }
-
-aside .ignore {
-	top: 140px;
-	right: unset;
-	left: 112px;
-}
-
-aside .reactivate {
-	top: 140px;
-	right: unset;
-	left: 112px;
-}
-
 
 .info_description {
 	user-select: text;

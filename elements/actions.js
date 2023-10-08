@@ -146,6 +146,11 @@ var info_content = document.getElementById("info_content");
 var info_panel = document.getElementById("info_panel");
 var play_box = document.getElementById("play_box");
 
+var info_add = document.getElementById("info_control_add");
+var info_remove = document.getElementById("info_control_remove");
+var info_ignore = document.getElementById("info_control_ignore");
+var info_reactivate = document.getElementById("info_control_reactivate");
+
 function showInfo(array_id, is_random_episode) {
 	var episode_id = array_id.split("_");
 
@@ -190,8 +195,14 @@ function showInfo(array_id, is_random_episode) {
 	info_name.innerHTML = episode.name;
 	info_content.innerHTML = episode.content;
 
+	console.log(episode)
+
 	// Ignore List
 	play_box.setAttribute("data-array", array_id);
+
+	// show correct Buttons
+	if (episode.ignored == "true") { info_reactivate.style.display = "block" }
+	else {  }
 
 	// Settings
 	if (is_random_episode) {
