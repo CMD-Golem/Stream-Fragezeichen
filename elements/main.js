@@ -1,7 +1,7 @@
 // user_role: "hidden" -> don't count clicks and user analytics
 
 // Functions to generate the list according to settings
-var provider_link, last_provider_selected, backwards, sort_date, active_type, user_data = {list:[]}, watch_list_count = 0, ignore_list_count = 0;
+var provider_link, last_provider_selected, backwards, sort_date, user_data = {list:[]}, watch_list_count = 0, ignore_list_count = 0;
 var user_id = null;
 
 // get data from storage/db
@@ -63,17 +63,9 @@ function setupUserData(json_user_data) {
 		}
 
 		// load in episode array
-		var episode_id = episode.array_id.split("_");
-		if (episode_id[0] == "normal") {
-			episoden[episode_id[1]].ignored = add_ignore;
-			episoden[episode_id[1]].class = add_class;
-			episoden[episode_id[1]].history = history;
-		}
-		else {
-			special[episode_id[1]].ignored = add_ignore;
-			special[episode_id[1]].class = add_class;
-			special[episode_id[1]].history = history;
-		}
+		episoden[episode.array_id].ignored = add_ignore;
+		episoden[episode.array_id].class = add_class;
+		episoden[episode.array_id].history = history;
 	}
 
 	last_provider_selected = document.getElementById("provider_" + provider_link);
@@ -85,36 +77,29 @@ function setupUserData(json_user_data) {
 // load episodes
 var episoden_list = document.getElementsByTagName("ol")[0];
 var episode_html = [];
+var astring, bstring;
 
-function loadEpisodes(load_type) {
+function loadEpisodes() {
 	episode_html = [];
 
-	// load_type: normal, special, all, history (all but with special sort)
-	// load normal episods if load type isnt special
-	if (load_type != "special") {
-		for (var i = 0; i < episoden.length; i++) {
-			var episode = episoden[i];
-			var number = parseInt(episode.number);
-			var title = `<b>Folge ${number}</b>: ${episode.name}`;
+	for (var i = 0; i < episoden.length; i++) {
+		var episode = episoden[i];
+		var title = episode.name;
 
-			generateEpisodes(i, episode, number, "normal", "img/episode_", title);
-		}
+		if (episode.type == "normal") { title = `<b>Folge ${episode.number}</b>: ${episode.name}`; }
 
-		if (backwards && !show_history) {
-			episode_html.reverse();
-		}
-		else if (show_history) {
-			episode_html.reverse();
-		}
+		generateEpisodes(i, episode, episode.number, title);
 	}
 
-	if (load_type != "normal") {
-		for (var i = 0; i < special.length; i++) {
-			var episode = special[i];
-			var number = episode.number.toLowerCase();
+	if (!backwards && !show_history) {
+		episode_html.reverse();
 
-			generateEpisodes(i, episode, number, "special", "img_special/special_", episode.name);
-		}
+		console.log(1)
+	}
+	else if (show_history) {
+		episode_html.reverse();
+
+		console.log(2)
 	}
 
 	if (sort_date && !show_history) {
@@ -132,6 +117,8 @@ function loadEpisodes(load_type) {
 			}
 			return 0;
 		});
+
+		console.log(3)
 	}
 
 	if (show_history) {
@@ -149,13 +136,15 @@ function loadEpisodes(load_type) {
 			}
 			return 0;
 		});
+
+		console.log(4)
 	}
 	
 	episoden_list.innerHTML = episode_html.join("");
 }
 
-function generateEpisodes(i, episode, number, link_pre, img_folder, title) {
-	episoden[i].array_link = link_pre + "_" + i;
+function generateEpisodes(i, episode, number, title) {
+	episoden[i].array_link = i;
 	var episode_class = episode.class;
 
 	if (episode.href[provider_link] == "#") {
@@ -168,8 +157,8 @@ function generateEpisodes(i, episode, number, link_pre, img_folder, title) {
 		var info = `alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')`;
 	}
 	else {
-		var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('${link_pre}_${i}', new Date())"`;
-		var info = `showInfo('${link_pre}_${i}')`
+		var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('${i}', new Date())"`;
+		var info = `showInfo('${i}')`;
 	}
 
 	if (episode.history == undefined || episode.history == "1899-01-01T00:00:00.000Z" || episode.history == "") {
@@ -177,14 +166,14 @@ function generateEpisodes(i, episode, number, link_pre, img_folder, title) {
 	}
 
 	episode_html.push(`
-	<div data-release="${episode.release}" data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="${link_pre}_${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author}">
+	<div data-release="${episode.release}" data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author}">
 		<a ${href} class="img_play_box">
-			<img src="${img_folder}${number}.jpg" alt="${title}">
+			<img src="img/${number}.jpg" alt="${title}">
 			<p>${title}</p>
 			<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 		</a>
-		<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(this, '${link_pre}')"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-		<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(this, '${link_pre}')"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+		<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+		<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 		<button class="control_button info" title="Folgeninhalt anzeigen" onclick="${info}"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0Zm1.2 18h-2.4v-7.2h2.4zm0-9.6h-2.4V6h2.4z" style="fill:#fff;stroke-width:1.20001"></path></g></svg></button>
 	</div>`);
 }
@@ -198,19 +187,13 @@ function toggleOrder() {
 	backwards = !backwards;
 	set_sort_list.checked = !backwards;
 	storeUserData();
+	loadEpisodes();
 
 	if (backwards) {
 		el_sort_list.style.transform = "scaleY(1)";
 	}
 	else {
 		el_sort_list.style.transform = "scaleY(-1)";
-	}
-	
-	if (show_history) {
-		loadEpisodes("history");
-	}
-	else {
-		loadEpisodes(active_type);
 	}
 }
 
@@ -223,6 +206,7 @@ function toggleSort() {
 	sort_date = !sort_date;
 	set_episode_number.checked = sort_date;
 	storeUserData();
+	loadEpisodes();
 
 	if (sort_date) {
 		episode_number.style.display = "flex";
@@ -231,13 +215,6 @@ function toggleSort() {
 	else {
 		episode_number.style.display = "none";
 		release_date.style.display = "flex";
-	}
-	
-	if (show_history) {
-		loadEpisodes("history");
-	}
-	else {
-		loadEpisodes(active_type);
 	}
 }
 
@@ -286,15 +263,13 @@ async function loadData() {
 
 		showSettings(); //actions.js
 		if (window_width <= 506) { overflowMenu(); } //actions.js
-	
+
 		last_provider_selected = document.getElementById("provider_0");
 		last_provider_selected.classList.add("provider_selected");
 	}
 
 	// load html
-	
-	active_type = "all";
-	loadEpisodes(active_type);
+	loadEpisodes();
 }
 
 loadData();
@@ -309,7 +284,6 @@ async function storeUserData() {
 	user_data.provider = provider_link;
 	user_data.backwards = backwards;
 	user_data.sort_date = sort_date;
-	// user_data.active_type = active_type;
 
 	var json_user_data = JSON.stringify(user_data);
 	window.localStorage.setItem("user_data", json_user_data);
@@ -354,11 +328,7 @@ function getUserDataIndex(array_id) {
 		in_array--;
 	}
 
-	// return array of array_id: ["normal", "200"]
-	var episode_id = array_id.split("_");
-	episode_id.push(in_array);
-
-	return episode_id;
+	return in_array;
 }
 
 //#################################################################################################
@@ -367,30 +337,29 @@ var no_watch_list = document.getElementById("no_watch_list");
 
 function toggleWatchList(el_button) {
 	var element = el_button.parentNode;
-	var data = getUserDataIndex(element.dataset.array);
+	var array_id = element.dataset.array;
+	var in_array = getUserDataIndex(array_id);
 
 	if (!element.classList.contains("in_watch_list")) {
 		// Add to Watchlist
 		element.classList.add("in_watch_list");
 		watch_list_count++;
-		user_data.list[data[2]].list = "true";
+		user_data.list[in_array].list = "true";
 		add_class = "in_watch_list ";
 	}
 	else {
 		// Remove from Watchlist
 		element.classList.remove("in_watch_list");
 		watch_list_count--;
-		user_data.list[data[2]].list = "";
+		user_data.list[in_array].list = "";
 		var add_class = "";
 
 		if (watch_list_count == 0 && show_watch_list) {
 			no_watch_list.style.display = "block";
 		}
 	}
-	// Refresh arrays
-	if (data[0] == "normal") { episoden[data[1]].class = add_class; }
-	else { special[data[1]].class = add_class; }
 
+	episoden[array_id].class = add_class;
 	storeUserData();
 }
 
@@ -400,28 +369,27 @@ var no_ignore_list = document.getElementById("no_ignore_list");
 
 function toggleIgnoreList(el_button) {
 	var element = el_button.parentNode;
-	var data = getUserDataIndex(element.dataset.array);
+	var array_id = element.dataset.array;
+	var in_array = getUserDataIndex(array_id);
 
-	if (user_data.list[data[2]].ignored == "") {
+	if (user_data.list[in_array].ignored == "") {
 		// Add to Ignore list
 		ignore_list_count++;
-		user_data.list[data[2]].ignored = "true";
+		user_data.list[in_array].ignored = "true";
 		add_ignore = "true";
 	}
 	else {
 		// Remove from Ignore list
 		ignore_list_count--;
-		user_data.list[data[2]].ignored = "";
+		user_data.list[in_array].ignored = "";
 		add_ignore = "";
 
 		if (ignore_list_count == 0 && show_ignore_list) {
 			no_ignore_list.style.display = "block";
 		}
 	}
-	// Refresh arrays
-	if (data[0] == "normal") { episoden[data[1]].ignored = add_ignore; }
-	else { special[data[1]].ignored = add_ignore; }
 
+	episoden[array_id].ignored = add_ignore;
 	storeUserData();
 }
 
@@ -434,13 +402,11 @@ var this_year = new Date().getFullYear();
 var date_before_edit, finished_input;
 
 function refreshHistory(array_id, history) {
-	var data = getUserDataIndex(array_id);
-
-	if (data[0] == "normal") { var episode = episoden[data[1]]; }
-	else { var episode = special[data[1]]; }
+	var in_array = getUserDataIndex(array_id);
+	var episode = episoden[array_id];
 
 	episode.history = history;
-	user_data.list[data[2]].history = history;
+	user_data.list[in_array].history = history;
 
 	// Click counter
 	if (user_role != "hidden") {
@@ -545,17 +511,17 @@ function refreshList() {
 	episoden_list.classList.remove("show_watch_list");
 
 	if (show_watch_list) {
-		loadEpisodes(active_type);
+		loadEpisodes();
 		episoden_list.classList.add("show_watch_list");
 		if (watch_list_count == 0) { no_watch_list.style.display = "block"; }
 	}
 	else if (show_history) {
-		loadEpisodes("history");
+		loadEpisodes();
 		episoden_list.classList.add("show_history");
 		if (episoden_list.querySelectorAll("div:not(.no_history)").length == 0) { no_history.style.display = "block"; }
 	}
 	else {
-		loadEpisodes(active_type);
+		loadEpisodes();
 	}
 	refreshNavButtons(); // actions.js
 }

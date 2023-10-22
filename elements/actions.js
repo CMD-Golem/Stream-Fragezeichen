@@ -81,42 +81,94 @@ var show_random_episode = false;
 var show_settings = false;
 var show_account = false;
 var show_info = false;
+var history_array = episoden.slice();
+
+var random_settings = [20, true, false, true, true, true, true, true, true, true];
+
+function initRandomEpisode() {
+	for (var i = 0; i < history_array.length; i++) {
+		var episode = history_array[i];
+		var remove = false;
+
+		if (random_settings[1] && episode.type == "normal") { remove = true; }
+		if (random_settings[2] && episode.type == "special") { remove = true; }
+		if (random_settings[3] && episode.type == "advent_calender") { remove = true; }
+		if (random_settings[4] && episode.type == "headphones") { remove = true; }
+		if (random_settings[5] && episode.type == "short_story") { remove = true; }
+		if (random_settings[6] && episode.type == "film") { remove = true; }
+		if (random_settings[7] && episode.type == "live") { remove = true; }
+		if (random_settings[8] && episode.type == "audiobook") { remove = true; }
+		if (random_settings[9] && episode.type == "documentation") { remove = true; }
+
+		if (remove) {
+			delete history_array[i];
+			remove_counter++;
+		}
+	}
+
+	console.log(remove_counter)
+	console.log(random_shown_counter)
+	console.log(history_array.length)
+
+	history_array = history_array.filter(function(n){return n;});
+}
 
 function getRandomEpisode() {
-	// random episode from the select_random_amount longest not heard
-	var history_array = episoden.slice(); //.concat(special)
-	var select_random_amount = 20;
+	for (var i = 0; i < history_array.length; i++) {
+		var episode = history_array[i];
+		var remove = false;
+
+		if (episode.random_shown) { remove = true; }
+
+		if (remove) {
+			delete history_array[i];
+			remove_counter++;
+		}
+	}
+
+	history_array = history_array.filter(function(n){return n;});
 
 	// sort history array by the history
 	history_array.sort((a, b) => {
 		if (a.history == undefined || a.history == "") {a.history = "1899-01-01T00:00:00.000Z";}
-		if (b.history == undefined || b.history == "") { b.history = "1899-01-01T00:00:00.000Z";}
+		if (b.history == undefined || b.history == "") {b.history = "1899-01-01T00:00:00.000Z";}
+
+		if (a.href[0] == "#new") {a.history = "3000-01-01T00:00:00.000Z"}
+		if (b.href[0] == "#new") {b.history = "3000-01-01T00:00:00.000Z"}
 
 		var a_date = a.history;
 		var b_date = b.history;
-
-		if (a.href[0] == "#new") { a_date = "3000-01-01T00:00:00.000Z"}
 
 		if (a_date < b_date) { return -1; } // sort a before b
 		if (a_date > b_date) { return 1; } // sort a after b
 		return 0;
 	});
 
-	var oldest_index = select_random_amount - 1;
-	// increase oldest_index by one if element in array has same date
-	for (var i = select_random_amount; i < history_array.length; i++) {
-		if (history_array[i].history == history_array[oldest_index].history) {
-			oldest_index = i;
+	var select_random_amount = random_settings[0];
+
+	if (select_random_amount >= history_array.length) {
+		var oldest_index = history_array.length - 1;
+	}
+	else {
+		var oldest_index = select_random_amount - 1;
+		// increase oldest_index by one if element in array has same date
+		for (var i = select_random_amount; i < history_array.length; i++) {
+			if (history_array[i].history == history_array[oldest_index].history) {
+				oldest_index = i;
+			}
+			else {break;}
 		}
-		else {break;}
 	}
 
-	history_array.length = oldest_index + 1;
+	// history_array.length = oldest_index + 1;
 	var random_index = Math.floor(Math.random() * oldest_index + 1);
+	var array_link = history_array[random_index].array_link;
 
 	// show aside
+	random_shown_counter++
 	show_random_episode = true;
-	showInfo(history_array[random_index].array_link, true);
+	episoden[array_link].random_shown = true;
+	showInfo(array_link, true);
 }
 
 
@@ -152,17 +204,10 @@ var info_ignore = document.getElementById("info_control_ignore");
 var info_reactivate = document.getElementById("info_control_reactivate");
 
 function showInfo(array_id, is_random_episode) {
-	var episode_id = array_id.split("_");
+	var episode = episoden[array_id];
 
 	// img
-	if (episode_id[0] == "normal") {
-		var episode = episoden[episode_id[1]];
-		info_img.src = `img/episode_${parseInt(episode.number)}.jpg`;
-	}
-	else {
-		var episode = special[episode_id[1]];
-		info_img.src = `img_special/special_${episode.number}.jpg`;
-	}
+	info_img.src = `img/${episode.number}.jpg`;
 
 	// info panel with author, duration, release date
 	var hours = episode.track_length /3600000;
@@ -363,7 +408,7 @@ function selectProvider(el_button) {
 	last_provider_selected = el_button;
 	provider_link = parseInt(el_button.id.replace("provider_", ""));
 
-	loadEpisodes(active_type); // main.js
+	loadEpisodes(); // main.js
 	storeUserData(); // main.js
 }
 
@@ -544,7 +589,7 @@ function startSearch() {
 		search_box.style.display = "none";
 		if (window.screen.width <= 506) { nav_buttons.removeAttribute("style"); }
 		siteSearch();
-		// loadEpisodes(active_type); // main.js
+		// loadEpisodes(); // main.js
 	}
 }
 
