@@ -40,34 +40,28 @@ function setupUserData(json_user_data) {
 	// int user list
 	for (var i = 0; i < user_data.list.length; i++) {
 		var episode = user_data.list[i];
-		var add_class = "";
-		var add_ignore = "";
+		var found_episode = false;
 
-		// int history
-		var history = undefined;
+		// init counters
+		if (episode.list != "") { watch_list_count++; }
 
-		if (episode.history != "") {
-			history = episode.history;
+		if (episode.ignored != "") { ignore_list_count++; }
+
+		// store user data array 
+		for (var j = 0; j < episoden.length; j++) {
+			if (episode.number == episoden[j].number) {
+				episoden[j].user_data_index = i;
+				found_episode = true;
+				break;
+			}
 		}
 
-		// int watch list
-		if (episode.list != "") {
-			add_class += "in_watch_list ";
-			watch_list_count++;
+		if (!found_episode) {
+			console.warn("Episode in den Nutzerdaten konnte nicht gefunden werden.");
 		}
-
-		// int ignore list
-		if (episode.ignored != "") {
-			add_ignore = "true";
-			ignore_list_count++;
-		}
-
-		// load in episode array
-		episoden[episode.array_id].ignored = add_ignore;
-		episoden[episode.array_id].class = add_class;
-		episoden[episode.array_id].history = history;
 	}
 
+	// select provider
 	last_provider_selected = document.getElementById("provider_" + provider_link);
 	last_provider_selected.classList.add("provider_selected");
 }
@@ -77,29 +71,77 @@ function setupUserData(json_user_data) {
 // load episodes
 var episoden_list = document.getElementsByTagName("ol")[0];
 var episode_html = [];
-var astring, bstring;
 
 function loadEpisodes() {
 	episode_html = [];
 
 	for (var i = 0; i < episoden.length; i++) {
 		var episode = episoden[i];
+		var episode_class = "";
+
+		// get user_data index
+		if (episode.user_data_index != undefined) {
+			var episode_data = user_data.list[episode.user_data_index];
+		}
+		else {
+			var episode_data = {};
+		}
+
+		// generate title
 		var title = episode.name;
+		var search_number = "";
+		if (episode.type == "normal") {
+			title = `<b>Folge ${episode.number}</b>: ${episode.name}`;
+			search_number = episode.number + " ";
+		}
 
-		if (episode.type == "normal") { title = `<b>Folge ${episode.number}</b>: ${episode.name}`; }
+		// remove episodes whiche are not aviable on selected streamer 
+		if (episode.href[provider_link] == "#") {
+			var href = 'href="#"';
+			episode_class += " not_aviable";
+			var info = "";
+		}
+		// add message for unreleased episodes
+		else if (episode.href[0] == "#new") {
+			var href = `href="#" onclick="alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.');"`;
+			var info = `alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')`;
+		}
+		// setup episodes links
+		else {
+			var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('${i}', new Date())"`;
+			var info = `showInfo('${i}')`;
+		}
 
-		generateEpisodes(i, episode, episode.number, title);
+		// classes
+		if (episode_data.history == undefined || episode_data.history == "1899-01-01T00:00:00.000Z" || episode_data.history == "") {
+			episode_class += " no_history";
+		}
+		if (episode_data.list == "true") {
+			episode_class += " in_watch_list";
+		}
+		if (episode_data.ignored == "true") {
+			episode_class += " in_ignore_list";
+		}
+																						//number or index?							// remove?
+		episode_html.push(`
+		<div data-release="${episode.release}" data-history="${episode_data.history}" id="${episode.number}" class="${episode_class}" data-array="${i}" data-filter="die drei fragezeichen ??? ${search_number}${episode.name} ${episode.book_author}">
+			<a ${href} class="img_play_box">
+				<img src="img/${episode.number}.jpg" alt="${title}">
+				<p>${title}</p>
+				<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+			</a>
+			<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(${i}, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+			<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(${i}, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+			<button class="control_button info" title="Folgeninhalt anzeigen" onclick="${info}"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0Zm1.2 18h-2.4v-7.2h2.4zm0-9.6h-2.4V6h2.4z" style="fill:#fff;stroke-width:1.20001"></path></g></svg></button>
+		</div>`);
 	}
 
+	// do html sorting according to settings
 	if (!backwards && !show_history) {
 		episode_html.reverse();
-
-		console.log(1)
 	}
 	else if (show_history) {
 		episode_html.reverse();
-
-		console.log(2)
 	}
 
 	if (sort_date && !show_history) {
@@ -117,8 +159,6 @@ function loadEpisodes() {
 			}
 			return 0;
 		});
-
-		console.log(3)
 	}
 
 	if (show_history) {
@@ -136,46 +176,9 @@ function loadEpisodes() {
 			}
 			return 0;
 		});
-
-		console.log(4)
 	}
 	
 	episoden_list.innerHTML = episode_html.join("");
-}
-
-function generateEpisodes(i, episode, number, title) {
-	episoden[i].array_link = i;
-	var episode_class = episode.class;
-
-	if (episode.href[provider_link] == "#") {
-		var href = 'href="#"';
-		episode_class += " not_aviable";
-		var info = "";
-	}
-	else if (episode.href[0] == "#new") {
-		var href = `href="#" onclick="alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.');"`;
-		var info = `alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')`;
-	}
-	else {
-		var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('${i}', new Date())"`;
-		var info = `showInfo('${i}')`;
-	}
-
-	if (episode.history == undefined || episode.history == "1899-01-01T00:00:00.000Z" || episode.history == "") {
-		episode_class += " no_history";
-	}
-
-	episode_html.push(`
-	<div data-release="${episode.release}" data-history="${episode.history}" id="${number}" class="${episode_class}" data-array="${i}" data-filter="die drei fragezeichen ??? ${number} ${episode.name} ${episode.release.slice(0, 4)} ${episode.book_author}">
-		<a ${href} class="img_play_box">
-			<img src="img/${number}.jpg" alt="${title}">
-			<p>${title}</p>
-			<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-		</a>
-		<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-		<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-		<button class="control_button info" title="Folgeninhalt anzeigen" onclick="${info}"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0Zm1.2 18h-2.4v-7.2h2.4zm0-9.6h-2.4V6h2.4z" style="fill:#fff;stroke-width:1.20001"></path></g></svg></button>
-	</div>`);
 }
 
 //#################################################################################################
@@ -221,7 +224,6 @@ function toggleSort() {
 //#################################################################################################
 // load user data
 var input_user_id = document.getElementById("user_id");
-var load_data_response;
 
 async function loadData() {
 	var json_user_data = window.localStorage.getItem("user_data");
@@ -242,13 +244,13 @@ async function loadData() {
 			input_user_id.value = user_id;
 		}
 		else if (response.status == 502) {
-			alert("Die registierte ID ist fehlerhaft!");
+			alert("Die registierte ID ist fehlerhaft oder entfernt worden!");
 			disconnectId();
 		}
 		else {
 			alert("Benutzer Daten konnten nicht heruntergeladen werden!");
-			console.log(response);
-			console.log(response_object);
+			console.error(response);
+			console.error(response_object);
 		}
 	}
 
@@ -304,62 +306,55 @@ async function storeUserData() {
 
 		if (response.status != 200) {
 			alert("Benutzer Daten konnte nicht hochgeladen werden!");
-			console.log(response);
-			console.log(await response.json());
+			console.error(response);
+			console.error(await response.json());
 		}
 	}
 }
 
 //#################################################################################################
-// make changes to user data list
-function getUserDataIndex(array_id) {
-	var in_array = false;
+// create new index in user data for episode
+function createUserDataIndex(episoden_index) {
+	// create user data entry
+	var user_data_index = user_data.list.push({number:episoden[episoden_index].number});
+	user_data_index--;
 
-	// check if episode is already in user data
-	for (var i = 0; i < user_data.list.length; i++) {
-		if (user_data.list[i].array_id == array_id) {
-			in_array = i;
-		}
-	}
-
-	// add episode to user list if not existing
-	if (in_array === false) {
-		var in_array = user_data.list.push({array_id:array_id, history:undefined, list:"", ignored:""});
-		in_array--;
-	}
-
-	return in_array;
+	// store user_data_index in episoden array and return it
+	episoden[episoden_index].user_data_index = user_data_index;
+	return user_data_index;
 }
 
 //#################################################################################################
 // Watchlist
 var no_watch_list = document.getElementById("no_watch_list");
 
-function toggleWatchList(el_button) {
-	var element = el_button.parentNode;
-	var array_id = element.dataset.array;
-	var in_array = getUserDataIndex(array_id);
+function toggleWatchList(episoden_index, el_button) {
+	// get or create user_data entry
+	var user_data_index = episoden[episoden_index].user_data_index;
 
-	if (!element.classList.contains("in_watch_list")) {
-		// Add to Watchlist
-		element.classList.add("in_watch_list");
-		watch_list_count++;
-		user_data.list[in_array].list = "true";
-		add_class = "in_watch_list ";
+	if (user_data_index == undefined) {
+		user_data_index = createUserDataIndex(episoden_index);
 	}
-	else {
-		// Remove from Watchlist
-		element.classList.remove("in_watch_list");
+
+	var episode_data = user_data.list[user_data_index];
+
+	// Remove from Watchlist
+	if (episode_data.list == "true") {
+		el_button.parentNode.classList.remove("in_watch_list");
 		watch_list_count--;
-		user_data.list[in_array].list = "";
-		var add_class = "";
+		episode_data.list = undefined;
 
 		if (watch_list_count == 0 && show_watch_list) {
 			no_watch_list.style.display = "block";
 		}
 	}
+	// Add to Watchlist
+	else {
+		el_button.parentNode.classList.add("in_watch_list");
+		watch_list_count++;
+		episode_data.list = "true";
+	}
 
-	episoden[array_id].class = add_class;
 	storeUserData();
 }
 
@@ -367,29 +362,33 @@ function toggleWatchList(el_button) {
 // Ignore List
 var no_ignore_list = document.getElementById("no_ignore_list");
 
-function toggleIgnoreList(el_button) {
-	var element = el_button.parentNode;
-	var array_id = element.dataset.array;
-	var in_array = getUserDataIndex(array_id);
+function toggleIgnoreList(episoden_index, el_button) {
+	// get or create user_data entry
+	var user_data_index = episoden[episoden_index].user_data_index;
 
-	if (user_data.list[in_array].ignored == "") {
-		// Add to Ignore list
-		ignore_list_count++;
-		user_data.list[in_array].ignored = "true";
-		add_ignore = "true";
+	if (user_data_index == undefined) {
+		user_data_index = createUserDataIndex(episoden_index);
 	}
-	else {
-		// Remove from Ignore list
+
+	var episode_data = user_data.list[user_data_index];
+
+	// Remove from Ignore List
+	if (episode_data.ignored == "true") {
+		el_button.parentNode.classList.remove("in_ignore_list");
 		ignore_list_count--;
-		user_data.list[in_array].ignored = "";
-		add_ignore = "";
+		episode_data.ignored = undefined;
 
 		if (ignore_list_count == 0 && show_ignore_list) {
 			no_ignore_list.style.display = "block";
 		}
 	}
+	// Add to Ignore List
+	else {
+		el_button.parentNode.classList.add("in_ignore_list");
+		ignore_list_count++;
+		episode_data.ignored = "true";
+	}
 
-	episoden[array_id].ignored = add_ignore;
 	storeUserData();
 }
 
@@ -401,19 +400,24 @@ var done_history = document.getElementById("done_history");
 var this_year = new Date().getFullYear();
 var date_before_edit, finished_input;
 
-function refreshHistory(array_id, history) {
-	var in_array = getUserDataIndex(array_id);
-	var episode = episoden[array_id];
+function refreshHistory(episoden_index, date, click_counter) {
+	// get or create user_data entry
+	var user_data_index = episoden[episoden_index].user_data_index;
 
-	episode.history = history;
-	user_data.list[in_array].history = history;
-
-	// Click counter
-	if (user_role != "hidden") {
-		fetch("/.netlify/functions/episode_counter/");
+	if (user_data_index == undefined) {
+		user_data_index = createUserDataIndex(episoden_index);
 	}
 
+	var episode_data = user_data.list[user_data_index];
+
+	// store date
+	episode_data.history = date;
 	storeUserData();
+
+	// Click counter
+	if (user_role != "hidden" && click_counter != false) {
+		fetch("/.netlify/functions/episode_counter/");
+	}
 }
 
 function editHistory() {
@@ -438,9 +442,9 @@ function saveEditHistory() {
 	done_history.style.display = "none";
 
 	var date_array = info_history.value.split(".");
-	var history = `${date_array[2]}-${date_array[1]}-${date_array[0]}T00:00:00.000Z`;
+	var date = `${date_array[2]}-${date_array[1]}-${date_array[0]}T00:00:00.000Z`;
 
-	refreshHistory(info_history.dataset.array, history);
+	refreshHistory(info_history.dataset.array, date, false);
 }
 
 // Check user input (origin: https://stackoverflow.com/a/43473017/14225364)
@@ -489,6 +493,7 @@ info_history.onkeydown = function(evt) {
 //#################################################################################################
 // Show Watch list, History
 var show_watch_list = false;
+var show_ignore_list = false;
 var show_history = false;
 
 function showWatchList() {
@@ -511,7 +516,7 @@ function refreshList() {
 	episoden_list.classList.remove("show_watch_list");
 
 	if (show_watch_list) {
-		loadEpisodes();
+		// loadEpisodes();
 		episoden_list.classList.add("show_watch_list");
 		if (watch_list_count == 0) { no_watch_list.style.display = "block"; }
 	}

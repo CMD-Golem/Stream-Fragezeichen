@@ -14,11 +14,11 @@
 		<a class="nav_button nav_home" href="/"><h1>Stream Fragezeichen</h1></a>
 	</nav>
 
-	<main>
+	<main class="center">
 		<h1>Kontakt</h1>
 
-		<form name="Contact" netlify onsubmit="return validateForm()" action="form_success.html" style="text-align: left;">
-			<p>Deine E-Mail Adresse <small>(für die Rückmeldung)</small></p>
+		<form name="Contact" netlify onsubmit="validateForm()" method="POST"  style="text-align: left;">
+			<p>Deine E-Mail Adresse <small>(nur falls eine Rückmeldung gewünscht ist)</small></p>
 			<input type="email" name="Email" placeholder="Deine Antwort">
 
 			<p>Betreff</p>
@@ -31,6 +31,15 @@
 				<button type="submit" class="border_button">Senden</button>
 			</div>
 		</form>
+
+		<section style="display: none;">
+			<p>Vielen Dank für Ihre Nachricht.</p>
+			<p>Sie wurde erfolgreich versendet.</p>
+
+			<div style="height:10vh;"></div>
+
+			<a href="/" class="border_button settings_more_info">Zurück zur Startseite</a>
+		</section>
 	</main>
 
 	<datalist id="subjects">

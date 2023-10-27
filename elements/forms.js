@@ -11,14 +11,27 @@ function textarea(edited_textarea) {
 
 
 // validate Form
+var el_form = document.getElementsByTagName("form")[0];
+var el_success = document.getElementsByTagName("section")[0];
 var description = document.getElementById("description");
 var subject = document.getElementById("subject");
 
-function validateForm() {
+async function validateForm() {
+	event.preventDefault();
 	
-	if (check.value == "" || subject.value == "") {
-		alert("Add your comment first");
-		return false;
+	if (document.getElementById("description").value == "" || document.getElementById("subject").value == "") {
+		alert("Die Felder Betreff und Beschreibung müssen ausgefüllt werden.");
+	}
+	else {
+		await fetch("/", {
+			method: "POST",
+			headers: { "Content-Type": "application/x-www-form-urlencoded" },
+			body: new URLSearchParams(new FormData(event.target)).toString(),
+		})
+
+		el_form.style.display = "none";
+		el_success.style.display = "block";
+		return true;
 	}
 }
 
