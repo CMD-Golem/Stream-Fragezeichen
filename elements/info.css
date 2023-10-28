@@ -65,6 +65,10 @@ input:focus, input:focus:hover, textarea:focus, textarea:focus:hover {
 	background-color: #02abeb;
 }
 
-.info_description span {
+.info_description b {
 	font-weight: bold;
+}
+
+.hidden_settings span {
+	user-select: all;
 }

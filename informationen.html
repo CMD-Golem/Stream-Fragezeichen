@@ -37,25 +37,48 @@
 		</div>
 		<br>
 		<div class="info_description">
-			<p style="display: none;" class="sort_list"><span>Liste umkehren:</span> Toggle, ob zuerst Folge 1 oder die neuste Folge angezeigt werden soll.</p>
-			<p style="display: none;" class="episode_number"><span>Nach Folgennummer anordnen:</span> Sortiere Folgen nach dem Erscheinungsdatum oder nach Fall Art (Spezialfälle, Adventsfolgen, Hörbücher).</p>
-			<p style="display: none;" class="release_date"><span>Nach Erscheinungsdatum anordnen:</span> Sortiere Folgen nach dem Erscheinungsdatum oder nach Fall Art (Spezialfälle, Adventsfolgen, Hörbücher).</p>
+			<p style="display: none;" class="sort_list"><b>Liste umkehren:</b> Toggle, ob zuerst Folge 1 oder die neuste Folge angezeigt werden soll.</p>
+			<p style="display: none;" class="episode_number"><b>Nach Folgennummer anordnen:</b> Sortiere Folgen nach dem Erscheinungsdatum oder nach Fall Art (Spezialfälle, Adventsfolgen, Hörbücher).</p>
+			<p style="display: none;" class="release_date"><b>Nach Erscheinungsdatum anordnen:</b> Sortiere Folgen nach dem Erscheinungsdatum oder nach Fall Art (Spezialfälle, Adventsfolgen, Hörbücher).</p>
 			<div style="display: none;" class="watch_list">
-				<p><span>Watch List:</span> Zeige Folgen an, welche in der Watch List gespeichert sind.</p>
+				<p><b>Watch List:</b> Zeige Folgen an, welche in der Watch List gespeichert sind.</p>
 				<p>Folgen können durch das Klicken des Plus-Buttons in die Watch List hinzugefügt oder durch das Klicken des Minus-Buttons aus der Watch List entfernt werden.</p>
 			</div>
-			<p style="display: none;" class="history"><span>Verlauf:</span> Zeige deinen Hörverlauf an.</p>
-			<p style="display: none;" class="random_episode"><span>Zufällige Folge:</span> Wählt aus deinen zwanzig, am längsten nicht mehr gehörten Episoden, zufällig eine aus.</p>
-			<p style="display: none;" class="search"><span>Suche:</span> Suche nach Fällen anhand von Fallnummer, Falltitel, Autor oder Erscheinungsdatum</p>
-			<p style="display: none;" class="settings"><span>Einstellungen:</span> Ändere deinen Musik Streaming-Dienst.</p>
+			<p style="display: none;" class="history"><b>Verlauf:</b> Zeige deinen Hörverlauf an.</p>
+			<p style="display: none;" class="random_episode"><b>Zufällige Folge:</b> Wählt aus deinen zwanzig, am längsten nicht mehr gehörten Episoden, zufällig eine aus.</p>
+			<p style="display: none;" class="search"><b>Suche:</b> Suche nach Fällen anhand von Fallnummer, Falltitel, Autor oder Erscheinungsdatum</p>
+			<p style="display: none;" class="settings"><b>Einstellungen:</b> Ändere deinen Musik Streaming-Dienst.</p>
 			<div style="display: none;" class="account">
-				<p><span>Nutzerdaten:</span> Erstelle einen ID für eine geräteübergreifende Synchronisation von deinen Nutzerdaten, wie Streaming-Dienst, Folgensortierung, Watch List, Hörverlauf und ignorierte Folgen.</p>
+				<p><b>Nutzerdaten:</b> Erstelle einen ID für eine geräteübergreifende Synchronisation von deinen Nutzerdaten, wie Streaming-Dienst, Folgensortierung, Watch List, Hörverlauf und ignorierte Folgen.</p>
 				<p>Hier kannst du ausserdem deine Nutzerdaten exportieren, importieren oder zurücksetzen.</p>
 				<p>Wenn bereits eine ID erstellt wurde, kann man sich hier von dieser Trennen oder diese mit allen Daten unwiederruflich Löschen.</p>
 			</div>
 			
 		</div>
+		<br>
+		<details onclick="spoiler(this, true, event)" open class="hidden_settings">
+			<summary>Versteckte Einstellungen</summary>
+			<div>
+				<p><b>Episode von Verlauf entfernen:</b> Zuletzt gehört der gewünschten Folge bearbeiten und das Datum 01.01.1999 eintragen.</p>
+				<p><b>Anzahl zufällige Folgen:</b> Einstellen aus wie vielen der am längsten nicht mehr gehörten Folgen zufällig ausgewählt werden soll. Die Tastenkombination Strg + Umschalt + J drücken und folgenden Befehl eingeben: <span>random_settings[0] = 20</span>. Die 20 kann durch die gewünschte Anzahl ersetzt werden.</p>
+				<p>
+					<b>Welche Folgen sollen zufällig ausgewählt werden:</b> Die Tastenkombination Strg + Umschalt + J drücken und passenden Befehl aus der Liste eingeben. Bei "= true" werden die Epsioden angezeigt und sie auf false gesetzt wird, werden sie nicht mehr angezeigt.
+					<ul>
+						<li>Normale Episoden: <span>random_settings[1] = true</span></li>
+						<li>Special und Top Secret Episoden: <span>random_settings[2] = true</span></li>
+						<li>Adventskalender: <span>random_settings[3] = false</span></li>
+						<li>Kopfhörer-Hörspiele: <span>random_settings[4] = false</span></li>
+						<li>Kurzgeschichten: <span>random_settings[5] = false</span></li>
+						<li>Hörspiele zu Filmen: <span>random_settings[6] = false</span></li>
+						<li>Liveshows: <span>random_settings[7] = false</span></li>
+						<li>Hörbucher: <span>random_settings[8] = false</span></li>
+						<li>Die Welt der drei Fragezeichen: <span>random_settings[9] = false</span></li>
+					</ul>
+				</p>
+			</div>
+		</details>
 	</main>
+
 
 	<footer>
 		<div class="footer_flex">
@@ -75,6 +98,7 @@
 		</div>
 	</footer>
 
+<script src="elements/info.js"></script>
 <script>
 
 var prev_el = document.createElement("div");

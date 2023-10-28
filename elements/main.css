@@ -13,47 +13,6 @@ main, .aside_content {
 @media (max-width: 458px) { main, .aside_content { width: 288px; } }
 
 /* ####################################################################### */
-/* img play box */
-.img_play_box img {
-	transition: opacity 0.2s;
-}
-
-.control_button {
-	display: none;
-	position: absolute;
-	background-color: rgba(0, 0, 0, 0.5);
-	backdrop-filter: blur(10px);
-	border-radius: 100%;
-	transition: transform 0.2s;
-	width: 40px;
-	height: 40px;
-	padding: 10px;
-}
-
-.control_button:hover {
-	background-color: rgba(0, 0, 0, 0.6);
-	transform: scale(1.2);
-}
-
-.img_play_box:hover img {
-	opacity: 60%;
-}
-
-.img_play_box:hover .control_button {
-	display: block;
-}
-
-@media (pointer: coarse) {
-	.play,
-	.info,
-	ol div:not(.in_watch_list) .add,
-	ol div.in_watch_list .remove {
-		display: block;
-	}
-}
-
-
-/* ####################################################################### */
 /* Episode list */
 ol {
 	padding: 0;
@@ -64,10 +23,6 @@ ol {
 
 ol div {
 	position: relative;
-}
-
-ol.show_watch_list div {
-	display: none;
 }
 
 ol img {
@@ -90,9 +45,63 @@ ol span {
 	font-weight: bold;
 }
 
-.add, .remove {
+.not_found {
+	display: none;
+	text-align: center;
+}
+
+.hide_search, .not_aviable {
+	display: none !important;
+}
+
+.show_history .no_history,
+.show_watch_list div:not(.in_watch_list),
+.show_ignore_list div:not(.in_ignore_list) {
+	display: none;
+}
+
+/* ####################################################################### */
+/* On cover buttons */					/*more*/
+.control_button {
+	display: none;
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(10px);
+	border-radius: 100%;
+	transition: transform 0.2s;
+	width: 40px;
+	height: 40px;
+	padding: 10px;
+}
+
+.control_button:hover {
+	background-color: rgba(0, 0, 0, 0.6);
+	transform: scale(1.2);
+}
+
+.play {
+	cursor: pointer;
+	width: 60px;
+	height: 60px;
+	padding-left: 18px;
+	padding-top: 12px;
+}
+ol .play {
+	top: 137px;
+	right: 27px;
+}
+.play_box .play {
+	top: 100px;
+	left: 112px;
+}
+
+ol .add, ol .remove {
 	top: 157px;
 	left: 17px;
+}
+.play_box .add, .play_box .remove {
+	top: 210px;
+	right: 62px;
 }
 
 .info {
@@ -100,36 +109,31 @@ ol span {
 	left: 17px;
 }
 
-.play {
-	cursor: pointer;
-	top: 137px;
-	right: 27px;
-	width: 60px;
-	height: 60px;
-	padding-left: 18px;
-	padding-top: 12px;
+.play_box .ignore, .play_box .reactivate {
+	top: 210px;
+	right: 122px;
 }
 
 ol div:hover .play,
 ol div:hover .info,
 ol div:not(.in_watch_list):hover .add,
-ol div.in_watch_list:hover .remove {
+ol div.in_watch_list:hover .remove,
+.play_box .play,
+.play_box:not(.in_watch_list) .add,
+.play_box.in_watch_list .remove,
+.play_box:not(.in_ignore_list) .ignore,
+.play_box.in_ignore_list .reactivate {
 	display: block;
 }
 
-.not_found {
-	display:none;
-	text-align: center;
+@media (pointer: coarse) {
+	ol .play,
+	ol .info,
+	ol div:not(.in_watch_list) .add,
+	ol div.in_watch_list .remove {
+		display: block;
+	}
 }
-
-.in_watch_list {
-	display: block !important;
-}
-
-.hide_search, .not_aviable, .show_history .no_history {
-	display: none !important;
-}
-
 
 /* ####################################################################### */
 /* Dialog */
@@ -209,32 +213,17 @@ aside .img_play_box img {
 	margin-left: 12px;
 }
 
-#play_box {
+/* img play box */
+.img_play_box img {
+	transition: opacity 0.2s;
+}
+
+.img_play_box:hover img {
+	opacity: 60%;
+}
+
+.play_box {
 	position: relative;
-}
-
-aside .control_button {
-	display: block;
-	top: unset;
-	left: unset;
-	/* width: 40px;
-	height: 40px; */
-}
-
-aside .play {
-	top: 100px;
-	right: unset;
-	left: 112px;
-}
-
-#info_control_add, #info_control_remove {
-	bottom: 10px;
-	right: 62px;
-}
-
-#info_control_ignore, #info_control_reactivate {
-	bottom: 10px;
-	right: 122px;
 }
 
 .info_description {
@@ -383,7 +372,7 @@ aside .play {
 		margin: 0;
 		width: 150px;
 	}
-	aside .play {
+	aside .play { /*more*/
 		top: 110px;
 		right: unset;
 		left: calc(100% / 2 + 15px);
@@ -403,7 +392,7 @@ aside .play {
 	ol p {
 		width: 264px;
 	}
-	.add, .remove, .info {
+	.add, .remove, .info { /*more*/
 		background-color: black;
 		top: 200px;
 		left: 15px;

@@ -25,12 +25,27 @@ function refreshNavButtons() {
 	if (show_account) { account_button.classList.add("nav_active"); }
 }
 
+// Overflow menu for navbar on mobile
+var show_overflow_menu = false;
+
+function overflowMenu() {
+	show_overflow_menu = !show_overflow_menu;
+	refreshNavButtons();
+
+	if (show_overflow_menu) { nav_buttons.classList.add("overflow_menu"); }
+	else { nav_buttons.classList.remove("overflow_menu"); }
+}
+
 //#################################################################################################
 // Aside
 var aside = document.getElementsByTagName("aside")[0];
 var aside_content = document.getElementsByClassName("aside_content");
 var css_root = document.querySelector(':root');
 var show_aside = false;
+var show_random_episode = false;
+var show_settings = false;
+var show_account = false;
+var show_info = false;
 
 
 function refreshAside() {
@@ -54,9 +69,6 @@ function refreshAside() {
 
 function hideAside() {
 	css_root.style.setProperty("--aside_height", "0");
-	if (show_random_episode || show_info) {
-		css_root.style.setProperty("--description_height", "unset");
-	}
 	
 	setTimeout(function(){
 		aside.style.overflow = "hidden";
@@ -75,119 +87,149 @@ function hideAside() {
 	preventScroll(false);
 }
 
-//#################################################################################################
-// Show Aside Tabs
-var show_random_episode = false;
-var show_settings = false;
-var show_account = false;
-var show_info = false;
-var history_array = episoden.slice();
-
-var random_settings = [20, true, false, true, true, true, true, true, true, true];
-
-function initRandomEpisode() {
-	for (var i = 0; i < history_array.length; i++) {
-		var episode = history_array[i];
-		var remove = false;
-
-		if (random_settings[1] && episode.type == "normal") { remove = true; }
-		if (random_settings[2] && episode.type == "special") { remove = true; }
-		if (random_settings[3] && episode.type == "advent_calender") { remove = true; }
-		if (random_settings[4] && episode.type == "headphones") { remove = true; }
-		if (random_settings[5] && episode.type == "short_story") { remove = true; }
-		if (random_settings[6] && episode.type == "film") { remove = true; }
-		if (random_settings[7] && episode.type == "live") { remove = true; }
-		if (random_settings[8] && episode.type == "audiobook") { remove = true; }
-		if (random_settings[9] && episode.type == "documentation") { remove = true; }
-
-		if (remove) {
-			delete history_array[i];
-			remove_counter++;
-		}
-	}
-
-	console.log(remove_counter)
-	console.log(random_shown_counter)
-	console.log(history_array.length)
-
-	history_array = history_array.filter(function(n){return n;});
+// hide aside on touchmove
+var main_el = document.getElementsByTagName("main")[0];
+if (navigator.maxTouchPoints > 0 ) {
+	main_el.addEventListener("touchmove", function(){ if (show_aside) { hideAside(); }});
 }
 
+// prevent scroll
+var body = document.getElementsByTagName("body")[0];
+var prevents_scroll = false;
+
+function preventScroll(prevent_scroll) {
+	if (prevent_scroll && !prevents_scroll) {
+		body.style.overflow = "hidden";
+		prevents_scroll = true;
+	}
+	else if (!prevent_scroll && prevents_scroll) {
+		body.style.overflow = "visible";
+		prevents_scroll = false;
+	}
+}
+
+// calc height
+function infoHeight() {
+	var aside_needed_height = aside.firstElementChild.scrollHeight;
+	var description_header_height = info_name.parentElement.parentElement.scrollHeight;
+	var window_height = window.innerHeight;
+	var window_width = window.innerWidth;
+	var window_without_nav = window_height - 220;
+
+	// Height for Desktop view
+	if (window_width > 682) {
+		var aside_height = 340;
+		var info_height = (340 - 92 - description_header_height) + "px";
+	}
+	// Height for small screens (mobile with open keyboard)
+	else if (window_height <= 600 && window_width <= 682) {
+		var aside_height = window_height - 120;
+		var info_height = "unset";
+		preventScroll(true);
+	}
+	// Height for small screens but text doesn't fit on page without scrolling
+	else if (aside_needed_height >= window_without_nav) {
+		var aside_height = window_without_nav;
+		var info_height = (window_without_nav - description_header_height - 238) + "px";
+	}
+	// Height for small screens but text fits on page without scrolling
+	else if (aside_needed_height < window_without_nav) {
+		var aside_height = aside_needed_height;
+		var info_height = "unset";
+	}
+
+	css_root.style.setProperty("--aside_height", aside_height + "px");
+	css_root.style.setProperty("--description_height", info_height);
+}
+
+window.addEventListener("resize", function(){
+	if (show_info || show_random_episode) { infoHeight(); }
+});
+
+//#################################################################################################
+// Random Episode
+var random_settings = [20, true, true, false, false, false, false, false, false, false];
+// var all_possible_episoden, filtered_episoden;
+
 function getRandomEpisode() {
-	for (var i = 0; i < history_array.length; i++) {
-		var episode = history_array[i];
-		var remove = false;
+	var all_possible_episoden = [];
+	var filtered_episoden = [];
 
-		if (episode.random_shown) { remove = true; }
+	for (var i = 0; i < episoden.length; i++) {
+		var episode = episoden[i];
+		var not_listened_counter_all = 0;
+		var not_listened_counter_filtered = 0;
+		var keep = false;
 
-		if (remove) {
-			delete history_array[i];
-			remove_counter++;
+		if (random_settings[1] && episode.type == "normal") { keep = true; }
+		else if (random_settings[2] && episode.type == "special") { keep = true; }
+		else if (random_settings[3] && episode.type == "advent_calender") { keep = true; }
+		else if (random_settings[4] && episode.type == "headphones") { keep = true; }
+		else if (random_settings[5] && episode.type == "short_story") { keep = true; }
+		else if (random_settings[6] && episode.type == "film") { keep = true; }
+		else if (random_settings[7] && episode.type == "live") { keep = true; }
+		else if (random_settings[8] && episode.type == "audiobook") { keep = true; }
+		else if (random_settings[9] && episode.type == "documentation") { keep = true; }
+
+		// remove unreleased episodes
+		if (episode.href[0] == "#new") { keep = false; }
+
+		// remove ignored episodes
+		if (episode.user_data_index != undefined && user_data.list[episode.user_data_index].ignored == "true") { keep = false; }
+
+		// generate arrays array
+		if (keep) {
+			var history;
+			if (episode.user_data_index != undefined) {
+				history = user_data.list[episode.user_data_index].history;
+			}
+			if (history == undefined) {
+				history = "1999-01-01T00:00:00.000Z";
+				not_listened_counter_all++;
+				if (episode.random_shown) { not_listened_counter_filtered++; }
+			}
+
+			// array with all episodes
+			all_possible_episoden.push({episoden_index:i, history:history});
+
+			// array without already shown episodes
+			if (!episode.random_shown) { filtered_episoden.push({episoden_index:i, history:history}); }
 		}
 	}
 
-	history_array = history_array.filter(function(n){return n;});
+	// if there are not shown episodes, use filtered_episoden array
+	if (filtered_episoden.length != 0) { 
+		var random_episoden = filtered_episoden; 
+		var not_listened_counter = not_listened_counter_filtered;
+	}
+	else {
+		var random_episoden = all_possible_episoden;
+		var not_listened_counter = not_listened_counter_all;
+	}
 
-	// sort history array by the history
-	history_array.sort((a, b) => {
-		if (a.history == undefined || a.history == "") {a.history = "1899-01-01T00:00:00.000Z";}
-		if (b.history == undefined || b.history == "") {b.history = "1899-01-01T00:00:00.000Z";}
-
-		if (a.href[0] == "#new") {a.history = "3000-01-01T00:00:00.000Z"}
-		if (b.href[0] == "#new") {b.history = "3000-01-01T00:00:00.000Z"}
-
-		var a_date = a.history;
-		var b_date = b.history;
-
-		if (a_date < b_date) { return -1; } // sort a before b
-		if (a_date > b_date) { return 1; } // sort a after b
+	// sort array by the history
+	random_episoden.sort((a, b) => {
+		if (a.history < b.history) { return -1; } // sort a before b
+		if (a.history > b.history) { return 1; } // sort a after b
 		return 0;
 	});
 
-	var select_random_amount = random_settings[0];
-
-	if (select_random_amount >= history_array.length) {
-		var oldest_index = history_array.length - 1;
+	// decrease max_length if not enough episodes possible as defined in settings
+	if (random_settings[0] >= random_episoden.length) {
+		var max_length = random_episoden.length;
+	}
+	// set max_length to not_listened_counter if it is bigger
+	else if (random_settings[0] <= not_listened_counter) {
+		var max_length = not_listened_counter;
 	}
 	else {
-		var oldest_index = select_random_amount - 1;
-		// increase oldest_index by one if element in array has same date
-		for (var i = select_random_amount; i < history_array.length; i++) {
-			if (history_array[i].history == history_array[oldest_index].history) {
-				oldest_index = i;
-			}
-			else {break;}
-		}
+		var max_length = random_settings[0] + 1;
 	}
 
-	// history_array.length = oldest_index + 1;
-	var random_index = Math.floor(Math.random() * oldest_index + 1);
-	var array_link = history_array[random_index].array_link;
-
-	// show aside
-	random_shown_counter++
-	show_random_episode = true;
-	episoden[array_link].random_shown = true;
-	showInfo(array_link, true);
-}
-
-
-// settings tab
-function showSettings() {
-	if (show_settings) {
-		show_settings = false;
-		css_root.style.setProperty("--aside_height", "0");
-		hideAside();
-	}
-	else {
-		show_settings = true;
-		show_account = false;
-		show_random_episode = false;
-		show_info = false;
-		css_root.style.setProperty("--aside_height", "400px");
-		refreshNavButtons();
-	}
-	refreshAside();
+	// get random episode
+	var random_episode = random_episoden[Math.floor(Math.random() * max_length)];
+	episoden[random_episode.episoden_index].random_shown = true;
+	showInfo(random_episode.episoden_index, true);
 }
 
 // episode info
@@ -196,15 +238,15 @@ var info_img = document.getElementById("info_img");
 var info_name = document.getElementById("info_name");
 var info_content = document.getElementById("info_content");
 var info_panel = document.getElementById("info_panel");
-var play_box = document.getElementById("play_box");
+var play_box = document.getElementsByClassName("play_box")[0];
 
 var info_add = document.getElementById("info_control_add");
 var info_remove = document.getElementById("info_control_remove");
 var info_ignore = document.getElementById("info_control_ignore");
 var info_reactivate = document.getElementById("info_control_reactivate");
 
-function showInfo(array_id, is_random_episode) {
-	var episode = episoden[array_id];
+function showInfo(episoden_index, is_random_episode) {
+	var episode = episoden[episoden_index];
 
 	// img
 	info_img.src = `img/${episode.number}.jpg`;
@@ -225,37 +267,43 @@ function showInfo(array_id, is_random_episode) {
 	info_panel.innerHTML = `${episode.book_author} - ${episode.release.slice(0, 4)} - ${hours_length}${min_length}min`
 
 	// history
-	info_href.setAttribute("onclick", `refreshHistory("${array_id}", new Date())`);
-	var history = episode.history;
-	if (history == "1899-01-01T00:00:00.000Z" || history == undefined) {
-		history = "nie";
+	info_href.setAttribute("onclick", `refreshHistory('${episoden_index}', new Date())`);
+	if (episode.user_data_index == undefined) {
+		info_history.value = "nie";
+	}
+	else if (user_data.list[episode.user_data_index].history == undefined) {
+		info_history.value = "nie";
 	}
 	else {
-		var history = new Date(history).toLocaleDateString("fr-CH");
+		info_history.value = new Date(user_data.list[episode.user_data_index].history).toLocaleDateString("fr-CH");
 	}
-	info_history.value = history; // main.js
 
 	// link and text
 	info_href.href = episode.href[provider_link];
 	info_name.innerHTML = episode.name;
 	info_content.innerHTML = episode.content;
 
-	console.log(episode)
-
 	// Ignore List
-	play_box.setAttribute("data-array", array_id);
+	play_box.classList = "play_box";
+	play_box.dataset.index = episoden_index;
 
-	// show correct Buttons
-	if (episode.ignored == "true") { info_reactivate.style.display = "block" }
-	else {  }
+	if (episode.user_data_index != undefined) {
+		if (user_data.list[episode.user_data_index].list == "true") {
+			play_box.classList.add("in_watch_list");
+		}
+		if (user_data.list[episode.user_data_index].ignored == "true") {
+			play_box.classList.add("in_ignore_list");
+		}
+	}
 
 	// Settings
 	if (is_random_episode) {
 		show_info = false;
+		show_random_episode = true;
 	}
 	else {
 		show_info = true;
-		show_random_episode = false
+		show_random_episode = false;
 	}
 	
 	show_settings = false;
@@ -265,25 +313,105 @@ function showInfo(array_id, is_random_episode) {
 	refreshNavButtons();
 	
 	// Prepare Edit History (defined in main.js)
-	info_history.dataset.array = array_id;
 	info_history.disabled = true;
 	edit_history.style.display = "inline-block";
 	done_history.style.display = "none";
+	done_history.setAttribute("onclick", `saveEditHistory("${episoden_index}")`);
 }
 
 
-// account tab
+//#################################################################################################
+// Show Watch list, History
+var show_watch_list = false;
+var show_ignore_list = false;
+var show_history = false;
+
+function showWatchList() {
+	show_watch_list = !show_watch_list;
+	show_history = false;
+	show_ignore_list = false;
+	refreshList();
+}
+
+function showHistory() {
+	show_history = !show_history;
+	show_watch_list = false;
+	show_ignore_list = false;
+	refreshList();
+}
+
+function showIgnoreList() {
+	show_ignore_list = !show_ignore_list;
+	show_watch_list = false;
+	show_history = false;
+	refreshList();
+}
+
+function refreshList() {
+	no_watch_list.style.display = "none";
+	no_history.style.display = "none";
+	no_ignore_list.style.display = "none";
+
+	episoden_list.classList.remove("show_history");
+	episoden_list.classList.remove("show_watch_list");
+	episoden_list.classList.remove("show_ignore_list");
+
+	if (show_watch_list) {
+		// loadEpisodes(); // main.js
+		episoden_list.classList.add("show_watch_list");
+		if (watch_list_count == 0) { no_watch_list.style.display = "block"; }
+	}
+	else if (show_history) {
+		loadEpisodes(); // main.js
+		episoden_list.classList.add("show_history");
+		if (episoden_list.querySelectorAll("div:not(.no_history)").length == 0) { no_history.style.display = "block"; }
+	}
+	else if (show_ignore_list) {
+		episoden_list.classList.add("show_ignore_list");
+		if (ignore_list_count == 0) { no_ignore_list.style.display = "block"; }
+	}
+	else {
+		loadEpisodes(); // main.js
+	}
+	refreshNavButtons();
+}
+
+//#################################################################################################
+// Settings
+function showSettings() {
+	if (show_settings) { hideAside(); }
+	else {
+		show_settings = true;
+		show_account = false;
+		show_random_episode = false;
+		show_info = false;
+		css_root.style.setProperty("--aside_height", "400px");
+		refreshNavButtons();
+	}
+	refreshAside();
+}
+
+// Provider
+function selectProvider(el_button) {
+	last_provider_selected.classList.remove("provider_selected");
+	el_button.classList.add("provider_selected");
+
+	last_provider_selected = el_button;
+	provider_link = parseInt(el_button.id.replace("provider_", ""));
+
+	loadEpisodes(); // main.js
+	storeUserData(); // main.js
+}
+
+//#################################################################################################
+// User data
 var new_id = document.getElementById("new_id");
 var delete_id = document.getElementById("delete_id");
 var check_id = document.getElementById("check_id");
 var remove_id = document.getElementById("remove_id");
 
 function showAccount() {
-	if (show_account) {
-		show_account = false;
-		css_root.style.setProperty("--aside_height", "0");
-		hideAside();
-	}
+	if (show_account) { hideAside(); }
 	else {
 		show_account = true;
 		show_settings = false;
@@ -301,6 +429,58 @@ function showAccount() {
 	refreshAside();
 }
 
+// reset/ export settings
+function exportUserData() {
+	storeUserData();
+	var link = document.createElement('a');
+	link.download = "Stream-Fragezeicen.de Daten.json";
+	link.href = "data:text/plain;charset=utf-8," + JSON.stringify(user_data);
+	link.click();
+}
+
+function resetUserData() {
+	var confirm_msg = confirm("Deine lokalen und synchronisierten Nutzerdaten werden unwiederruflich gelöscht!");
+	if (confirm_msg == true) {
+		provider_link = 0;
+		backwards = true;
+		sort_date = false;
+		user_data.list = [];
+
+		storeUserData(); // main.js
+
+		document.location.reload();
+	}
+}
+
+// import user data
+var import_user_data = document.createElement('input');
+import_user_data.type = 'file';
+import_user_data.accept = '.json';
+
+import_user_data.onchange = e => { 
+	var reader = new FileReader();
+	reader.readAsText(e.target.files[0],'UTF-8');
+
+	reader.onload = readerEvent => {
+		var json_user_data = readerEvent.target.result;
+
+		try {
+			user_data = JSON.parse(json_user_data);
+			if (user_data.provider == undefined || user_data.backwards == undefined || user_data.sort_date == undefined) {
+				alert("Die Datei enthält keine Nutzerdaten!");
+			}
+			else { // all in main.js
+				setupUserData(json_user_data);
+				storeUserData();
+				document.location.reload();
+			}
+		}
+		catch (e) { alert("Die Datei ist beschädigt!") }
+	}
+}
+
+//#################################################################################################
+// Account
 function changeAccountButton(button) {
 	new_id.style.display = "none";
 	delete_id.style.display = "none";
@@ -333,132 +513,6 @@ function importNewId() {
 		document.location.reload();
 	}
 }
-
-//#################################################################################################
-// calc height
-var window_height = window.innerHeight;
-var window_width = window.innerWidth;
-
-function infoHeight() {
-	var aside_needed_height = aside.firstElementChild.scrollHeight;
-	var description_header_height = info_name.parentElement.parentElement.scrollHeight;
-	var window_without_nav = window_height - 220;
-
-	// Height for Desktop view
-	if (window_width > 682) {
-		var aside_height = 340;
-		var info_height = (340 - 92 - description_header_height) + "px";
-	}
-	// Height for small screens (mobile with open keyboard)
-	else if (window_height <= 600 && window_width <= 682) {
-		var aside_height = window_height - 120;
-		var info_height = "unset";
-		preventScroll(true);
-	}
-	// Height for small screens but text doesn't fit on page without scrolling
-	else if (aside_needed_height >= window_without_nav) {
-		var aside_height = window_without_nav;
-		var info_height = (window_without_nav - description_header_height - 238) + "px";
-	}
-	// Height for small screens but text fits on page without scrolling
-	else if (aside_needed_height < window_without_nav) {
-		var aside_height = aside_needed_height;
-		var info_height = "unset";
-	}
-
-	css_root.style.setProperty("--aside_height", aside_height + "px");
-	css_root.style.setProperty("--description_height", info_height);
-}
-
-
-
-var body = document.getElementsByTagName("body")[0];
-var main_el = document.getElementsByTagName("main")[0];
-var prevents_scroll = false;
-
-window.addEventListener("resize", function(){
-	window_height = window.innerHeight;
-	window_width = window.innerWidth;
-	if (show_info || show_random_episode) { infoHeight(); }
-});
-
-// hide aside on touchmove
-if (navigator.maxTouchPoints > 0 ) {
-	main_el.addEventListener("touchmove", function(){ if (show_aside) { hideAside(); }});
-}
-
-function preventScroll(prevent_scroll) {
-	if (prevent_scroll && !prevents_scroll) {
-		body.style.overflow = "hidden";
-		prevents_scroll = true;
-	}
-	else if (!prevent_scroll && prevents_scroll) {
-		body.style.overflow = "visible";
-		prevents_scroll = false;
-	}
-}
-
-//#################################################################################################
-// Settings
-// Provider
-function selectProvider(el_button) {
-	last_provider_selected.classList.remove("provider_selected");
-	el_button.classList.add("provider_selected");
-
-	last_provider_selected = el_button;
-	provider_link = parseInt(el_button.id.replace("provider_", ""));
-
-	loadEpisodes(); // main.js
-	storeUserData(); // main.js
-}
-
-// reset/ export settings
-function exportUserData() {
-	storeUserData();
-	var link = document.createElement('a');
-	link.download = "Stream-Fragezeicen.de Daten.json";
-	link.href = "data:text/plain;charset=utf-8," + JSON.stringify(user_data);
-	link.click();
-}
-
-function resetUserData() {
-	provider_link = 0;
-	backwards = true;
-	sort_date = false;
-	user_data.list = [];
-
-	storeUserData(); // main.js
-
-	document.location.reload();
-}
-
-// import user data
-var import_user_data = document.createElement('input');
-import_user_data.type = 'file';
-import_user_data.accept = '.json';
-
-import_user_data.onchange = e => { 
-	var reader = new FileReader();
-	reader.readAsText(e.target.files[0],'UTF-8');
-
-	reader.onload = readerEvent => {
-		var json_user_data = readerEvent.target.result;
-
-		try {
-			user_data = JSON.parse(json_user_data);
-			if (user_data.provider == undefined || user_data.backwards == undefined || user_data.sort_date == undefined) {
-				alert("Die Datei enthält keine Nutzerdaten!");
-			}
-			else { // all in main.js
-				setupUserData(json_user_data);
-				storeUserData();
-				document.location.reload();
-			}
-		}
-		catch (e) { alert("Die Datei ist beschädigt!") }
-	}
-}
-
 
 // create new db id
 async function createDatabase() {
@@ -497,7 +551,6 @@ function disconnectId() {
 	user_id = null;
 	changeAccountButton("new_id");
 }
-
 
 // delete db
 async function deleteDatabase() {
@@ -593,26 +646,11 @@ function startSearch() {
 	}
 }
 
-// Overflow menu for navbar on mobile
-var show_overflow_menu = false;
-
-function overflowMenu() {
-	show_overflow_menu = !show_overflow_menu;
-	refreshNavButtons();
-
-	if (show_overflow_menu) { nav_buttons.classList.add("overflow_menu"); }
-	else { nav_buttons.classList.remove("overflow_menu"); }
-}
-
-
-
-
 //#################################################################################################
 // Calc ms
 function calcDuration(min, s) {
 	return (min * 60 + s) * 1000;
 }
-
 
 // User counter
 const local_date = new Date();

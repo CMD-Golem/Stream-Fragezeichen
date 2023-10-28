@@ -1,6 +1,19 @@
 // Bing Chat suche für Daten
 // Gib mir den Link zum Album vom "Folge 222: und die Gesetzlosen" drei Fragezeichen Hörbuch auf Spotify, Deezer, Apple Music und Youtube Music als Tabelle formatiert. Suche mir ausserdem noch das Erscheinungsdatum dieser Folge auf den Tag genau.
 
+// {
+//	type: "normal",
+// 	number: "219",
+// 	name: "und die Teufelsklippe",
+//	search: "", //(bei normalen Folgen nicht)
+// 	href: ["#new", "18. November", "", ""]
+//	content: "",
+//	release: "2022-11-18",
+//	track_length: 0,
+//	book_author: "",
+//	track_author: ""
+// }
+
 var episoden = [
 	{
 		type: "normal",
@@ -538,6 +551,7 @@ var episoden = [
         content: "Die drei Detektive bekommen eine einmalige Chance: Sie dürfen an der Universität Ruxton für ein paar Wochen das Studentenleben testen! Doch schnell wird klar, dass hier nicht nur Vorlesungen, Partys und Wohnheimzoff auf sie warten, sondern ein neuer Fall!",
         release: "2015-05-15",
         track_length: 11249626,
+		book_author: "Christoph Dittert, Kari Erlhoff, Hendrik Buchna",
         track_author: "André Minninger"
     },
     {
@@ -2559,7 +2573,7 @@ var episoden = [
 		content: "Verschollen, gefunden, endlich auch auf Deutsch veröffentlicht: Eine Geschichten aus dem Jahr 1986 von dem amerikanischen Die drei ???-Autorenpaar Megan und H. William Stine.<br>Wolltest du immer schon den drei ??? bei ihren Ermittlungen helfen? Jetzt hast Du die Chance dazu! In der Geisterbahn im Freizeitpark geschehen merkwürdige Dinge. Schreckliche Schreie ertönen, die mit Sicherheit nicht zum Programm dazugehören. Justus, Peter und Bob, die drei jungen Detektive aus Rocky Beach und ihr Auftraggeber Tony müssen schnellstmöglich herausfinden, was dahinter steckt.<br>Aber Vorsicht: Eine falsche Entscheidung, und sie sind für immer verloren!<br><br>Es liegt an Dir: Du kannst den drei ??? und Tony den Weg durch das Haus der Angst schaffen. Oder auch nicht …",
 		release: "2011-08-19",
 		track_length: 7594170,
-		book_author: "Megan & H. William Stine",
+		book_author: "Megan, H. William Stine",
 		track_author: "André Minninger"
 	},
 	{
@@ -2674,6 +2688,7 @@ var episoden = [
 		type: "special",
 		number: "SP",
 		name: "und der Super-Papagei 2004",
+		search: "",
 		href: ["https://www.deezer.com/de/album/12761834", "https://music.youtube.com/browse/MPREb_6cKhBgCr5Yw", "https://open.spotify.com/album/4KXnXnpFRnQsjeZHpNC7X9", "https://music.apple.com/ch/album/super-papagei-2004/1092550463"],
 		content: "Das ist wirklich ein spezial gelagerter Sonderfall: Warum zitieren Papageien sonderbare Sprüche falsch? Was hat Sherlock Holmes mit Schneewittchen zu tun? Und aus welchem Grund taucht urplötzlich Skinny Norris auf, obwohl er damals vor 25 Jahren im Original-Hörspiel nicht dabei war? Ganz einfach: Diese Sonder-Edition der allerersten drei ??? Folge enthält viele neue Szenen und beantwortet endlich alle Fragen, die in der ursprünglichen Fassung nie beantwortet wurden …",
 		release: "2004-10-04",
@@ -2685,6 +2700,7 @@ var episoden = [
 		type: "special",
 		number: "3T",
 		name: "und der dreiTag",
+		search: "",
 		href: ["https://www.deezer.com/de/album/12761802", "https://music.youtube.com/browse/MPREb_FkxFDU3nyUl", "https://open.spotify.com/album/3JJeehFIJTxhrltC6e44VT", "https://music.apple.com/ch/album/und-der-dreitag/1092548111"],
 		content: "Kann ein und derselbe Tag dreimal völlig unterschiedlich verlaufen? Kann ein unscheinbares Detail wie ein Colaglas darüber entscheiden, wie sich alle weiteren Geschehnisse entwickeln? Erlebe, wie Justus, Peter und Bob auf den unheimlichen Fluch der Sheldon Street, die mysteriösen Zeichen der Ritter stoßen und den bedrohlichen Fremden Freund stoßen - und zwar zeitgleich am selben Tag!<br>Drei Geschichten von drei Autoren führen dich dreimal durch einen Tag, wie er unterschiedlicher nicht verlaufen könnte.",
 		release: "2010-10-01",
@@ -2830,7 +2846,7 @@ var episoden = [
 		name: "und der dunkle Taipan",
 		search: "Live",
 		href: ["#", "#", "#", "https://music.apple.com/ch/album/und-der-dunkle-taipan-live-25-10-19-berlin-verti-music-hall/1480842354"],
-		content: "",
+		content: "Eine alte Bekannte bittet die drei ??? darum auf ihren Hund aufzupassen. Doch das anfangs harmlose Hunde-Sitting ist nur der Auftakt zu einem mysteriösen Fall, der die drei Detektive an geheimnisvolle Orte und in mehr als brenzlige Situationen bringt. Als ihnen klar wird, wer hinter den Kulissen die Fäden zieht, ist es zu spät – die drei ??? sind in akuter Lebensgefahr.",
 		release: "2019-10-25",
 		track_length: 7079000,
 		book_author: "Hendrik Buchna",
@@ -3118,7 +3134,7 @@ var episoden = [
 		name: "Die Welt der drei Fragezeichen",
 		search: "Dokumentation",
 		href: ["https://www.deezer.com/de/album/105012832", "https://music.youtube.com/browse/MPREb_sL7uwWhB7Y3", "https://open.spotify.com/album/7M0B7obT3Yne87GsGAvB4r", "https://music.apple.com/ch/album/die-welt-der-drei/1473823449"],
-		content: "Wusstet ihr, dass Skinny Norris und Morton etwas gemeinsam haben? Dass Bobs Vater ganze vier uns seine Mutter gar keinen Vornamen hat? Wer den Ausdruck \"spezialgelagerter Sonderfall\" erfand? Und ob Hugenay eigentlich noch mal aus dem Gefängnis kommt?<br>Autor C.R. Rodenwald fasst nun endlich (fast) alles zusammen, was über die drei Detektive aus Rocky Beach und ihre abenteuerlichen Erlebnisse bekannt ist: Wissenswertes zu allen wichtigen Figuren der Serie, die Hintergründe der Entstehung, Fakten und kuriose Gegebenheiten - und  klärt unter anderem auch die hypothetische Frage \"Wie groß müsste die Kleinstadt Rocky Beach eigentlich wirklich sein?\".<br>Ein Audio-Feature basierend auf dem gleichnamigen von C.R. Rodenwald. Mit O-Tönen, Statements, Zwischenrufen und Hörspielsequenzen. Erzählt von Daniel Finger.",
+		content: "Wusstet ihr, dass Skinny Norris und Morton etwas gemeinsam haben? Dass Bobs Vater ganze vier uns seine Mutter gar keinen Vornamen hat? Wer den Ausdruck \"spezialgelagerter Sonderfall\" erfand? Und ob Hugenay eigentlich noch mal aus dem Gefängnis kommt?<br>Autor C.R. Rodenwald fasst nun endlich (fast) alles zusammen, was über die drei Detektive aus Rocky Beach und ihre abenteuerlichen Erlebnisse bekannt ist: Wissenswertes zu allen wichtigen Figuren der Serie, die Hintergründe der Entstehung, Fakten und kuriose Gegebenheiten - und  klärt unter anderem auch die hypothetische Frage \"Wie groß müsste die Kleinstadt Rocky Beach eigentlich wirklich sein?\".<br>Ein Audio-Feature basierend auf dem gleichnamigen Buch von C.R. Rodenwald. Mit O-Tönen, Statements, Zwischenrufen und Hörspielsequenzen. Erzählt von Daniel Finger.",
 		release: "2019-08-23",
 		track_length: 32645000,
 		book_author: "C. R. Rodenwald",

@@ -43,9 +43,9 @@ function setupUserData(json_user_data) {
 		var found_episode = false;
 
 		// init counters
-		if (episode.list != "") { watch_list_count++; }
+		if (episode.list == "true") { watch_list_count++; }
 
-		if (episode.ignored != "") { ignore_list_count++; }
+		if (episode.ignored == "true") { ignore_list_count++; }
 
 		// store user data array 
 		for (var j = 0; j < episoden.length; j++) {
@@ -90,10 +90,15 @@ function loadEpisodes() {
 		// generate title
 		var title = episode.name;
 		var search_number = "";
+		var search = "";
 		if (episode.type == "normal") {
 			title = `<b>Folge ${episode.number}</b>: ${episode.name}`;
 			search_number = episode.number + " ";
 		}
+		else {
+			search = " " + episode.search;
+		}
+
 
 		// remove episodes whiche are not aviable on selected streamer 
 		if (episode.href[provider_link] == "#") {
@@ -113,7 +118,7 @@ function loadEpisodes() {
 		}
 
 		// classes
-		if (episode_data.history == undefined || episode_data.history == "1899-01-01T00:00:00.000Z" || episode_data.history == "") {
+		if (episode_data.history == undefined) {
 			episode_class += " no_history";
 		}
 		if (episode_data.list == "true") {
@@ -122,9 +127,9 @@ function loadEpisodes() {
 		if (episode_data.ignored == "true") {
 			episode_class += " in_ignore_list";
 		}
-																						//number or index?							// remove?
+
 		episode_html.push(`
-		<div data-release="${episode.release}" data-history="${episode_data.history}" id="${episode.number}" class="${episode_class}" data-array="${i}" data-filter="die drei fragezeichen ??? ${search_number}${episode.name} ${episode.book_author}">
+		<div data-release="${episode.release}" data-history="${episode_data.history}" id="${i}" class="${episode_class}" data-filter="die drei fragezeichen ??? ${search_number}${episode.name} ${episode.book_author}${search}">
 			<a ${href} class="img_play_box">
 				<img src="img/${episode.number}.jpg" alt="${title}">
 				<p>${title}</p>
@@ -347,12 +352,24 @@ function toggleWatchList(episoden_index, el_button) {
 		if (watch_list_count == 0 && show_watch_list) {
 			no_watch_list.style.display = "block";
 		}
+		if ((show_info || show_random_episode) && (play_box.dataset.index == episoden_index)) {
+			play_box.classList.remove("in_watch_list");
+			document.getElementById(episoden_index).classList.remove("in_watch_list");
+		}
 	}
 	// Add to Watchlist
 	else {
 		el_button.parentNode.classList.add("in_watch_list");
 		watch_list_count++;
 		episode_data.list = "true";
+
+		if (show_watch_list) {
+			no_watch_list.style.display = "none";
+		}
+		if ((show_info || show_random_episode) && (play_box.dataset.index == episoden_index)) {
+			play_box.classList.add("in_watch_list");
+			document.getElementById(episoden_index).classList.add("in_watch_list");
+		}
 	}
 
 	storeUserData();
@@ -381,12 +398,24 @@ function toggleIgnoreList(episoden_index, el_button) {
 		if (ignore_list_count == 0 && show_ignore_list) {
 			no_ignore_list.style.display = "block";
 		}
+		if ((show_info || show_random_episode) && (play_box.dataset.index == episoden_index)) {
+			play_box.classList.remove("in_ignore_list");
+			document.getElementById(episoden_index).classList.remove("in_ignore_list");
+		}
 	}
 	// Add to Ignore List
 	else {
 		el_button.parentNode.classList.add("in_ignore_list");
 		ignore_list_count++;
 		episode_data.ignored = "true";
+
+		if (show_ignore_list) {
+			no_ignore_list.style.display = "none";
+		}
+		if ((show_info || show_random_episode) && (play_box.dataset.index == episoden_index)) {
+			play_box.classList.add("in_ignore_list");
+			document.getElementById(episoden_index).classList.add("in_ignore_list");
+		}
 	}
 
 	storeUserData();
@@ -397,7 +426,6 @@ function toggleIgnoreList(episoden_index, el_button) {
 var info_history = document.getElementById("info_history");
 var edit_history = document.getElementById("edit_history");
 var done_history = document.getElementById("done_history");
-var this_year = new Date().getFullYear();
 var date_before_edit, finished_input;
 
 function refreshHistory(episoden_index, date, click_counter) {
@@ -436,7 +464,7 @@ function editHistory() {
 	info_history.focus();
 }
 
-function saveEditHistory() {
+function saveEditHistory(episoden_index) {
 	info_history.disabled = true;
 	edit_history.style.display = "inline-block";
 	done_history.style.display = "none";
@@ -444,7 +472,11 @@ function saveEditHistory() {
 	var date_array = info_history.value.split(".");
 	var date = `${date_array[2]}-${date_array[1]}-${date_array[0]}T00:00:00.000Z`;
 
-	refreshHistory(info_history.dataset.array, date, false);
+	if (date == "1999-01-01T00:00:00.000Z") {
+		date = undefined;
+	}
+
+	refreshHistory(episoden_index, date, false);
 }
 
 // Check user input (origin: https://stackoverflow.com/a/43473017/14225364)
@@ -463,8 +495,8 @@ info_history.onkeyup = function(evt) {
 		if (size == 5 && Number(info_history.value.split('.')[1]) > 12) {
 			info_history.value = info_history.value.slice(0, -2) + "12";
 		}
-		if (size == 10 && Number(info_history.value.split('.')[2]) < 1900) {
-			info_history.value = info_history.value.slice(0, -4) + this_year;
+		if (size == 10 && Number(info_history.value.split('.')[2]) < 1999) {
+			info_history.value = info_history.value.slice(0, -4) + new Date().getFullYear();
 		}
 		if (size == 10) {
 			finished_input = true;
@@ -488,45 +520,4 @@ info_history.onkeydown = function(evt) {
 		!(evt.keyCode >= 96 && evt.keyCode <= 105)) {
 		evt.preventDefault();
 	}
-}
-
-//#################################################################################################
-// Show Watch list, History
-var show_watch_list = false;
-var show_ignore_list = false;
-var show_history = false;
-
-function showWatchList() {
-	show_watch_list = !show_watch_list;
-	show_history = false;
-	refreshList();
-}
-
-function showHistory() {
-	show_history = !show_history;
-	show_watch_list = false;
-	refreshList();
-}
-
-function refreshList() {
-	no_watch_list.style.display = "none";
-	no_history.style.display = "none";
-
-	episoden_list.classList.remove("show_history");
-	episoden_list.classList.remove("show_watch_list");
-
-	if (show_watch_list) {
-		// loadEpisodes();
-		episoden_list.classList.add("show_watch_list");
-		if (watch_list_count == 0) { no_watch_list.style.display = "block"; }
-	}
-	else if (show_history) {
-		loadEpisodes();
-		episoden_list.classList.add("show_history");
-		if (episoden_list.querySelectorAll("div:not(.no_history)").length == 0) { no_history.style.display = "block"; }
-	}
-	else {
-		loadEpisodes();
-	}
-	refreshNavButtons(); // actions.js
 }
