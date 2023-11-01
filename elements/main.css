@@ -3,14 +3,22 @@ body {
 }
 
 main, .aside_content {
-	width: 1120px;
+	max-width: 1140px;
 	margin: 20px auto;
 }
 
-@media (max-width: 1240px) { main, .aside_content { width: 896px; } }
-@media (max-width: 906px) { main, .aside_content { width: 672px; } }
-@media (max-width: 682px) { main, .aside_content { width: 448px; } }
-@media (max-width: 458px) { main, .aside_content { width: 288px; } }
+:root {
+	--aside_height: 0;
+	--description_height: unset;
+	--list_cover_size: 190px;
+
+	--play_button_size: 60px;
+	--play_button_top: 130px;
+	--play_button_right: 27px;
+	--watch_list_button_top: 150px;
+	--info_button_top: 102px;
+	--small_button_left: 17px;
+}
 
 /* ####################################################################### */
 /* Episode list */
@@ -18,16 +26,12 @@ ol {
 	padding: 0;
 	display: flex;
 	flex-flow: row wrap;
+	justify-content: center;
 	margin: 0;
 }
 
 ol div {
 	position: relative;
-}
-
-ol img {
-	width: 200px;
-	border-radius: 5px;
 }
 
 ol a {
@@ -36,9 +40,19 @@ ol a {
 	margin-bottom: 15px;
 }
 
+ol img {
+	width: var(--list_cover_size);
+	border-radius: 5px;
+	transition: opacity 0.2s;
+}
+
+ol a:hover img {
+	opacity: 60%;
+}
+
 ol p {
 	margin: 8px 0;
-	width: 200px;
+	width: var(--list_cover_size);
 }
 
 ol span {
@@ -61,7 +75,7 @@ ol span {
 }
 
 /* ####################################################################### */
-/* On cover buttons */					/*more*/
+/* On cover buttons */
 .control_button {
 	display: none;
 	position: absolute;
@@ -71,7 +85,7 @@ ol span {
 	transition: transform 0.2s;
 	width: 40px;
 	height: 40px;
-	padding: 10px;
+	padding: 10px;;
 }
 
 .control_button:hover {
@@ -79,50 +93,32 @@ ol span {
 	transform: scale(1.2);
 }
 
-.play {
-	cursor: pointer;
-	width: 60px;
-	height: 60px;
-	padding-left: 18px;
-	padding-top: 12px;
-}
 ol .play {
-	top: 137px;
-	right: 27px;
+	cursor: pointer;
+	width: var(--play_button_size);
+	height: var(--play_button_size);
+	padding: calc(var(--play_button_size) / 4);
+	top: var(--play_button_top); /* 130px */
+	right: var(--play_button_right); /* 27px */
 }
-.play_box .play {
-	top: 100px;
-	left: 112px;
-}
-
 ol .add, ol .remove {
-	top: 157px;
-	left: 17px;
+	top: var(--watch_list_button_top); /* 150px */
+	left: var(--small_button_left); /* 17px */
 }
-.play_box .add, .play_box .remove {
-	top: 210px;
-	right: 62px;
-}
-
-.info {
-	top: 102px;
-	left: 17px;
-}
-
-.play_box .ignore, .play_box .reactivate {
-	top: 210px;
-	right: 122px;
+ol .info {
+	top: var(--info_button_top); /* 102px */
+	left: var(--small_button_left); /* 17px */
 }
 
 ol div:hover .play,
 ol div:hover .info,
 ol div:not(.in_watch_list):hover .add,
 ol div.in_watch_list:hover .remove,
-.play_box .play,
-.play_box:not(.in_watch_list) .add,
-.play_box.in_watch_list .remove,
-.play_box:not(.in_ignore_list) .ignore,
-.play_box.in_ignore_list .reactivate {
+#info_play .play,
+#info_play:not(.in_watch_list) .add,
+#info_play.in_watch_list .remove,
+#info_play:not(.in_ignore_list) .ignore,
+#info_play.in_ignore_list .reactivate {
 	display: block;
 }
 
@@ -133,30 +129,6 @@ ol div.in_watch_list:hover .remove,
 	ol div.in_watch_list .remove {
 		display: block;
 	}
-}
-
-/* ####################################################################### */
-/* Dialog */
-dialog {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	z-index: 4;
-	margin: 0;
-	min-width: 171px;
-	transform: translate(-50%, -50%);
-	background-color: var(--aside-background-color);
-	backdrop-filter: blur(20px);
-	color: inherit;
-	padding: 30px 40px;
-	padding-bottom: 15px;
-	border: 1px solid var(--text-color);
-	border-radius: 5px;
-}
-
-dialog p {
-	margin: 0;
-	margin-bottom: 20px;
 }
 
 /* ####################################################################### */
@@ -197,74 +169,14 @@ aside {
 	margin: 0;
 }
 
-.hide_aside_small {
-	display: none;
-}
-
-/* Info Box */
-.aside_info {
-	overflow-y: auto;
-}
-
-aside .img_play_box img {
-	border-radius: 5px;
-	width: 260px;
-	margin-right: 50px;
-	margin-left: 12px;
-}
-
-/* img play box */
-.img_play_box img {
-	transition: opacity 0.2s;
-}
-
-.img_play_box:hover img {
-	opacity: 60%;
-}
-
-.play_box {
-	position: relative;
-}
-
-.info_description {
-	user-select: text;
-	margin-right: 12px;
-}
-
-.info_description p {
-	overflow-y: auto;
-	margin: 0;
-	height: var(--description_height);
-	margin-top: 12px;
-}
-
-.info_description section {
-	font-size: small;
-	display: flex;
-}
-
-#info_panel, .placeholder {
-	padding-top: 4px;
-}
-
-.info_description input {
-	width: 70px;
-}
-
-.info_description svg {
-	width: 15px;
-	height: 15px;
-	fill: var(--text-color);
-	fill-opacity: 1;
-}
-
-.hide_info {
+.hide_aside_mobile {
 	display: none;
 	position: absolute;
-	right: 20px;
+	top: 40px;
+	right: 30px;
 }
 
-.hide_info svg {
+.hide_aside_mobile svg {
 	width: 35px;
 	height: 35px;
 	fill: var(--text-color);
@@ -275,10 +187,152 @@ aside .img_play_box img {
 	fill: var(--nav-hover-color);
 }
 
+@media (max-width: 682px) {
+	.aside_content {
+		width: unset;
+		flex-direction: column;
+		height: calc(100% - 55px);
+		padding: 20px;
+		padding-bottom: 35px;
+	}
+}
+
+@media (max-height: 600px) and (max-width: 682px) {
+	aside {
+		bottom: 60px;
+		border-bottom: none;
+		overflow-y: auto;
+	}
+	.hide_aside {
+		display: none;
+	}
+	.hide_aside_mobile {
+		display: block;
+	}
+}
+
+/* Info Box */
+#info_play {
+	position: relative;
+	margin-right: 50px;
+	margin-left: 12px;
+}
+
+#info_href img {
+	border-radius: 5px;
+	width: 260px;
+	transition: opacity 0.2s;
+}
+
+#info_href:hover img {
+	opacity: 60%;
+}
+
+#info_play .play {
+	cursor: pointer;
+	width: 60px;
+	height: 60px;
+	padding: 15px;
+	top: 100px;
+	left: 112px;
+}
+
+#info_play .add, #info_play .remove {
+	top: 210px;
+	right: 12px;
+}
+
+#info_play .ignore, #info_play .reactivate {
+	top: 210px;
+	right: 72px;
+}
+
+.info_box {
+	user-select: text;
+	margin-right: 12px;
+}
+
+.info_box p {
+	overflow-y: auto;
+	margin: 0;
+	height: var(--description_height);
+	margin-top: 12px;
+}
+
+.info_data {
+	font-size: small;
+}
+
+.info_metadata {
+	display: inline-block;
+	padding-top: 4px;
+}
+
+.info_metadata:not(:last-child)::after, .info_history_box {
+    content: "-";
+    margin-left: 5px;
+}
+
+.info_history_box {
+	display: inline-block;
+}
+
+.info_history_box input {
+	width: 70px;
+}
+
+.info_history_box svg {
+	width: 15px;
+	height: 15px;
+	fill: var(--text-color);
+	fill-opacity: 1;
+}
+
+@media (max-width: 682px) {
+	.info_box {
+		margin-right: 0;
+	}
+	#info_play {
+		margin: 0 auto;
+		margin-bottom: 15px;
+	}
+	#info_href img {
+		width: 150px !important;
+	}
+	#info_play .play {
+		top: 80px;
+		left: 80px;
+	}
+	#info_play .add, #info_play .remove {
+		top: 50px;
+		right: unset;
+		left: 12px;
+	}
+	#info_play .ignore, #info_play .reactivate {
+		top: 100px;
+		right: unset;
+		left: 12px;
+	}
+}
+
+@media (max-height: 600px) and (max-width: 682px) {
+	aside {
+		bottom: 60px;
+		border-bottom: none;
+		overflow-y: auto;
+	}
+	.hide_aside {
+		display: none;
+	}
+	.hide_aside_mobile {
+		display: block;
+	}
+}
+
+
 /* Settings */
 .settings_box {
 	display: flex;
-	/* margin-top: 30px; */
 }
 
 .settings_box > div {
@@ -343,82 +397,7 @@ aside .img_play_box img {
 	margin-top: 20px;
 }
 
-@media (max-width: 906px) {
-	.placeholder {
-		display: none;
-	}
-	section {
-		flex-direction: column;
-	}
-}
-
-@media (max-width: 682px) {
-	.aside_content {
-		width: unset;
-		flex-direction: column;
-		height: calc(100% - 55px);
-		padding: 20px;
-		padding-bottom: 35px;
-	}
-	.info_description {
-		margin-right: 0;
-	}
-	aside .img_play_box {
-		display: block;
-		margin: 0 auto;
-		margin-bottom: 15px;
-	}
-	aside .img_play_box img {
-		margin: 0;
-		width: 150px;
-	}
-	aside .play { /*more*/
-		top: 110px;
-		right: unset;
-		left: calc(100% / 2 + 15px);
-	}
-	.placeholder {
-		display: block;
-	}
-	section {
-		flex-direction: row;
-	}
-}
-
 @media (max-width: 458px) {
-	ol img {
-		width: 264px;
-	}
-	ol p {
-		width: 264px;
-	}
-	.add, .remove, .info { /*more*/
-		background-color: black;
-		top: 200px;
-		left: 15px;
-		width: 50px;
-		height: 50px;
-	}
-	
-	.info {
-		top: 130px;
-	}
-	
-	.play {
-		top: 200px;
-		right: 15px;
-		width: 50px;
-		height: 50px;
-		padding-left: 15px;
-		padding-top: 12px;
-	}
-	.placeholder {
-		display: none;
-	}
-	section {
-		flex-direction: column;
-	}
-
 	.settings_box {
 		display: block;
 	}
@@ -436,22 +415,5 @@ aside .img_play_box img {
 @media (max-width: 403px) {
 	.switch_box {
 		margin-top: 40px;
-	}
-}
-
-@media (max-height: 600px) and (max-width: 682px) {
-	aside {
-		bottom: 60px;
-		border-bottom: none;
-		overflow-y: auto;
-	}
-	.hide_aside {
-		display: none;
-	}
-	.hide_aside_small, .hide_info {
-		display: block;
-	}
-	.info_description p {
-		height: unset;
 	}
 }

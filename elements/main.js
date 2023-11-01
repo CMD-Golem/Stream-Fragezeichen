@@ -130,10 +130,10 @@ function loadEpisodes() {
 
 		episode_html.push(`
 		<div data-release="${episode.release}" data-history="${episode_data.history}" id="${i}" class="${episode_class}" data-filter="die drei fragezeichen ??? ${search_number}${episode.name} ${episode.book_author}${search}">
-			<a ${href} class="img_play_box">
+			<a ${href}>
 				<img src="img/${episode.number}.jpg" alt="${title}">
 				<p>${title}</p>
-				<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+				<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M5.142 0v24L24 12z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 			</a>
 			<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(${i}, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 			<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(${i}, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
@@ -269,7 +269,7 @@ async function loadData() {
 		sort_date = false;
 
 		showSettings(); //actions.js
-		if (window_width <= 506) { overflowMenu(); } //actions.js
+		if (window.innerWidth <= 506) { overflowMenu(); } //actions.js
 
 		last_provider_selected = document.getElementById("provider_0");
 		last_provider_selected.classList.add("provider_selected");
@@ -283,7 +283,6 @@ loadData();
 
 // store user data on storage/db
 // document.addEventListener("visibilitychange", function() { if (document.hidden) { storeUserData() } });
-// document.addEventListener("beforeunload", storeUserData);
 
 async function storeUserData() {
 	console.log("Saved User data");

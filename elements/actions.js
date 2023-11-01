@@ -142,7 +142,7 @@ function infoHeight() {
 	css_root.style.setProperty("--description_height", info_height);
 }
 
-window.addEventListener("resize", function(){
+visualViewport.addEventListener("resize", function(){
 	if (show_info || show_random_episode) { infoHeight(); }
 });
 
@@ -233,13 +233,14 @@ function getRandomEpisode() {
 }
 
 // episode info
+var info_play = document.getElementById("info_play");
 var info_href = document.getElementById("info_href");
 var info_img = document.getElementById("info_img");
 var info_name = document.getElementById("info_name");
-var info_content = document.getElementById("info_content");
-var info_panel = document.getElementById("info_panel");
-var play_box = document.getElementsByClassName("play_box")[0];
-
+var info_summary = document.getElementById("info_summary");
+var info_author = document.getElementById("info_author");
+var info_release = document.getElementById("info_release");
+var info_duration = document.getElementById("info_duration");
 var info_add = document.getElementById("info_control_add");
 var info_remove = document.getElementById("info_control_remove");
 var info_ignore = document.getElementById("info_control_ignore");
@@ -247,9 +248,6 @@ var info_reactivate = document.getElementById("info_control_reactivate");
 
 function showInfo(episoden_index, is_random_episode) {
 	var episode = episoden[episoden_index];
-
-	// img
-	info_img.src = `img/${episode.number}.jpg`;
 
 	// info panel with author, duration, release date
 	var hours = episode.track_length /3600000;
@@ -264,7 +262,7 @@ function showInfo(episoden_index, is_random_episode) {
 	if (hours_length != 0) { hours_length = hours_length + "h " }
 	else {hours_length = ""}
 
-	info_panel.innerHTML = `${episode.book_author} - ${episode.release.slice(0, 4)} - ${hours_length}${min_length}min`
+	info_duration.innerHTML = hours_length + min_length + "min";
 
 	// history
 	info_href.setAttribute("onclick", `refreshHistory('${episoden_index}', new Date())`);
@@ -280,19 +278,22 @@ function showInfo(episoden_index, is_random_episode) {
 
 	// link and text
 	info_href.href = episode.href[provider_link];
+	info_img.src = `img/${episode.number}.jpg`;
 	info_name.innerHTML = episode.name;
-	info_content.innerHTML = episode.content;
+	info_author.innerHTML = episode.book_author;
+	info_release.innerHTML = episode.release.slice(0, 4);
+	info_summary.innerHTML = episode.content;
 
 	// Ignore List
-	play_box.classList = "play_box";
-	play_box.dataset.index = episoden_index;
+	info_play.classList = "";
+	info_play.dataset.index = episoden_index;
 
 	if (episode.user_data_index != undefined) {
 		if (user_data.list[episode.user_data_index].list == "true") {
-			play_box.classList.add("in_watch_list");
+			info_play.classList.add("in_watch_list");
 		}
 		if (user_data.list[episode.user_data_index].ignored == "true") {
-			play_box.classList.add("in_ignore_list");
+			info_play.classList.add("in_ignore_list");
 		}
 	}
 
@@ -569,6 +570,25 @@ async function deleteDatabase() {
 			console.log(await response.json());
 		}
 	}
+}
+
+//#################################################################################################
+// Cover size
+function changeCoverSize(size) {
+	//										  play s, cover,   play t, play r, watch,  info,   small
+	if (size == "0") { 		var size_array = ["40px", "120px", "85px", "17px", "85px", "38px", "17px"]; }
+	else if (size == "1") { var size_array = ["60px", "155px", "97px", "22px", "118px", "70px", "17px"]; }
+	else if (size == "2") { var size_array = ["60px", "190px", "130px", "27px", "150px", "102px", "17px"]; }
+	else if (size == "3") { var size_array = ["60px", "225px", "130px", "27px", "150px", "102px", "17px"]; }
+	else if (size == "4") { var size_array = ["60px", "260px", "130px", "27px", "150px", "102px", "17px"]; }
+
+	css_root.style.setProperty("--play_button_size", size_array[0]);
+	css_root.style.setProperty("--list_cover_size", size_array[1]);
+	css_root.style.setProperty("--play_button_top", size_array[2]);
+	css_root.style.setProperty("--play_button_right", size_array[3]);
+	css_root.style.setProperty("--watch_list_button_top", size_array[4]);
+	css_root.style.setProperty("--info_button_top", size_array[5]);
+	css_root.style.setProperty("--small_button_left", size_array[6]);
 }
 
 //#################################################################################################

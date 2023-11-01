@@ -43,11 +43,6 @@
 	}
 }
 
-:root {
-	--aside_height: 0;
-	--description_height: unset;
-}
-
 html {
 	height: 100%;
 	min-width: 310px;
@@ -89,6 +84,8 @@ a:hover, .visible_links a:hover {
 	text-decoration: underline;
 }
 
+/* ####################################################################### */
+/* Spoiler */
 details {
 	overflow: hidden;
 	background-color: var(--nav-focus-color);
@@ -126,6 +123,8 @@ details:not(.active) *:not(summary) {
 	display: none;
 }
 
+/* ####################################################################### */
+/* Buttons and Inputs */
 button, input {
 	appearance: none;
 	background-color: transparent;
@@ -145,7 +144,6 @@ button:focus, input:focus {
 	background-color: var(--background-color);
 	border: var(--text-color) solid 1px;
 	border-radius: 5px;
-	/* margin: 0 20px; */
 	margin: 0 auto;
 	padding: 0 20px;
 	height: 30px;
@@ -164,11 +162,24 @@ button:focus, input:focus {
 	background-color: var(--background-color);
 	border: var(--text-color) solid 1px;
 	border-radius: 5px;
-	/* margin: 0 20px; */
 	margin: 0 auto;
 	padding: 0 20px;
 	height: 30px;
 	line-height: 30px;
+}
+
+.input_slider {
+	display: block;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.input_slider input {
+	display: block;
+	margin: 0 auto;
+	margin-top: 10px;
+	width: 180px;
+	appearance: auto;
 }
 
 /* ####################################################################### */
@@ -227,6 +238,31 @@ input:checked + .slider:before {
 	bottom: 3px;
 }
 
+
+/* ####################################################################### */
+/* Dialog */
+dialog {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 4;
+	margin: 0;
+	min-width: 171px;
+	transform: translate(-50%, -50%);
+	background-color: var(--aside-background-color);
+	backdrop-filter: blur(20px);
+	color: inherit;
+	padding: 30px 40px;
+	padding-bottom: 15px;
+	border: 1px solid var(--text-color);
+	border-radius: 5px;
+}
+
+dialog p {
+	margin: 0;
+	margin-bottom: 20px;
+}
+
 /* ####################################################################### */
 /* Navbar */
 nav {
@@ -242,19 +278,19 @@ nav {
 }
 
 /* Button */
-.nav_buttons {
-	display: flex;
-	transition: height 0.2s;
-	align-items: flex-end;
-	float: right;
-}
-
 .nav_home {
 	color: inherit;
 	text-decoration: none;
 	float: left;
 	padding: 17.5px 16px;
 	margin-right: 10px;
+}
+
+.nav_buttons {
+	display: flex;
+	transition: height 0.2s;
+	align-items: flex-end;
+	float: right;
 }
 
 .nav_button {
@@ -370,7 +406,6 @@ footer svg {
 		background-color: var(--background-color);
 		border-top: var(--text-color) solid 1px;
 		overflow: hidden;
-
 	}
 	.nav_search {
 		margin-right: 186px;
@@ -422,8 +457,6 @@ footer svg {
 	}
 	.overflow_menu {
 		height: 120px;
-		/* padding-left: calc((100% - 310px)/2);
-		padding-right: calc((100% - 310px)/2); */
 	}
 	.active_white.nav_active {
 		background-color: #e91b24;

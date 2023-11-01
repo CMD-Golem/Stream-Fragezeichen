@@ -36,12 +36,11 @@
 	</nav>
 
 	<aside>
-		<div class="aside_content aside_info"> <!-- Info Box -->
-			<button title="Schliessen" class="hide_info hover_svg" onclick="hideAside()"><svg viewBox="0 0 24 24"><g><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></g></svg></button>
-			<div class="play_box">
-				<a class="img_play_box" id="info_href" target="_blank">
+		<div class="aside_content aside_scroll"> <!-- Info Box -->
+			<div id="info_play">
+				<a id="info_href" target="_blank">
 					<img src="" alt="Folgen Cover" id="info_img">
-					<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 2.5714996,-1e-7 V 24 L 21.428642,12 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
+					<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M5.142 0v24L24 12z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 				</a>
 				<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(this.parentNode.dataset.index, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 				<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(this.parentNode.dataset.index, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
@@ -49,19 +48,18 @@
 				<button class="control_button reactivate" title="Im Zufallsgenerator anzeigen" onclick="toggleIgnoreList(this.parentNode.dataset.index, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="m 12,10.800656 c -0.665091,0 -1.199344,0.534253 -1.199344,1.199344 0,0.665091 0.534253,1.199345 1.199344,1.199345 0.665091,0 1.199345,-0.534254 1.199345,-1.199345 0,-0.665091 -0.534254,-1.199344 -1.199345,-1.199344 z M 12,1.0968662 C 5.9814705,1.0968662 1.0968665,5.9814697 1.0968665,12 1.0968665,18.01853 5.9814705,22.903134 12,22.903134 18.01853,22.903134 22.903133,18.01853 22.903133,12 22.903133,5.9814697 18.018529,1.0968662 12,1.0968662 Z m 2.387787,13.2909208 -8.9296665,4.154094 4.154094,-8.9296672 8.9296665,-4.154094 z" style="fill:#ffffff;stroke-width:1.71429"/></g></svg></button>
 			</div>
 			
-			<div class="info_description">
-				<div>
-					<h1>Die drei ??? <span id="info_name"></span></h1>
-					<section>
-						<div id="info_panel"></div>
-						<div class="placeholder">&#160;-&#160;</div>
-						<div>zuletzt gehört: <input id="info_history" data-array="" type="text" value="tt.mm.yyyy" disabled maxlength="10"></input>
-							<button class="hover_svg" id="edit_history" title="Zuletzt gehört bearbeiten" onclick="editHistory()"><svg viewBox="0 0 24 24"><g><path d="M 0,19.000694 V 24 H 4.9993057 L 19.743924,9.2553812 14.744619,4.2560755 Z M 23.610054,5.3892515 c 0.519928,-0.5199278 0.519928,-1.3598111 0,-1.8797389 L 20.490487,0.38994584 c -0.519927,-0.51992779 -1.359811,-0.51992779 -1.879738,0 L 16.171087,2.829607 21.170393,7.8289127 Z"/></g></svg></button>
-							<button class="hover_svg" id="done_history" title="Speichern"><svg viewBox="0 0 24 24"><g><path d="M 7.636364,17.318045 1.9090909,11.590773 0,13.499864 7.636364,21.136227 24,4.7725909 22.090909,2.8635 Z"/></g></svg></button>
-						</div>
-					</section>
+			<div class="info_box">
+				<h1>Die drei ??? <span id="info_name"></span></h1>
+				<div class="info_data">
+					<div class="info_metadata" id="info_author"></div>
+					<div class="info_metadata" id="info_release"></div>
+					<div class="info_metadata" id="info_duration"></div>
+					<div class="info_history_box">zuletzt gehört: <input id="info_history" data-array="" type="text" value="tt.mm.yyyy" disabled maxlength="10"></input>
+						<button class="hover_svg" id="edit_history" title="Zuletzt gehört bearbeiten" onclick="editHistory()"><svg viewBox="0 0 24 24"><g><path d="M 0,19.000694 V 24 H 4.9993057 L 19.743924,9.2553812 14.744619,4.2560755 Z M 23.610054,5.3892515 c 0.519928,-0.5199278 0.519928,-1.3598111 0,-1.8797389 L 20.490487,0.38994584 c -0.519927,-0.51992779 -1.359811,-0.51992779 -1.879738,0 L 16.171087,2.829607 21.170393,7.8289127 Z"/></g></svg></button>
+						<button class="hover_svg" id="done_history" title="Speichern"><svg viewBox="0 0 24 24"><g><path d="M 7.636364,17.318045 1.9090909,11.590773 0,13.499864 7.636364,21.136227 24,4.7725909 22.090909,2.8635 Z"/></g></svg></button>
+					</div>
 				</div>
-				<p id="info_content"></p>
+				<p id="info_summary"></p>
 			</div>
 		</div>
 		<div class="aside_content center aside_scroll"> <!-- Settings Box -->
@@ -129,6 +127,10 @@
 					<span class="slider_text">Nach Erscheinungsdatum sortieren</span>
 				</label>
 			</div>
+			<label class="input_slider">
+				<span>Covergrösse</span>
+				<input type="range" min="0" max="4" step="1" defaultValue="2" onchange="changeCoverSize(this.value)">
+			</label>
 			<div class="border_button settings_ignored" onclick="showIgnoreList()">Ignorierte Folgen</div>
 		</div>
 		<div class="aside_content center"> <!-- Account Box -->
@@ -153,6 +155,7 @@
 				</div>
 			</div>
 		</div>
+		<button onclick="hideAside()" class="hide_aside_mobile hover_svg" title="Schliessen"><svg viewBox="0 0 24 24"><g><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></g></svg></button>
 		<button onclick="hideAside()" class="hide_aside border_button">Schliessen</button>
 	</aside>
 
