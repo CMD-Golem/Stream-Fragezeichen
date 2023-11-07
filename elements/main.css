@@ -10,14 +10,14 @@ main, .aside_content {
 :root {
 	--aside_height: 0;
 	--description_height: unset;
-	--list_cover_size: 190px;
 
-	--play_button_size: 60px;
-	--play_button_top: 130px;
-	--play_button_right: 27px;
-	--watch_list_button_top: 150px;
-	--info_button_top: 102px;
-	--small_button_left: 17px;
+	--cover_size: 190px;
+	--play_button_size:  60px;
+	--play_button_right: 16px;
+	--play_button_top: 114px;
+	--info_button_top: 81px;
+	--watch_list_top: 134px;
+	--buttons_left: 9px;
 }
 
 /* ####################################################################### */
@@ -32,16 +32,15 @@ ol {
 
 ol div {
 	position: relative;
+	margin: 12px;
 }
 
 ol a {
 	display: block;
-	margin: 12px;
-	margin-bottom: 15px;
 }
 
 ol img {
-	width: var(--list_cover_size);
+	width: var(--cover_size);
 	border-radius: 5px;
 	transition: opacity 0.2s;
 }
@@ -51,8 +50,9 @@ ol a:hover img {
 }
 
 ol p {
-	margin: 8px 0;
-	width: var(--list_cover_size);
+	margin: 0;
+	margin-top: 5px;
+	width: var(--cover_size);
 }
 
 ol span {
@@ -71,6 +71,19 @@ ol span {
 .show_history .no_history,
 .show_watch_list div:not(.in_watch_list),
 .show_ignore_list div:not(.in_ignore_list) {
+	display: none;
+}
+
+ol.show_episode_title p {
+	display: none;
+}
+
+ol.show_episode_title div {
+	margin: 8px;
+	margin-bottom: 4px;
+}
+
+ol.hide_watch_list .add, ol.hide_watch_list .remove {
 	display: none;
 }
 
@@ -98,16 +111,16 @@ ol .play {
 	width: var(--play_button_size);
 	height: var(--play_button_size);
 	padding: calc(var(--play_button_size) / 4);
-	top: var(--play_button_top); /* 130px */
-	right: var(--play_button_right); /* 27px */
+	top: var(--play_button_top);
+	right: var(--play_button_right);
 }
 ol .add, ol .remove {
-	top: var(--watch_list_button_top); /* 150px */
-	left: var(--small_button_left); /* 17px */
+	top: var(--watch_list_top);
+	left: var(--buttons_left);
 }
 ol .info {
-	top: var(--info_button_top); /* 102px */
-	left: var(--small_button_left); /* 17px */
+	top: var(--info_button_top);
+	left: var(--buttons_left);
 }
 
 ol div:hover .play,
@@ -146,6 +159,12 @@ aside {
 	transition: height 0.5s;
 }
 
+aside.small_screen {
+	bottom: 60px;
+	border-bottom: none;
+	overflow-y: auto;
+}
+
 .aside_content {
 	display: none;
 	position: relative;
@@ -153,6 +172,7 @@ aside {
 	padding: 40px 0;
 	margin: 0 auto;
 	overflow: hidden;
+	z-index: -1;
 }
 
 .aside_scroll {
@@ -161,12 +181,27 @@ aside {
 
 .hide_aside {
 	position: absolute;
+	z-index: 2;
 	bottom: 0;
 	left: 50%;
 	transform: translate(-50%, 50%);
 	width: 300px;
 	padding: 0;
 	margin: 0;
+}
+
+/* aside::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	width: 100vw;
+	bottom: 0;
+	height: 35px;
+	background-color: black;
+} */
+
+.small_screen .hide_aside {
+	display: none;
 }
 
 .hide_aside_mobile {
@@ -183,6 +218,10 @@ aside {
 	fill-opacity: 1;
 }
 
+.small_screen .hide_aside_mobile {
+	display: block;
+}
+
 .hover_svg:hover svg {
 	fill: var(--nav-hover-color);
 }
@@ -194,20 +233,6 @@ aside {
 		height: calc(100% - 55px);
 		padding: 20px;
 		padding-bottom: 35px;
-	}
-}
-
-@media (max-height: 600px) and (max-width: 682px) {
-	aside {
-		bottom: 60px;
-		border-bottom: none;
-		overflow-y: auto;
-	}
-	.hide_aside {
-		display: none;
-	}
-	.hide_aside_mobile {
-		display: block;
 	}
 }
 
@@ -315,20 +340,6 @@ aside {
 	}
 }
 
-@media (max-height: 600px) and (max-width: 682px) {
-	aside {
-		bottom: 60px;
-		border-bottom: none;
-		overflow-y: auto;
-	}
-	.hide_aside {
-		display: none;
-	}
-	.hide_aside_mobile {
-		display: block;
-	}
-}
-
 
 /* Settings */
 .settings_box {
@@ -338,6 +349,14 @@ aside {
 .settings_box > div {
 	padding: 0 10px;
 	width: calc(50% - 20px);
+}
+
+.settings_welcome {
+	padding: 10px 10px;
+}
+
+.small_screen .settings_welcome {
+	margin-right: 40px;
 }
 
 .settings_box span {
@@ -402,13 +421,10 @@ aside {
 		display: block;
 	}
 	.settings_box > div {
-		padding: 0 10px;
-		max-width: 450px;
 		width: unset;
-		margin: 0 auto;
 	}
-	.create_account, .manage_account {
-		margin-top: 40px !important;
+	.user_data_box {
+		margin-bottom: 40px;
 	}
 }
 

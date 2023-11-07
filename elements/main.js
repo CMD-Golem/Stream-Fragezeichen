@@ -13,6 +13,8 @@ function setupUserData(json_user_data) {
 	provider_link = user_data.provider;
 	if (provider_link == undefined) { provider_link = 0; }
 
+	document.getElementById("settings_cover_size").value = user_data.cover_size;
+
 	// int list sorting
 	backwards = user_data.backwards;
 	set_sort_list.checked = !backwards;
@@ -269,6 +271,7 @@ async function loadData() {
 		sort_date = false;
 
 		showSettings(); //actions.js
+		changeCoverSize("2"); //action.js
 		if (window.innerWidth <= 506) { overflowMenu(); } //actions.js
 
 		last_provider_selected = document.getElementById("provider_0");

@@ -110,40 +110,77 @@ function preventScroll(prevent_scroll) {
 
 // calc height
 function infoHeight() {
-	var aside_needed_height = aside.firstElementChild.scrollHeight;
+	// var aside_needed_height = aside.firstElementChild.scrollHeight;
 	var description_header_height = info_name.parentElement.parentElement.scrollHeight;
+	var aside_needed_height = description_header_height + 224;
 	var window_height = window.innerHeight;
 	var window_width = window.innerWidth;
 	var window_without_nav = window_height - 220;
 
-	// Height for Desktop view
-	if (window_width > 682) {
-		var aside_height = 340;
-		var info_height = (340 - 92 - description_header_height) + "px";
-	}
-	// Height for small screens (mobile with open keyboard)
-	else if (window_height <= 600 && window_width <= 682) {
-		var aside_height = window_height - 120;
-		var info_height = "unset";
-		preventScroll(true);
-	}
-	// Height for small screens but text doesn't fit on page without scrolling
-	else if (aside_needed_height >= window_without_nav) {
-		var aside_height = window_without_nav;
-		var info_height = (window_without_nav - description_header_height - 238) + "px";
-	}
-	// Height for small screens but text fits on page without scrolling
-	else if (aside_needed_height < window_without_nav) {
-		var aside_height = aside_needed_height;
-		var info_height = "unset";
+	aside.classList.remove("small_screen");
+	preventScroll(false);
+
+	if (show_info || show_random_episode) {
+		// Height for Desktop view
+		if (window_width > 682) {
+			var aside_height = "340px";
+			var info_height = (340 - 92 - description_header_height) + "px";
+			var info_height = (248 - info_name.parentElement.scrollHeight - info_author.parentElement.scrollHeight) + "px";
+		}
+		// Height for small screens (mobile with open keyboard)
+		else if (window_height <= 600 && window_width <= 682) {
+			var aside_height = (window_height - 120) + "px";
+			var info_height = "unset";
+			aside.classList.add("small_screen");
+			preventScroll(true);
+		}
+		// Height for small screens but text doesn't fit on page without scrolling
+		else if (aside_needed_height >= window_without_nav) {
+			var aside_height = (window_height - 120) + "px";
+			var info_height = "unset";
+			aside.classList.add("small_screen");
+			preventScroll(true);
+		}
+		// Height for small screens but text fits on page without scrolling
+		else if (aside_needed_height < window_without_nav) {
+			var aside_height = aside_needed_height + "px";
+			var info_height = "unset";
+		}
+
+		css_root.style.setProperty("--description_height", info_height);
 	}
 
-	css_root.style.setProperty("--aside_height", aside_height + "px");
-	css_root.style.setProperty("--description_height", info_height);
+	// Account Settings Height
+	else if (show_settings) {
+		aside_height = "400px";
+		// Height for small screens (mobile with open keyboard)
+		if (window_height <= 600 && window_width <= 682) {
+			var aside_height = (window_height - 120) + "px";
+			aside.classList.add("small_screen");
+			preventScroll(true);
+		}
+	}
+
+	// Account Settings Height
+	else if (show_account) {
+		if (window_height <= 580 && window_width <= 458) {
+			var aside_height = (window_height - 120) + "px";
+			aside.classList.add("small_screen");
+			preventScroll(true);
+		}
+		else if (window_width <= 458) {
+			aside_height = "400px";
+		}
+		else {
+			aside_height = "270px";
+		}
+	}
+
+	css_root.style.setProperty("--aside_height", aside_height);
 }
 
 visualViewport.addEventListener("resize", function(){
-	if (show_info || show_random_episode) { infoHeight(); }
+	infoHeight();
 });
 
 //#################################################################################################
@@ -386,7 +423,7 @@ function showSettings() {
 		show_account = false;
 		show_random_episode = false;
 		show_info = false;
-		css_root.style.setProperty("--aside_height", "400px");
+		infoHeight();
 		refreshNavButtons();
 	}
 	refreshAside();
@@ -418,7 +455,7 @@ function showAccount() {
 		show_settings = false;
 		show_random_episode = false;
 		show_info = false;
-		css_root.style.setProperty("--aside_height", "270px");
+		infoHeight();
 		refreshNavButtons();
 
 		if (user_id != null) {
@@ -575,20 +612,30 @@ async function deleteDatabase() {
 //#################################################################################################
 // Cover size
 function changeCoverSize(size) {
-	//										  play s, cover,   play t, play r, watch,  info,   small
-	if (size == "0") { 		var size_array = ["40px", "120px", "85px", "17px", "85px", "38px", "17px"]; }
-	else if (size == "1") { var size_array = ["60px", "155px", "97px", "22px", "118px", "70px", "17px"]; }
-	else if (size == "2") { var size_array = ["60px", "190px", "130px", "27px", "150px", "102px", "17px"]; }
-	else if (size == "3") { var size_array = ["60px", "225px", "130px", "27px", "150px", "102px", "17px"]; }
-	else if (size == "4") { var size_array = ["60px", "260px", "130px", "27px", "150px", "102px", "17px"]; }
+	episoden_list.classList.remove('hide_watch_list');
 
-	css_root.style.setProperty("--play_button_size", size_array[0]);
-	css_root.style.setProperty("--list_cover_size", size_array[1]);
-	css_root.style.setProperty("--play_button_top", size_array[2]);
-	css_root.style.setProperty("--play_button_right", size_array[3]);
-	css_root.style.setProperty("--watch_list_button_top", size_array[4]);
-	css_root.style.setProperty("--info_button_top", size_array[5]);
-	css_root.style.setProperty("--small_button_left", size_array[6]);
+	user_data.cover_size = size;
+	
+	if (size == "0") {
+		var size_array = ["120px", "40px", "9px", "71px", "71px", "71px", "9px"];
+		episoden_list.classList.add('hide_watch_list');
+	}
+	else if (size == "1") { var size_array = ["155px", "60px", "11px", "84px", "51px", "104px", "9px"]; }
+	else if (size == "2") { var size_array = ["190px", "60px", "16px", "114px", "81px", "134px", "9px"]; }
+	else if (size == "3") { var size_array = ["225px", "60px", "16px", "146px", "111px", "169px", "14px"]; }
+	else if (size == "4") { var size_array = ["260px", "60px", "16px", "184px", "146px", "204px", "14px"]; }
+
+	css_root.style.setProperty("--cover_size", size_array[0]);
+	css_root.style.setProperty("--play_button_size", size_array[1]);
+	css_root.style.setProperty("--play_button_right", size_array[2]);
+	css_root.style.setProperty("--play_button_top", size_array[3]);
+	css_root.style.setProperty("--info_button_top", size_array[4]);
+	css_root.style.setProperty("--watch_list_top", size_array[5]);
+	css_root.style.setProperty("--buttons_left", size_array[6]);
+}
+
+function toggleEpisodeTitle() {
+	episoden_list.classList.toggle('show_episode_title');
 }
 
 //#################################################################################################
