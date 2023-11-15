@@ -16,28 +16,10 @@ function setupUserData(json_user_data) {
 	document.getElementById("settings_cover_size").value = user_data.cover_size;
 
 	// int list sorting
-	backwards = user_data.backwards;
-	set_sort_list.checked = !backwards;
-	if (backwards == false) {
-		el_sort_list.style.transform = "scaleY(-1)";
-	}
-	else {
-		backwards = true;
-		el_sort_list.style.transform = "scaleY(1)";
-	}
-
-	// int list sort type
-	sort_date = user_data.sort_date;
-	set_episode_number.checked = sort_date;
-	if (sort_date == true) {
-		episode_number.style.display = "flex";
-		release_date.style.display = "none";
-	}
-	else {
-		sort_date = false;
-		episode_number.style.display = "none";
-		release_date.style.display = "flex";
-	}
+	backwards = !user_data.backwards;
+	sort_date = !user_data.sort_date;
+	toggleOrder();
+	toggleSort();
 
 	// int user list
 	for (var i = 0; i < user_data.list.length; i++) {
@@ -72,10 +54,9 @@ function setupUserData(json_user_data) {
 //#################################################################################################
 // load episodes
 var episoden_list = document.getElementsByTagName("ol")[0];
-var episode_html = [];
 
 function loadEpisodes() {
-	episode_html = [];
+	var episode_html = [];
 
 	for (var i = 0; i < episoden.length; i++) {
 		var episode = episoden[i];
@@ -87,6 +68,11 @@ function loadEpisodes() {
 		}
 		else {
 			var episode_data = {};
+		}
+
+		// get index of episode 001
+		if (episode.number == "001") {
+			var first_episode_index = i + 1;
 		}
 
 		// generate title
@@ -115,7 +101,7 @@ function loadEpisodes() {
 		}
 		// setup episodes links
 		else {
-			var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('${i}', new Date())"`;
+			var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('${i}')"`;
 			var info = `showInfo('${i}')`;
 		}
 
@@ -143,15 +129,9 @@ function loadEpisodes() {
 		</div>`);
 	}
 
-	// do html sorting according to settings
-	if (!backwards && !show_history) {
-		episode_html.reverse();
-	}
-	else if (show_history) {
-		episode_html.reverse();
-	}
-
 	if (sort_date && !show_history) {
+		if (!backwards) { episode_html = episode_html.reverse(); }
+
 		episode_html.sort((a, b) => {
 			var a_date = a.slice(21, 31);
 			var b_date = b.slice(21, 31);
@@ -167,8 +147,7 @@ function loadEpisodes() {
 			return 0;
 		});
 	}
-
-	if (show_history) {
+	else if (show_history) {
 		episode_html.sort((a, b) => {
 			var a_date = a.slice(47, 71);
 			var b_date = b.slice(47, 71);
@@ -184,47 +163,43 @@ function loadEpisodes() {
 			return 0;
 		});
 	}
+	else if (!backwards) {
+		episode_html = episode_html.slice(0, first_episode_index).reverse().concat(episode_html.slice(first_episode_index));
+	}
 	
 	episoden_list.innerHTML = episode_html.join("");
 }
 
 //#################################################################################################
 // change direction of episode list
-var el_sort_list = document.getElementById("sort_list");
-var set_sort_list = document.getElementById("settings_sort_list");
-
 function toggleOrder() {
 	backwards = !backwards;
-	set_sort_list.checked = !backwards;
+	document.getElementById("settings_sort_list").checked = !backwards;
 	storeUserData();
 	loadEpisodes();
 
 	if (backwards) {
-		el_sort_list.style.transform = "scaleY(1)";
+		document.getElementById("sort_list").style.transform = "scaleY(1)";
 	}
 	else {
-		el_sort_list.style.transform = "scaleY(-1)";
+		document.getElementById("sort_list").style.transform = "scaleY(-1)";
 	}
 }
 
 // sort episode list according to release date or numbering
-var episode_number = document.getElementById("episode_number");
-var set_episode_number = document.getElementById("settings_episode_number");
-var release_date = document.getElementById("release_date");
-
 function toggleSort() {
 	sort_date = !sort_date;
-	set_episode_number.checked = sort_date;
+	document.getElementById("settings_episode_number").checked = sort_date;
 	storeUserData();
 	loadEpisodes();
 
 	if (sort_date) {
-		episode_number.style.display = "flex";
-		release_date.style.display = "none";
+		document.getElementById("episode_number").style.display = "flex";
+		document.getElementById("release_date").style.display = "none";
 	}
 	else {
-		episode_number.style.display = "none";
-		release_date.style.display = "flex";
+		document.getElementById("episode_number").style.display = "none";
+		document.getElementById("release_date").style.display = "flex";
 	}
 }
 
@@ -319,7 +294,6 @@ async function storeUserData() {
 	}
 }
 
-//#################################################################################################
 // create new index in user data for episode
 function createUserDataIndex(episoden_index) {
 	// create user data entry
@@ -430,22 +404,35 @@ var edit_history = document.getElementById("edit_history");
 var done_history = document.getElementById("done_history");
 var date_before_edit, finished_input;
 
-function refreshHistory(episoden_index, date, click_counter) {
+function refreshHistory(episoden_index, date) {
 	// get or create user_data entry
 	var user_data_index = episoden[episoden_index].user_data_index;
 
 	if (user_data_index == undefined) {
 		user_data_index = createUserDataIndex(episoden_index);
 	}
-
+	
 	var episode_data = user_data.list[user_data_index];
 
-	// store date
-	episode_data.history = date;
+	// store current date
+	if (date == undefined) {
+		episode_data.history = new Date();
+	}
+	// remove stored date
+	else if (date == false) {
+		episode_data.history = undefined;
+		info_history.value = "nie";
+		document.getElementById(episoden_index).classList.add("no_history");
+	}
+	// store predefined date
+	else {
+		episode_data.history = date;
+	}
+
 	storeUserData();
 
 	// Click counter
-	if (user_role != "hidden" && click_counter != false) {
+	if (user_role != "hidden" && date != undefined && date != false) {
 		fetch("/.netlify/functions/episode_counter/");
 	}
 }
@@ -475,10 +462,10 @@ function saveEditHistory(episoden_index) {
 	var date = `${date_array[2]}-${date_array[1]}-${date_array[0]}T00:00:00.000Z`;
 
 	if (date == "1999-01-01T00:00:00.000Z") {
-		date = undefined;
+		date = false;
 	}
 
-	refreshHistory(episoden_index, date, false);
+	refreshHistory(episoden_index, date);
 }
 
 // Check user input (origin: https://stackoverflow.com/a/43473017/14225364)

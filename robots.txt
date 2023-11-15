@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /form_success.html
-Disallow: /impressum.html
-Disallow: /kontakt.html
+Allow: /index.html
+Disallow: /
+Allow: /index.html
