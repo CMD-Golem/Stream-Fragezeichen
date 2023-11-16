@@ -308,7 +308,7 @@ function showInfo(episoden_index, is_random_episode) {
 	}
 
 	// link and text
-	info_href.href = episode.href[provider_link];
+	info_href.href = episode.href[user_data.provider];
 	info_name.innerHTML = episode.name;
 	info_author.innerHTML = episode.book_author;
 	document.getElementById("info_img").src = `img/${episode.number}.jpg`;
@@ -429,10 +429,10 @@ function selectProvider(el_button) {
 	el_button.classList.add("provider_selected");
 
 	last_provider_selected = el_button;
-	provider_link = parseInt(el_button.id.replace("provider_", ""));
+	user_data.provider = parseInt(el_button.id.replace("provider_", ""));
 
 	loadEpisodes(); // main.js
-	storeUserData(); // main.js
+	storeUserData(false); // main.js
 }
 
 //#################################################################################################
@@ -452,36 +452,53 @@ function showAccount() {
 		infoHeight();
 		refreshNavButtons();
 
-		if (user_id != null) {
+		if (user_data.user_id != undefined) {
 			changeAccountButton("delete_id");
-			input_user_id.value = user_id;
+			input_user_id.value = user_data.user_id;
 		}
 		else { changeAccountButton("new_id"); }
 	}
 	refreshAside();
 }
 
-// reset/ export settings
-function exportUserData() {
-	storeUserData();
-	var link = document.createElement('a');
-	link.download = "Stream-Fragezeicen.de Daten.json";
-	link.href = "data:text/plain;charset=utf-8," + JSON.stringify(user_data);
-	link.click();
-}
-
-function resetUserData() {
-	var confirm_msg = confirm("Deine lokalen und synchronisierten Nutzerdaten werden unwiederruflich gelöscht!");
+// reset user data
+async function resetUserData() {
+	var confirm_msg = confirm("Deine lokalen und synchronisierten Nutzerdaten werden unwiederruflich gelöscht! Deine ID bleibt ohne Daten bestehen.");
 	if (confirm_msg == true) {
-		provider_link = 0;
-		backwards = true;
-		sort_date = false;
-		user_data.list = [];
+		// reset local data and only keep user id
+		var json_user_data = JSON.stringify({user_id: user_data.user_id});
+		window.localStorage.setItem("user_data", json_user_data);
 
-		storeUserData(); // main.js
+		// reset remote data
+		if (user_data.user_id != undefined) {
+			var remote_data = {};
+			remote_data.latest_upload = new Date();
+			remote_data.a_name = user_data.a_name;
+
+			var fetch_body = {
+				id: user_data.user_id,
+				data: remote_data
+			}
+		
+			var json_fetch_body = JSON.stringify(fetch_body);
+		
+			await fetch("/.netlify/functions/db_update", {
+				method: "POST",
+				body: json_fetch_body,
+			});
+		}
 
 		document.location.reload();
 	}
+}
+
+// export user data
+function exportUserData() {
+	storeUserData(false);
+	var link = document.createElement('a');
+	link.download = "Stream-Fragezeichen Daten.json";
+	link.href = "data:text/plain;charset=utf-8," + JSON.stringify(user_data);
+	link.click();
 }
 
 // import user data
@@ -497,13 +514,18 @@ import_user_data.onchange = e => {
 		var json_user_data = readerEvent.target.result;
 
 		try {
-			user_data = JSON.parse(json_user_data);
-			if (user_data.provider == undefined || user_data.backwards == undefined || user_data.sort_date == undefined) {
+			new_user_data = JSON.parse(json_user_data);
+			if (new_user_data.provider == undefined || new_user_data.backwards == undefined || new_user_data.sort_date == undefined) {
 				alert("Die Datei enthält keine Nutzerdaten!");
 			}
-			else { // all in main.js
-				setupUserData(json_user_data);
-				storeUserData();
+			else {
+				// keep current user id if not defined in new user data
+				if (new_user_data.user_id == undefined && user_data.user_id != undefined) {
+					new_user_data.user_id = user_data.user_id;
+					json_user_data = JSON.stringify(new_user_data);
+				}
+
+				window.localStorage.setItem("user_data", json_user_data);
 				document.location.reload();
 			}
 		}
@@ -539,21 +561,21 @@ function importNewIdShow() {
 }
 
 function importNewId() {
-	var confirm_msg = confirm("Durch das Einfügen dieser ID werden deine lokalen Daten überschrieben!");
+	var confirm_msg = confirm("Durch das Einfügen dieser ID werden deine lokalen Episoden Daten überschrieben!");
 	if (confirm_msg == true) {
-		window.localStorage.setItem("user_id", input_user_id.value);
+		user_data.user_id = input_user_id.value;
+		storeUserData(false);
 		document.location.reload();
 	}
 }
 
 // create new db id
 async function createDatabase() {
-	if (user_id != null) {
+	if (user_data.user_id != undefined) {
 		return
 	}
 
-	storeUserData();
-	var json_user_data = window.localStorage.getItem("user_data");
+	var json_user_data = JSON.stringify(user_data);
 
 	var response = await fetch("/.netlify/functions/db_create", {
 		method: "POST",
@@ -563,9 +585,9 @@ async function createDatabase() {
 	var response_object = await response.json();
 
 	if (response.status == 200) {
-		user_id = response_object.user_id;
-		input_user_id.value = user_id;
-		window.localStorage.setItem("user_id", user_id);
+		user_data.user_id = response_object.user_id;
+		input_user_id.value = user_data.user_id;
+		storeUserData(false);
 
 		changeAccountButton("delete_id");
 	}
@@ -579,8 +601,8 @@ async function createDatabase() {
 // disconnect from db
 function disconnectId() {
 	input_user_id.value = "";
-	window.localStorage.removeItem("user_id");
-	user_id = null;
+	user_data.user_id = undefined;
+	storeUserData(false);
 	changeAccountButton("new_id");
 }
 
@@ -590,12 +612,13 @@ async function deleteDatabase() {
 	if (confirm_msg == true) {
 		var response = await fetch("/.netlify/functions/db_delete", {
 			method: "POST",
-			body: user_id,
+			body: user_data.user_id,
 		});
 
-		disconnectId();
-
-		if (response.status != 200) {
+		if (response.status == 200) {
+			disconnectId();
+		}
+		else {
 			alert("ID konnte nicht gelöscht werden!");
 			console.log(response);
 			console.log(await response.json());
@@ -629,6 +652,7 @@ function changeCoverSize(size) {
 }
 
 function toggleEpisodeTitle() {
+	user_data.show_episode_title = !user_data.show_episode_title;
 	episoden_list.classList.toggle('show_episode_title');
 }
 
@@ -703,7 +727,6 @@ function startSearch() {
 		search_box.style.display = "none";
 		if (window.screen.width <= 506) { nav_buttons.removeAttribute("style"); }
 		siteSearch();
-		// loadEpisodes(); // main.js
 	}
 }
 
@@ -714,12 +737,11 @@ function calcDuration(min, s) {
 }
 
 // User counter
-const local_date = new Date();
-const user_role = window.localStorage.getItem("user_role"); // window.localStorage.setItem("user_role", "hidden")
-
 async function userCounter() {
+	var local_date = new Date();
 	var current_day = local_date.getFullYear + "." + local_date.getMonth + "." + local_date.getDay;
 	var was_counted = window.localStorage.getItem("user_counter");
+	var user_role = window.localStorage.getItem("user_role"); // window.localStorage.setItem("user_role", "hidden")
 
 	if (was_counted != current_day && user_role != "hidden") {
 		window.localStorage.setItem("user_counter", current_day);
@@ -730,4 +752,4 @@ async function userCounter() {
 	}
 }
 
-userCounter();
+// userCounter();

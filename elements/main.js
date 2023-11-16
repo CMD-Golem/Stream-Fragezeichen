@@ -1,57 +1,5 @@
 // user_role: "hidden" -> don't count clicks and user analytics
 
-// Functions to generate the list according to settings
-var provider_link, last_provider_selected, backwards, sort_date, user_data = {list:[]}, watch_list_count = 0, ignore_list_count = 0;
-var user_id = null;
-
-// get data from storage/db
-function setupUserData(json_user_data) {
-	user_data = JSON.parse(json_user_data);
-
-	// int selected provider
-	// deezer = 0, youtube = 1, spotify = 2, apple = 3
-	provider_link = user_data.provider;
-	if (provider_link == undefined) { provider_link = 0; }
-
-	document.getElementById("settings_cover_size").value = user_data.cover_size;
-
-	// int list sorting
-	backwards = !user_data.backwards;
-	sort_date = !user_data.sort_date;
-	toggleOrder();
-	toggleSort();
-
-	// int user list
-	for (var i = 0; i < user_data.list.length; i++) {
-		var episode = user_data.list[i];
-		var found_episode = false;
-
-		// init counters
-		if (episode.list == "true") { watch_list_count++; }
-
-		if (episode.ignored == "true") { ignore_list_count++; }
-
-		// store user data array 
-		for (var j = 0; j < episoden.length; j++) {
-			if (episode.number == episoden[j].number) {
-				episoden[j].user_data_index = i;
-				found_episode = true;
-				break;
-			}
-		}
-
-		if (!found_episode) {
-			console.warn("Episode in den Nutzerdaten konnte nicht gefunden werden.");
-		}
-	}
-
-	// select provider
-	last_provider_selected = document.getElementById("provider_" + provider_link);
-	last_provider_selected.classList.add("provider_selected");
-}
-
-
-//#################################################################################################
 // load episodes
 var episoden_list = document.getElementsByTagName("ol")[0];
 
@@ -89,7 +37,7 @@ function loadEpisodes() {
 
 
 		// remove episodes whiche are not aviable on selected streamer 
-		if (episode.href[provider_link] == "#") {
+		if (episode.href[user_data.provider] == "#") {
 			var href = 'href="#"';
 			episode_class += " not_aviable";
 			var info = "";
@@ -101,7 +49,7 @@ function loadEpisodes() {
 		}
 		// setup episodes links
 		else {
-			var href = `href="${episode.href[provider_link]}" target="_blank" onclick="refreshHistory('${i}')"`;
+			var href = `href="${episode.href[user_data.provider]}" target="_blank" onclick="refreshHistory('${i}')"`;
 			var info = `showInfo('${i}')`;
 		}
 
@@ -175,7 +123,7 @@ function loadEpisodes() {
 function toggleOrder() {
 	backwards = !backwards;
 	document.getElementById("settings_sort_list").checked = !backwards;
-	storeUserData();
+	storeUserData(false);
 	loadEpisodes();
 
 	if (backwards) {
@@ -190,7 +138,7 @@ function toggleOrder() {
 function toggleSort() {
 	sort_date = !sort_date;
 	document.getElementById("settings_episode_number").checked = sort_date;
-	storeUserData();
+	storeUserData(false);
 	loadEpisodes();
 
 	if (sort_date) {
@@ -205,53 +153,97 @@ function toggleSort() {
 
 //#################################################################################################
 // load user data
+var user_data = {list:[]}, last_provider_selected, backwards, sort_date, watch_list_count = 0, ignore_list_count = 0;
+var user_id = null;
 var input_user_id = document.getElementById("user_id");
 
 async function loadData() {
 	var json_user_data = window.localStorage.getItem("user_data");
-	user_id = window.localStorage.getItem("user_id");
-
-	// read data from db
-	if (user_id != null) {
-		var response = await fetch("/.netlify/functions/db_read", {
-			method: "POST",
-			body: user_id,
-		});
-
-		var response_object = await response.json();
-
-		if (response.status == 200) {
-			json_user_data = JSON.stringify(response_object);
-
-			input_user_id.value = user_id;
-		}
-		else if (response.status == 502) {
-			alert("Die registierte ID ist fehlerhaft oder entfernt worden!");
-			disconnectId();
-		}
-		else {
-			alert("Benutzer Daten konnten nicht heruntergeladen werden!");
-			console.error(response);
-			console.error(response_object);
-		}
-	}
+	// user_id = window.localStorage.getItem("user_id"); user_id != null
 
 	// setup according to user data
 	if (json_user_data != null) {
-		setupUserData(json_user_data);
+		user_data = JSON.parse(json_user_data);
+
+		// int list sorting
+		backwards = !user_data.backwards;
+		sort_date = !user_data.sort_date;
+		toggleOrder();
+		toggleSort();
+
+		// read remote episode data and overwrite local episode data (null can be removed)
+		if (user_data.user_id != undefined) {
+			var response = await fetch("/.netlify/functions/db_read", {
+				method: "POST",
+				body: user_data.user_id,
+			});
+
+			var response_object = await response.json();
+
+			if (response.status == 200) {
+				var remote_data = JSON.stringify(response_object);
+				user_data.list = remote_data.list;
+				user_data.a_name = remote_data.a_name;
+
+				input_user_id.value = user_data.user_id;
+				console.log("Server Daten vom " + remote_data.latest_upload + " wurden geladen.");
+			}
+			else if (response.status == 502) {
+				alert("Die registierte ID ist fehlerhaft oder entfernt worden!");
+				disconnectId();
+			}
+			else {
+				alert("Benutzer Daten konnten nicht heruntergeladen werden!");
+				console.error(response);
+				console.error(response_object);
+			}
+		}
+
+		// int episode data: history, watchlist, ignore_list
+		for (var i = 0; i < user_data.list.length; i++) {
+			var episode = user_data.list[i];
+			var found_episode = false;
+
+			// init counters
+			if (episode.list == "true") { watch_list_count++; }
+
+			if (episode.ignored == "true") { ignore_list_count++; }
+
+			// store user data array 
+			for (var j = 0; j < episoden.length; j++) {
+				if (episode.number == episoden[j].number) {
+					episoden[j].user_data_index = i;
+					found_episode = true;
+					break;
+				}
+			}
+
+			if (!found_episode) {
+				console.warn("Episode in den Nutzerdaten konnte nicht gefunden werden.");
+			}
+		}
 	}
 	else {
-		provider_link = 0;
+		// setup user_data one first visit
+		user_data.provider = 0;
+		user_data.cover_size = "2";
+		user_data.show_episode_title = true;
+		user_data.backwards = true;
+		user_data.sort_date = false;
 		backwards = true;
 		sort_date = false;
 
 		showSettings(); //actions.js
-		changeCoverSize("2"); //action.js
 		if (window.innerWidth <= 506) { overflowMenu(); } //actions.js
-
-		last_provider_selected = document.getElementById("provider_0");
-		last_provider_selected.classList.add("provider_selected");
 	}
+
+	// setup selected provider (deezer = 0, youtube = 1, spotify = 2, apple = 3)
+	last_provider_selected = document.getElementById("provider_" + user_data.provider);
+	last_provider_selected.classList.add("provider_selected");
+
+	// setup cover size
+	document.getElementById("settings_cover_size").value = user_data.cover_size;
+	changeCoverSize(user_data.cover_size); // actions.js
 
 	// load html
 	loadEpisodes();
@@ -259,24 +251,23 @@ async function loadData() {
 
 loadData();
 
-// store user data on storage/db
-// document.addEventListener("visibilitychange", function() { if (document.hidden) { storeUserData() } });
-
-async function storeUserData() {
-	console.log("Saved User data");
-
-	user_data.provider = provider_link;
+// store user data in local storage and upload local episode data if needed
+async function storeUserData(remote) {
 	user_data.backwards = backwards;
 	user_data.sort_date = sort_date;
 
 	var json_user_data = JSON.stringify(user_data);
 	window.localStorage.setItem("user_data", json_user_data);
-	
-	// store on db
-	if (user_id != null) {
+
+	if (remote && user_data.user_id != undefined) {
+		var remote_data = {};
+		remote_data.latest_upload = new Date();
+		remote_data.list = user_data.list;
+		remote_data.a_name = user_data.a_name;
+
 		var fetch_body = {
-			id: user_id,
-			data: user_data
+			id: user_data.user_id,
+			data: remote_data
 		}
 	
 		var json_fetch_body = JSON.stringify(fetch_body);
@@ -286,7 +277,10 @@ async function storeUserData() {
 			body: json_fetch_body,
 		});
 
-		if (response.status != 200) {
+		if (response.status == 200) {
+			console.log("Uploaded Episode data");
+		}
+		else {
 			alert("Benutzer Daten konnte nicht hochgeladen werden!");
 			console.error(response);
 			console.error(await response.json());
@@ -348,7 +342,7 @@ function toggleWatchList(episoden_index, el_button) {
 		}
 	}
 
-	storeUserData();
+	storeUserData(true);
 }
 
 //#################################################################################################
@@ -394,7 +388,7 @@ function toggleIgnoreList(episoden_index, el_button) {
 		}
 	}
 
-	storeUserData();
+	storeUserData(true);
 }
 
 //#################################################################################################
@@ -429,7 +423,7 @@ function refreshHistory(episoden_index, date) {
 		episode_data.history = date;
 	}
 
-	storeUserData();
+	storeUserData(true);
 
 	// Click counter
 	if (user_role != "hidden" && date != undefined && date != false) {

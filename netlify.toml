@@ -1,3 +1,8 @@
 [[edge_functions]]
 path = "/get-country"
 function = "location"
+
+[[redirects]]
+from = "/*"
+to = "/"
+status = 404
