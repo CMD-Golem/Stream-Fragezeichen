@@ -651,9 +651,50 @@ function changeCoverSize(size) {
 	css_root.style.setProperty("--buttons_left", size_array[6]);
 }
 
+// change visibility of episode titles
 function toggleEpisodeTitle() {
-	user_data.show_episode_title = !user_data.show_episode_title;
-	episoden_list.classList.toggle('show_episode_title');
+	user_data.hide_episode_title = !user_data.hide_episode_title;
+	document.getElementById("settings_episode_title").checked = user_data.hide_episode_title;
+	storeUserData(false);
+	
+	if (user_data.hide_episode_title) {
+		episoden_list.classList.add('hide_episode_title');;
+	}
+	else {
+		episoden_list.classList.remove('hide_episode_title');
+	}
+}
+
+// change direction of episode list
+function toggleOrder() {
+	user_data.backwards = !user_data.backwards;
+	document.getElementById("settings_sort_list").checked = !user_data.backwards;
+	storeUserData(false);
+	loadEpisodes();
+
+	if (user_data.backwards) {
+		document.getElementById("sort_list").style.transform = "scaleY(1)";
+	}
+	else {
+		document.getElementById("sort_list").style.transform = "scaleY(-1)";
+	}
+}
+
+// sort episode list according to release date or numbering
+function toggleSort() {
+	user_data.sort_date = !user_data.sort_date;
+	document.getElementById("settings_episode_number").checked = user_data.sort_date;
+	storeUserData(false);
+	loadEpisodes();
+
+	if (user_data.sort_date) {
+		document.getElementById("episode_number").style.display = "flex";
+		document.getElementById("release_date").style.display = "none";
+	}
+	else {
+		document.getElementById("episode_number").style.display = "none";
+		document.getElementById("release_date").style.display = "flex";
+	}
 }
 
 //#################################################################################################

@@ -77,14 +77,14 @@ function loadEpisodes() {
 		</div>`);
 	}
 
-	if (sort_date && !show_history) {
-		if (!backwards) { episode_html = episode_html.reverse(); }
+	if (user_data.sort_date && !show_history) {
+		if (!user_data.backwards) { episode_html = episode_html.reverse(); }
 
 		episode_html.sort((a, b) => {
 			var a_date = a.slice(21, 31);
 			var b_date = b.slice(21, 31);
 
-			if (backwards) {
+			if (user_data.backwards) {
 				if (a_date < b_date) { return 1; }
 				if (a_date > b_date){ return -1; }
 			}
@@ -100,7 +100,7 @@ function loadEpisodes() {
 			var a_date = a.slice(47, 71);
 			var b_date = b.slice(47, 71);
 
-			if (backwards) {
+			if (user_data.backwards) {
 				if (a_date < b_date) { return 1; }
 				if (a_date > b_date){ return -1; }
 			}
@@ -111,7 +111,7 @@ function loadEpisodes() {
 			return 0;
 		});
 	}
-	else if (!backwards) {
+	else if (!user_data.backwards) {
 		episode_html = episode_html.slice(0, first_episode_index).reverse().concat(episode_html.slice(first_episode_index));
 	}
 	
@@ -119,41 +119,8 @@ function loadEpisodes() {
 }
 
 //#################################################################################################
-// change direction of episode list
-function toggleOrder() {
-	backwards = !backwards;
-	document.getElementById("settings_sort_list").checked = !backwards;
-	storeUserData(false);
-	loadEpisodes();
-
-	if (backwards) {
-		document.getElementById("sort_list").style.transform = "scaleY(1)";
-	}
-	else {
-		document.getElementById("sort_list").style.transform = "scaleY(-1)";
-	}
-}
-
-// sort episode list according to release date or numbering
-function toggleSort() {
-	sort_date = !sort_date;
-	document.getElementById("settings_episode_number").checked = sort_date;
-	storeUserData(false);
-	loadEpisodes();
-
-	if (sort_date) {
-		document.getElementById("episode_number").style.display = "flex";
-		document.getElementById("release_date").style.display = "none";
-	}
-	else {
-		document.getElementById("episode_number").style.display = "none";
-		document.getElementById("release_date").style.display = "flex";
-	}
-}
-
-//#################################################################################################
 // load user data
-var user_data = {list:[]}, last_provider_selected, backwards, sort_date, watch_list_count = 0, ignore_list_count = 0;
+var user_data = {list:[]}, last_provider_selected, watch_list_count = 0, ignore_list_count = 0;
 var user_id = null;
 var input_user_id = document.getElementById("user_id");
 
@@ -166,10 +133,12 @@ async function loadData() {
 		user_data = JSON.parse(json_user_data);
 
 		// int list sorting
-		backwards = !user_data.backwards;
-		sort_date = !user_data.sort_date;
+		user_data.backwards = !user_data.backwards;
+		user_data.sort_date = !user_data.sort_date;
+		user_data.hide_episode_title = !user_data.hide_episode_title;
 		toggleOrder();
 		toggleSort();
+		toggleEpisodeTitle();
 
 		// read remote episode data and overwrite local episode data (null can be removed)
 		if (user_data.user_id != undefined) {
@@ -227,11 +196,9 @@ async function loadData() {
 		// setup user_data one first visit
 		user_data.provider = 0;
 		user_data.cover_size = "2";
-		user_data.show_episode_title = true;
+		user_data.hide_episode_title = false;
 		user_data.backwards = true;
 		user_data.sort_date = false;
-		backwards = true;
-		sort_date = false;
 
 		showSettings(); //actions.js
 		if (window.innerWidth <= 506) { overflowMenu(); } //actions.js
@@ -253,9 +220,6 @@ loadData();
 
 // store user data in local storage and upload local episode data if needed
 async function storeUserData(remote) {
-	user_data.backwards = backwards;
-	user_data.sort_date = sort_date;
-
 	var json_user_data = JSON.stringify(user_data);
 	window.localStorage.setItem("user_data", json_user_data);
 

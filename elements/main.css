@@ -74,11 +74,11 @@ ol span {
 	display: none;
 }
 
-ol.show_episode_title p {
+ol.hide_episode_title p {
 	display: none;
 }
 
-ol.show_episode_title div {
+ol.hide_episode_title div {
 	margin: 8px;
 	margin-bottom: 4px;
 }
