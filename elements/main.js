@@ -1,8 +1,6 @@
 // user_role: "hidden" -> don't count clicks and user analytics
 
 // load episodes
-var episoden_list = document.getElementsByTagName("ol")[0];
-
 function loadEpisodes() {
 	var episode_html = [];
 
@@ -77,7 +75,7 @@ function loadEpisodes() {
 		</div>`);
 	}
 
-	if (user_data.sort_date && !show_history) {
+	if (user_data.sort_date && active_main != "history") {
 		if (!user_data.backwards) { episode_html = episode_html.reverse(); }
 
 		episode_html.sort((a, b) => {
@@ -95,7 +93,7 @@ function loadEpisodes() {
 			return 0;
 		});
 	}
-	else if (show_history) {
+	else if (active_main == "history") {
 		episode_html.sort((a, b) => {
 			var a_date = a.slice(47, 71);
 			var b_date = b.slice(47, 71);
@@ -126,7 +124,7 @@ var input_user_id = document.getElementById("user_id");
 
 async function loadData() {
 	var json_user_data = window.localStorage.getItem("user_data");
-	// user_id = window.localStorage.getItem("user_id"); user_id != null
+	changeIdButton("new_id");
 
 	// setup according to user data
 	if (json_user_data != null) {
@@ -154,6 +152,7 @@ async function loadData() {
 				user_data.list = remote_data.list;
 				user_data.a_name = remote_data.a_name;
 
+				changeIdButton("delete_id"); // action.js
 				input_user_id.value = user_data.user_id;
 				console.log("Server Daten vom " + remote_data.latest_upload + " wurden geladen.");
 			}
@@ -200,7 +199,7 @@ async function loadData() {
 		user_data.backwards = true;
 		user_data.sort_date = false;
 
-		showSettings(); //actions.js
+		showAside('settings'); //actions.js
 		if (window.innerWidth <= 506) { overflowMenu(); } //actions.js
 	}
 
@@ -264,8 +263,7 @@ function createUserDataIndex(episoden_index) {
 }
 
 //#################################################################################################
-// Watchlist
-var no_watch_list = document.getElementById("no_watch_list");
+var play_box = document.getElementById("info_play");
 
 function toggleWatchList(episoden_index, el_button) {
 	// get or create user_data entry
@@ -283,10 +281,10 @@ function toggleWatchList(episoden_index, el_button) {
 		watch_list_count--;
 		episode_data.list = undefined;
 
-		if (watch_list_count == 0 && show_watch_list) {
-			no_watch_list.style.display = "block";
+		if (watch_list_count == 0 && active_main == "watch_list") {
+			main.classList.add("show_not_found");
 		}
-		if ((show_info || show_random_episode) && (play_box.dataset.index == episoden_index)) {
+		if ((active_aside == "info" || active_aside == "random_episode") && (play_box.dataset.index == episoden_index)) {
 			play_box.classList.remove("in_watch_list");
 			document.getElementById(episoden_index).classList.remove("in_watch_list");
 		}
@@ -297,10 +295,10 @@ function toggleWatchList(episoden_index, el_button) {
 		watch_list_count++;
 		episode_data.list = "true";
 
-		if (show_watch_list) {
-			no_watch_list.style.display = "none";
+		if (active_main == "watch_list") {
+			main.classList.remove("show_not_found");
 		}
-		if ((show_info || show_random_episode) && (play_box.dataset.index == episoden_index)) {
+		if ((active_aside == "info" || active_aside == "random_episode") && (play_box.dataset.index == episoden_index)) {
 			play_box.classList.add("in_watch_list");
 			document.getElementById(episoden_index).classList.add("in_watch_list");
 		}
@@ -308,10 +306,6 @@ function toggleWatchList(episoden_index, el_button) {
 
 	storeUserData(true);
 }
-
-//#################################################################################################
-// Ignore List
-var no_ignore_list = document.getElementById("no_ignore_list");
 
 function toggleIgnoreList(episoden_index, el_button) {
 	// get or create user_data entry
@@ -329,10 +323,10 @@ function toggleIgnoreList(episoden_index, el_button) {
 		ignore_list_count--;
 		episode_data.ignored = undefined;
 
-		if (ignore_list_count == 0 && show_ignore_list) {
-			no_ignore_list.style.display = "block";
+		if (ignore_list_count == 0 && active_main == "ignore_list") {
+			main.classList.add("show_not_found");
 		}
-		if ((show_info || show_random_episode) && (play_box.dataset.index == episoden_index)) {
+		if ((active_aside == "info" || active_aside == "random_episode") && (play_box.dataset.index == episoden_index)) {
 			play_box.classList.remove("in_ignore_list");
 			document.getElementById(episoden_index).classList.remove("in_ignore_list");
 		}
@@ -343,10 +337,10 @@ function toggleIgnoreList(episoden_index, el_button) {
 		ignore_list_count++;
 		episode_data.ignored = "true";
 
-		if (show_ignore_list) {
-			no_ignore_list.style.display = "none";
+		if (active_main == "ignore_list") {
+			main.classList.remove("show_not_found");
 		}
-		if ((show_info || show_random_episode) && (play_box.dataset.index == episoden_index)) {
+		if ((active_aside == "info" || active_aside == "random_episode") && (play_box.dataset.index == episoden_index)) {
 			play_box.classList.add("in_ignore_list");
 			document.getElementById(episoden_index).classList.add("in_ignore_list");
 		}
@@ -371,6 +365,8 @@ function refreshHistory(episoden_index, date) {
 	}
 	
 	var episode_data = user_data.list[user_data_index];
+	
+	document.getElementById(episoden_index).classList.remove("no_history");
 
 	// store current date
 	if (date == undefined) {
@@ -389,10 +385,15 @@ function refreshHistory(episoden_index, date) {
 
 	storeUserData(true);
 
-	// Click counter
-	if (user_role != "hidden" && date != undefined && date != false) {
-		fetch("/.netlify/functions/episode_counter/");
+	// refresh viewable data
+	if (active_main == "history" && episoden_list.querySelectorAll("div:not(.no_history)").length == 0) {
+		main.classList.add("show_not_found");
 	}
+
+	// Click counter
+	// if (user_role != "hidden" && date != undefined && date != false) {
+	// 	fetch("/.netlify/functions/episode_counter/");
+	// }
 }
 
 function editHistory() {

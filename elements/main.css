@@ -64,6 +64,12 @@ ol span {
 	text-align: center;
 }
 
+.show_history.show_not_found #no_history,
+.show_watch_list.show_not_found #no_watch_list,
+.show_ignore_list.show_not_found #no_ignore_list {
+	display: block !important;
+}
+
 .hide_search, .not_aviable {
 	display: none !important;
 }
@@ -163,6 +169,16 @@ aside.small_screen {
 	bottom: 60px;
 	border-bottom: none;
 	overflow-y: auto;
+}
+
+aside.show_random_episode .aside_content:nth-child(1), 
+aside.show_info .aside_content:nth-child(1) {
+	display: flex;
+}
+
+aside.show_settings .aside_content:nth-child(2), 
+aside.show_user_data .aside_content:nth-child(3) {
+	display: block;
 }
 
 .aside_content {
