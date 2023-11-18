@@ -6,8 +6,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="elements/style.css"/>
-	<link rel="stylesheet" type="text/css" href="elements/info.css"/>
 	<link rel="icon" href="graphics/favicon.png">
+
+	<style>
+		main {
+			max-width: 800px;
+			margin: 20px auto;
+			padding: 0 20px;
+		}
+	</style>
 </head>
 <body>
 	<nav>
@@ -17,7 +24,7 @@
 	<main class="visible_links">
 		<h1>Impressum & Datenschutz</h1>
 		<br>
-		<details onclick="spoiler(this, true, event)" open id="contact">
+		<details onclick="spoiler(event, true)" open id="contact">
 			<summary>Kontakt des Verantwortlichen</summary>
 			<div>
 				<p><a href="kontakt.html">Kontaktformular</a></p>
@@ -26,7 +33,7 @@
 			</div>
 		</details>
 
-		<details onclick="spoiler(this, true, event)" open id="general">
+		<details onclick="spoiler(event, true)" open id="general">
 			<summary>Allgemein</summary>
 			<div>
 				<p>Wenn Sie unsere Webseite besuchen, speichert unser Hoster, Netlify Inc., San Francisco, CA 94107, USA, vorübergehend technische Informationen, wie IP-Adresse, welche nach 30 Tagen wieder gelöscht werden. <a href="https://www.netlify.com/gdpr-ccpa/" target="_blank">[Siehe GDPR Netlify (EN)]</a></p>
@@ -35,7 +42,7 @@
 			</div>
 		</details>
 
-		<details onclick="spoiler(this, true, event)" open id="user_analysis">
+		<details onclick="spoiler(event, true)" open id="user_analysis">
 			<summary>Nutzeranalyse</summary>
 			<div>
 				<p>Wenn Sie unsere Webseite besuchen, wird das Land, in welchem Sie sich zum Zeitpunkt des Besuches der Webseite befanden, gespeichert. Die gesendeten und gespeicherten Daten beinhalten lediglich den Namen des Landes.</p>
@@ -44,7 +51,7 @@
 			</div>
 		</details>
 
-		<details onclick="spoiler(this, true, event)" open id="account">
+		<details onclick="spoiler(event, true)" open id="account">
 			<summary>Geräteübergreifende Synchronisation</summary>
 			<div>
 				<p>Nutzer können sich auf unserer Webseite eine ID zur geräteübergreifende Synchronisation erstellen. Diese ID kann auf verschiedenen Geräten eingetragen werden, wodurch die Nutzerdaten geräteübergreifend synchronisiert werden können. Diese Nutzerdaten beinhalten den ausgewählten Musik Streaming Service, die gewünschte Sortierung der Folgenliste, sämtliche Titel in der Watchlist, sowie ignorierte Folgen und von jeder Folge die zuletzt gehörte Zeit.</p>
@@ -60,7 +67,7 @@
 			</div>
 		</details>
 
-		<details onclick="spoiler(this, true, event)" open id="cookies">
+		<details onclick="spoiler(event, true)" open id="cookies">
 			<summary>Cookies</summary>
 			<div>
 				<p>Wir nutzen Cookies Ihre Nutzerdaten auch ohne Synchronisation zu speichern. Cookies sind kleine Textdateien, welche auf Ihrem Computer gespeichert werden können. Diese bleiben auch nach dem Neuladen der Webseite erhalten, wodurch persönliche Einstellungen (Watchlist, Verlauf) vorhanden bleiben.</p>
@@ -68,7 +75,7 @@
 			</div>
 		</details>
 
-		<details onclick="spoiler(this, true, event)" open id="cookies">
+		<details onclick="spoiler(event, true)" open id="cookies">
 			<summary>Copyright</summary>
 			<div>
 				<p>Im Folgenden sind alle Daten, welche nicht von uns erstellt wurden, verlinkt:</p>
@@ -106,6 +113,6 @@
 		</div>
 	</footer>
 
-	<script src="elements/info.js"></script>
+	<script src="elements/spoiler.js"></script>
 </body>
 </html>

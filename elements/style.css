@@ -88,22 +88,26 @@ a:hover, .visible_links a:hover {
 /* Spoiler */
 details {
 	overflow: hidden;
+	position: relative;
 	background-color: var(--nav-focus-color);
 	border-radius: 5px;
 	margin-bottom: 15px;
-	transition: max-height 0.2s;
+	max-height: 37px;
+	transition: max-height 0.3s;
 }
 
-details > * {
-	padding: 10px 15px;
+details > div {
+	padding: 0 15px;
 }
 
 summary {
 	display: block !important;
 	background-color: var(--nav-hover-color);
 	border-radius: 5px;
-	position: relative;
 	user-select: none;
+	overflow: hidden;
+	height: 17px;
+	padding: 10px 15px;
 }
 
 summary::after {
@@ -115,13 +119,21 @@ summary::after {
 	right: 15px;
 }
 
-.active summary::after {
+details.active summary::after {
 	content: "−";
 }
 
-details:not(.active) *:not(summary) {
-	display: none;
+details svg {
+	position: absolute;
+	top: 8.5px;
+	left: 8.5px;
+	height: 20px;
+	width: 20px;
+	fill: var(--text-color);
+	fill-opacity: 1;
 }
+
+/* details:not(.active) *:not(summary) {} */
 
 /* ####################################################################### */
 /* Buttons and Inputs */

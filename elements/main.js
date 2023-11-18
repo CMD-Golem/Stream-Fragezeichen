@@ -1,4 +1,14 @@
 // user_role: "hidden" -> don't count clicks and user analytics
+const standard_settings = {
+	user_id: undefined,
+	provider: 0,
+	cover_size: "2",
+	hide_episode_title: false,
+	backwards: true,
+	sort_date: false,
+	list:[],
+	random_settings: [20, true, true, false, false, false, false, false, false, false]
+}
 
 // load episodes
 function loadEpisodes() {
@@ -69,9 +79,9 @@ function loadEpisodes() {
 				<p>${title}</p>
 				<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M5.142 0v24L24 12z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 			</a>
-			<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(${i}, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-			<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(${i}, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
-			<button class="control_button info" title="Folgeninhalt anzeigen" onclick="${info}"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0Zm1.2 18h-2.4v-7.2h2.4zm0-9.6h-2.4V6h2.4z" style="fill:#fff;stroke-width:1.20001"></path></g></svg></button>
+			<button class="control_button add" title="Zur Watch List hinzufügen" onclick="toggleWatchList(${i}, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 24,13.714286 H 13.714286 V 24 H 10.285714 V 13.714286 H 0 V 10.285714 H 10.285714 V 0 h 3.428572 V 10.285714 H 24 Z" style="fill:#ffffff;stroke-width:1.71429"/></g></svg></button>
+			<button class="control_button remove" title="Von Watch List entfernen" onclick="toggleWatchList(${i}, this)"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M 0 10.285156 L 0 13.714844 L 10.285156 13.714844 L 13.714844 13.714844 L 24 13.714844 L 24 10.285156 L 13.714844 10.285156 L 10.285156 10.285156 L 0 10.285156 z " style="fill:#ffffff;stroke-width:1.71429"/></g></svg></button>
+			<button class="control_button info" title="Folgeninhalt anzeigen" onclick="${info}"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0Zm1.2 18h-2.4v-7.2h2.4zm0-9.6h-2.4V6h2.4z" style="fill:#fff;stroke-width:1.20001"/></g></svg></button>
 		</div>`);
 	}
 
@@ -98,14 +108,14 @@ function loadEpisodes() {
 			var a_date = a.slice(47, 71);
 			var b_date = b.slice(47, 71);
 
-			if (user_data.backwards) {
+			// if (user_data.backwards) {
 				if (a_date < b_date) { return 1; }
 				if (a_date > b_date){ return -1; }
-			}
-			else {
-				if (a_date < b_date) { return -1; }
-				if (a_date > b_date){ return 1; }
-			}
+			// }
+			// else {
+			//	if (a_date < b_date) { return -1; }
+			//	if (a_date > b_date){ return 1; }
+			// }
 			return 0;
 		});
 	}
@@ -119,7 +129,6 @@ function loadEpisodes() {
 //#################################################################################################
 // load user data
 var user_data = {list:[]}, last_provider_selected, watch_list_count = 0, ignore_list_count = 0;
-var user_id = null;
 var input_user_id = document.getElementById("user_id");
 
 async function loadData() {
@@ -149,6 +158,7 @@ async function loadData() {
 
 			if (response.status == 200) {
 				var remote_data = JSON.stringify(response_object);
+				user_data.random_settings = remote_data.random_settings;
 				user_data.list = remote_data.list;
 				user_data.a_name = remote_data.a_name;
 
@@ -193,14 +203,10 @@ async function loadData() {
 	}
 	else {
 		// setup user_data one first visit
-		user_data.provider = 0;
-		user_data.cover_size = "2";
-		user_data.hide_episode_title = false;
-		user_data.backwards = true;
-		user_data.sort_date = false;
+		user_data = standard_settings;
 
 		showAside('settings'); //actions.js
-		if (window.innerWidth <= 506) { overflowMenu(); } //actions.js
+		if (window.innerWidth <= 506) { overflowMenu(true); }
 	}
 
 	// setup selected provider (deezer = 0, youtube = 1, spotify = 2, apple = 3)
@@ -225,6 +231,7 @@ async function storeUserData(remote) {
 	if (remote && user_data.user_id != undefined) {
 		var remote_data = {};
 		remote_data.latest_upload = new Date();
+		remote_data.random_settings = user_data.random_settings;
 		remote_data.list = user_data.list;
 		remote_data.a_name = user_data.a_name;
 
@@ -443,7 +450,7 @@ info_history.onkeyup = function(evt) {
 		if (size == 5 && Number(info_history.value.split('.')[1]) > 12) {
 			info_history.value = info_history.value.slice(0, -2) + "12";
 		}
-		if (size == 10 && Number(info_history.value.split('.')[2]) < 1999) {
+		if (size == 10 && Number(info_history.value.split('.')[2]) < 2000 && info_history.value != "01.01.1999") {
 			info_history.value = info_history.value.slice(0, -4) + new Date().getFullYear();
 		}
 		if (size == 10) {

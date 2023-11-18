@@ -47,7 +47,6 @@ function showAside(visible_element, keep_open) {
 	// load element, aside is currently hidden
 	if (action == true) {
 		aside.classList.add("show_" + visible_element);
-		aside.style.overflow = "visible";
 		infoHeight();
 	}
 	// close element
@@ -58,14 +57,20 @@ function showAside(visible_element, keep_open) {
 		
 		setTimeout(function(){
 			aside.classList.remove("show_" + current_active);
-			aside.style.overflow = "hidden";
-		}, 200);
+		}, 300);
 	}
 	// load element, close currently loaded element
 	else if (action != undefined) {
 		aside.classList.add("show_" + visible_element);
 		aside.classList.remove("show_" + action);
 		infoHeight();
+	}
+
+	// close ignore list
+	if (active_main == "ignore_list") {
+		document.getElementById("nav_ignore_list").classList.remove("nav_active");
+		main.classList.remove("show_ignore_list");
+		active_main = undefined;
 	}
 }
 
@@ -162,28 +167,25 @@ visualViewport.addEventListener("resize", infoHeight);
 
 //#################################################################################################
 // Random Episode
-var random_settings = [20, true, true, false, false, false, false, false, false, false];
-// var all_possible_episoden, filtered_episoden;
-
 function getRandomEpisode() {
 	var all_possible_episoden = [];
 	var filtered_episoden = [];
+	var not_listened_counter_all = 0;
+	var not_listened_counter_filtered = 0;
 
 	for (var i = 0; i < episoden.length; i++) {
 		var episode = episoden[i];
-		var not_listened_counter_all = 0;
-		var not_listened_counter_filtered = 0;
 		var keep = false;
 
-		if (random_settings[1] && episode.type == "normal") { keep = true; }
-		else if (random_settings[2] && episode.type == "special") { keep = true; }
-		else if (random_settings[3] && episode.type == "advent_calender") { keep = true; }
-		else if (random_settings[4] && episode.type == "headphones") { keep = true; }
-		else if (random_settings[5] && episode.type == "short_story") { keep = true; }
-		else if (random_settings[6] && episode.type == "film") { keep = true; }
-		else if (random_settings[7] && episode.type == "live") { keep = true; }
-		else if (random_settings[8] && episode.type == "audiobook") { keep = true; }
-		else if (random_settings[9] && episode.type == "documentation") { keep = true; }
+		if (user_data.random_settings[1] && episode.type == "normal") { keep = true; }
+		else if (user_data.random_settings[2] && episode.type == "special") { keep = true; }
+		else if (user_data.random_settings[3] && episode.type == "advent_calender") { keep = true; }
+		else if (user_data.random_settings[4] && episode.type == "headphones") { keep = true; }
+		else if (user_data.random_settings[5] && episode.type == "short_story") { keep = true; }
+		else if (user_data.random_settings[6] && episode.type == "film") { keep = true; }
+		else if (user_data.random_settings[7] && episode.type == "live") { keep = true; }
+		else if (user_data.random_settings[8] && episode.type == "audiobook") { keep = true; }
+		else if (user_data.random_settings[9] && episode.type == "documentation") { keep = true; }
 
 		// remove unreleased episodes
 		if (episode.href[0] == "#new") { keep = false; }
@@ -193,14 +195,14 @@ function getRandomEpisode() {
 
 		// generate arrays array
 		if (keep) {
-			var history;
+			var history = undefined;
 			if (episode.user_data_index != undefined) {
 				history = user_data.list[episode.user_data_index].history;
 			}
 			if (history == undefined) {
 				history = "1999-01-01T00:00:00.000Z";
 				not_listened_counter_all++;
-				if (episode.random_shown) { not_listened_counter_filtered++; }
+				if (!episode.random_shown) { not_listened_counter_filtered++; }
 			}
 
 			// array with all episodes
@@ -228,16 +230,18 @@ function getRandomEpisode() {
 		return 0;
 	});
 
+	var defined_max_length = user_data.random_settings[0];
+
 	// decrease max_length if not enough episodes possible as defined in settings
-	if (random_settings[0] >= random_episoden.length) {
+	if (defined_max_length >= random_episoden.length) {
 		var max_length = random_episoden.length;
 	}
 	// set max_length to not_listened_counter if it is bigger
-	else if (random_settings[0] <= not_listened_counter) {
+	else if (defined_max_length <= not_listened_counter) {
 		var max_length = not_listened_counter;
 	}
 	else {
-		var max_length = random_settings[0] + 1;
+		var max_length = defined_max_length + 1;
 	}
 
 	// get random episode
@@ -336,29 +340,15 @@ function selectProvider(el_button) {
 async function resetUserData() {
 	var confirm_msg = confirm("Deine lokalen und synchronisierten Nutzerdaten werden unwiederruflich gelöscht! Deine ID bleibt ohne Daten bestehen.");
 	if (confirm_msg == true) {
-		// reset local data and only keep user id
-		var json_user_data = JSON.stringify({user_id: user_data.user_id, provider:0, cover_size:"2", hide_episode_title:false, backwards:true, sort_date:false, list:[]});
-		window.localStorage.setItem("user_data", json_user_data);
+		var user_id = user_data.user_id;
+		var a_name = user_data.a_name;
 
-		// reset remote data
-		if (user_data.user_id != undefined) {
-			var remote_data = {};
-			remote_data.latest_upload = new Date();
-			remote_data.a_name = user_data.a_name;
+		user_data = standard_settings;
 
-			var fetch_body = {
-				id: user_data.user_id,
-				data: remote_data
-			}
-		
-			var json_fetch_body = JSON.stringify(fetch_body);
-		
-			await fetch("/.netlify/functions/db_update", {
-				method: "POST",
-				body: json_fetch_body,
-			});
-		}
+		user_data.user_id = user_id;
+		user_data.a_name = a_name;
 
+		storeUserData(true);
 		document.location.reload();
 	}
 }
@@ -505,6 +495,7 @@ function changeCoverSize(size) {
 	main.classList.remove('hide_watch_list');
 
 	user_data.cover_size = size;
+	storeUserData(false);
 	
 	if (size == "0") {
 		var size_array = ["120px", "40px", "9px", "71px", "71px", "71px", "9px"];
@@ -607,14 +598,33 @@ function showEpisoden(visible_element, counter) {
 
 function showHistory() {
 	var counter = episoden_list.querySelectorAll("div:not(.no_history)").length;
-	console.log(counter)
-	showEpisoden('history', counter);
+	showEpisoden("history", counter);
 }
 
 //#################################################################################################
+// Overflow menu for navbar on mobile
+function overflowMenu(show_overflow_menu) {
+	var overflow_menu_hidden = search_box.parentNode.classList.contains("overflow_menu");
+	var overflow_menu_button = document.getElementById("nav_overflow_menu");
+
+	if (show_overflow_menu == true && overflow_menu_hidden) {
+		search_box.parentNode.classList.add("overflow_menu");
+		overflow_menu_button.classList.add("nav_active");
+	}
+	else if (show_overflow_menu == false && !overflow_menu_hidden) {
+		search_box.parentNode.classList.remove("overflow_menu");
+		overflow_menu_button.classList.remove("nav_active");
+	}
+	else {
+		search_box.parentNode.classList.toggle("overflow_menu");
+		overflow_menu_button.classList.toggle("nav_active");
+	}
+}
+
 // Search
 var article = document.getElementsByTagName("ol")[0].children;
 var input = document.getElementById("site_search");
+var search_box = document.getElementById("search_box");
 var not_found = document.getElementById("not_found");
 
 function siteSearch() {
@@ -656,67 +666,29 @@ function siteSearch() {
 	}
 }
 
-var search_box = document.getElementById("search_box");
-var nav_buttons = search_box.parentNode;
-
 function startSearch() {
+	showEpisoden("search");
 
+	if (active_main == "search") {
+		search_box.style.display = "flex";
+		if (window.screen.width <= 506) {
+			search_box.parentNode.style.justifyContent = "flex-end";
+			showAside("search");
+			overflowMenu(false);
+		}
+
+		setTimeout(function(){ input.focus() }, 100);
+	}
+	else {
+		input.value = "";
+		search_box.style.display = "none";
+		if (window.screen.width <= 506) {
+			search_box.parentNode.removeAttribute("style");
+			aside.classList.remove("show_search");
+		}
+		siteSearch();
+	}
 }
-
-// var show_search = false;
-
-// function startSearch() {
-// 	show_search = !show_search;
-// 	refreshNavButtons();
-
-// 	if (show_search) {
-// 		show_history = false;
-// 		show_watch_list = false;
-// 		refreshList(); // show normal episoden liste and close watch_list etc.
-
-// 		search_box.style.display = "flex";
-// 		if (window.screen.width <= 506) {
-// 			nav_buttons.style.justifyContent = "flex-end";
-// 			showAside();
-// 		}
-// 		if (show_overflow_menu) { overflowMenu(); }
-// 		setTimeout(function(){ input.focus() }, 100);
-// 	}
-// 	else {
-// 		input.value = "";
-// 		search_box.style.display = "none";
-// 		if (window.screen.width <= 506) { nav_buttons.removeAttribute("style"); }
-// 		siteSearch();
-// 	}
-// }
-
-// Nav
-// var overflow_menu_button = document.getElementById("nav_overflow_menu");
-// var watch_list_button = document.getElementById("nav_watch_list");
-// var history_button = document.getElementById("nav_history");
-// var random_episode_button = document.getElementById("nav_random_episode");
-// var search_button = document.getElementById("nav_search");
-// var settings_button = document.getElementById("nav_settings");
-// var account_button = document.getElementById("nav_account");
-
-// function refreshNavButtons() {
-// 	overflow_menu_button.classList.remove("nav_active");
-// 	watch_list_button.classList.remove("nav_active");
-// 	history_button.classList.remove("nav_active");
-// 	random_episode_button.classList.remove("nav_active");
-// 	search_button.classList.remove("nav_active");
-// 	settings_button.classList.remove("nav_active");
-// 	account_button.classList.remove("nav_active");
-
-// 	if (show_overflow_menu) { overflow_menu_button.classList.add("nav_active"); }
-// 	if (show_watch_list) { watch_list_button.classList.add("nav_active"); }
-// 	if (show_history) { history_button.classList.add("nav_active"); }
-// 	if (show_random_episode) { random_episode_button.classList.add("nav_active"); }
-// 	if (show_search) { search_button.classList.add("nav_active"); }
-// 	if (show_settings) { settings_button.classList.add("nav_active"); }
-// 	if (show_account) { account_button.classList.add("nav_active"); }
-// }
-
 
 //#################################################################################################
 // Calc ms

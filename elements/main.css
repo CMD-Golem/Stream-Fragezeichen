@@ -2,11 +2,6 @@ body {
 	user-select: none;
 }
 
-main, .aside_content {
-	max-width: 1140px;
-	margin: 20px auto;
-}
-
 :root {
 	--aside_height: 0;
 	--description_height: unset;
@@ -22,15 +17,27 @@ main, .aside_content {
 
 /* ####################################################################### */
 /* Episode list */
+main {
+	max-width: 1140px;
+	margin: 20px auto;
+	/* display: flex;
+	justify-content: center;
+	margin: 20px 0; */
+}
+
 ol {
-	padding: 0;
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
+	/* display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+	max-width: 1140px; */
+	padding: 0;
 	margin: 0;
 }
 
 ol div {
+	width: var(--cover_size);
 	position: relative;
 	margin: 12px;
 }
@@ -52,7 +59,6 @@ ol a:hover img {
 ol p {
 	margin: 0;
 	margin-top: 5px;
-	width: var(--cover_size);
 }
 
 ol span {
@@ -181,18 +187,22 @@ aside.show_user_data .aside_content:nth-child(3) {
 	display: block;
 }
 
+aside.show_random_episode,
+aside.show_info,
+aside.show_settings,
+aside.show_user_data {
+	overflow: visible;
+}
+
 .aside_content {
 	display: none;
 	position: relative;
+	max-width: 1140px;
 	height: calc(100% - 80px);
 	padding: 40px 0;
 	margin: 0 auto;
-	overflow: hidden;
-	z-index: -1;
-}
-
-.aside_scroll {
 	overflow-y: auto;
+	z-index: -1;
 }
 
 .hide_aside {
