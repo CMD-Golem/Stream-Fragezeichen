@@ -157,14 +157,13 @@ async function loadData() {
 			var response_object = await response.json();
 
 			if (response.status == 200) {
-				var remote_data = JSON.stringify(response_object);
-				user_data.random_settings = remote_data.random_settings;
-				user_data.list = remote_data.list;
-				user_data.a_name = remote_data.a_name;
+				user_data.random_settings = response_object.random_settings;
+				user_data.list = response_object.list;
+				user_data.a_name = response_object.a_name;
 
 				changeIdButton("delete_id"); // action.js
 				input_user_id.value = user_data.user_id;
-				console.log("Server Daten vom " + remote_data.latest_upload + " wurden geladen.");
+				console.log("Server Daten vom " + response_object.a_latest_upload + " wurden geladen.");
 			}
 			else if (response.status == 502) {
 				alert("Die registierte ID ist fehlerhaft oder entfernt worden!");
@@ -230,10 +229,10 @@ async function storeUserData(remote) {
 
 	if (remote && user_data.user_id != undefined) {
 		var remote_data = {};
-		remote_data.latest_upload = new Date();
+		remote_data.a_name = user_data.a_name;
+		remote_data.a_latest_upload = new Date();
 		remote_data.random_settings = user_data.random_settings;
 		remote_data.list = user_data.list;
-		remote_data.a_name = user_data.a_name;
 
 		var fetch_body = {
 			id: user_data.user_id,

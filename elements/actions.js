@@ -435,15 +435,19 @@ function importNewId() {
 }
 
 async function createId() {
-	if (user_data.user_id != undefined) {
-		return
-	}
+	if (user_data.user_id != undefined) { return }
 
-	var json_user_data = JSON.stringify(user_data);
+	var remote_data = {};
+	remote_data.a_name = user_data.a_name;
+	remote_data.a_latest_upload = new Date();
+	remote_data.random_settings = user_data.random_settings;
+	remote_data.list = user_data.list;
+
+	var json_remote_data = JSON.stringify(remote_data);
 
 	var response = await fetch("/.netlify/functions/db_create", {
 		method: "POST",
-		body: json_user_data,
+		body: json_remote_data,
 	});
 
 	var response_object = await response.json();
