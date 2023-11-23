@@ -268,6 +268,19 @@ function createUserDataIndex(episoden_index) {
 	return user_data_index;
 }
 
+// remove episode from user_data list of no value defined
+function checkRemoval(user_data_index) {
+	var episode_data = user_data.list[user_data_index];
+
+	if (
+		episode_data.list == undefined &&
+		episode_data.ignored == undefined &&
+		episode_data.history == undefined
+	) {
+		user_data.list.splice(user_data_index, 1);
+	}
+}
+
 //#################################################################################################
 var play_box = document.getElementById("info_play");
 
@@ -286,6 +299,7 @@ function toggleWatchList(episoden_index, el_button) {
 		el_button.parentNode.classList.remove("in_watch_list");
 		watch_list_count--;
 		episode_data.list = undefined;
+		checkRemoval(user_data_index);
 
 		if (watch_list_count == 0 && active_main == "watch_list") {
 			main.classList.add("show_not_found");
@@ -328,6 +342,7 @@ function toggleIgnoreList(episoden_index, el_button) {
 		el_button.parentNode.classList.remove("in_ignore_list");
 		ignore_list_count--;
 		episode_data.ignored = undefined;
+		checkRemoval(user_data_index);
 
 		if (ignore_list_count == 0 && active_main == "ignore_list") {
 			main.classList.add("show_not_found");
@@ -381,6 +396,7 @@ function refreshHistory(episoden_index, date) {
 	// remove stored date
 	else if (date == false) {
 		episode_data.history = undefined;
+		checkRemoval(user_data_index);
 		info_history.value = "nie";
 		document.getElementById(episoden_index).classList.add("no_history");
 	}
