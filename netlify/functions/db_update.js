@@ -4,7 +4,7 @@ var q = faunadb.query;
 exports.handler = async (event, context) => {
 	// get FaunaDB secret key
 	var client = new faunadb.Client({
-		secret: process.env.FAUNADB_NEW_SERVER_SECRET
+		secret: process.env.FAUNADB_SERVER_SECRET
 	});
 
 	var body = JSON.parse(event.body);
