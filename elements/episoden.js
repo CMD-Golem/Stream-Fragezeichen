@@ -1,7 +1,7 @@
-// Bing Chat suche für Daten
-// Gib mir den Link zum Album vom "Folge 222: und die Gesetzlosen" drei Fragezeichen Hörbuch auf Spotify, Deezer, Apple Music und Youtube Music als Tabelle formatiert. Suche mir ausserdem noch das Erscheinungsdatum dieser Folge auf den Tag genau.
+// track_length sollte ohne Inhaltsangabe, Prolog und Outro sein (ausnahme Hörbücher)
 
 // {
+//	checked: false, // alle Daten sind mit dreimetadaten oder anderen zuverlässigen Quellen abgeglichen
 //	type: "normal",
 // 	number: "219",
 // 	name: "und die Teufelsklippe",
@@ -14,15 +14,28 @@
 //	track_author: ""
 // }
 
+
 var episoden = [
+	{
+		checked: false,
+		type: "normal",
+        number: "224",
+        name: "Die Yacht des Verrats",
+        href: ["https://www.deezer.com/de/album/498823311", "https://music.youtube.com/browse/MPREb_NOXRMqYU6pv", "https://open.spotify.com/album/7JhdaReI98XYFrzb3jJPFa", "https://music.apple.com/de/album/folge-224-die-yacht-des-verrats/1697887952"],
+        content: "Justus Jonas ist einmalig - oder etwa nicht? Unerwarteter Besuch und ein Diebstahl führen die drei ??? auf die Yacht des Verrats.<br>Justus, Peter und Bob trauen ihren Augen kaum als ihnen lan Carew gegenübersteht. lan und Justus sind sich wie aus dem Gesicht geschnitten. Ein alter Fall verbindet die Detektive mit dem Sohn des Präsidenten von Nanda. Kein Wunder, dass lan erneut ihre Hilfe sucht. Er ist im Auftrag seines Landes in Rocky Beach, doch jemand verfolgt ihn und in sein Hotelzimmer wurde eingebrochen. Können die drei ??? ihrem Freund helfen?",
+        release: "2023-11-24",
+        track_length: 4377000,
+        book_author: "Ben Nevis",
+        track_author: "André Minninger"
+    },
 	{
 		type: "normal",
         number: "223",
         name: "und der Knochenmann",
         href: ["https://www.deezer.com/de/album/447848865", "https://music.youtube.com/browse/MPREb_V1C8nUZQQ4M", "https://open.spotify.com/album/451jKBwuSNrNgLlqEAZfra", "https://music.apple.com/de/album/folge-223-und-der-knochenmann/1686187662"],
-        content: "Eine Frau verschwindet nach einem Erdbeben plötzlich spurlos. Was ist mit ihr geschehen? Die drei ??? begeben sich auf die gefährliche Suche.<br>Die junge Schneiderin Maya erscheint nicht zur Arbeit am Camelot Theatre. Justus, Peter und Bob haben den Verdacht, dass das Rätsel, das die Theaterleitung veranstaltet, etwas damit zu tun hat. Denn ein hohes Preisgeld ist zu gewinnen. Ist des Rätsels Lösung auch die Spur zu Maya? Die drei Detektive ermitteln, während erneut die Erde bebt …",
-        release: "2023-07-28",
-        track_length: 4964000,
+        content: "Eine Frau verschwindet nach einem Erdbeben plötzlich spurlos. Was ist mit ihr geschehen? Die drei ??? begeben sich auf eine gefährliche Suche.<br>Die junge Schneiderin Maya erscheint nicht zur Arbeit am Camelot Theatre. Justus, Peter und Bob haben den Verdacht, dass das Rätsel, das die Theaterleitung veranstaltet, etwas damit zu tun hat. Denn ein hohes Preisgeld ist zu gewinnen. Ist des Rätsels Lösung auch die Spur zu Maya? Die drei Detektive ermitteln, während erneut die Erde bebt …",
+		release: "2023-07-28",
+        track_length: 4799880,
         book_author: "Marco Sonnleitner",
         track_author: "André Minninger"
     },
@@ -33,7 +46,7 @@ var episoden = [
         href: ["https://www.deezer.com/de/album/436922917", "https://music.youtube.com/browse/MPREb_u7xikUNb2sN", "https://open.spotify.com/album/3o2Gwvg8lqLNRnlV1v1s5K", "https://music.apple.com/ch/album/folge-222-und-die-gesetzlosen/1686089070"],
         content: "Peter wird in der Rocky Beach Highschool unfreiwillig Zeuge eines dubiosen Telefonats. Hat seine Lehrerin Amanda Blunt ein dunkles Geheimnis?<br>Als die unscheinbare Frau dann auch noch verdächtige Utensilien in ihr Auto packt und losfährt, nimmt Peter die Verfolgung auf. Natürlich nicht ohne seine beiden Freunde zu informieren. Die drei ??? begeben sich auf einen gefährlichen Roadtrip durch die verlassene Prärie. Hoffentlich wird ihnen diese Fahrt nicht zum Verhängnis …",
         release: "2023-05-12",
-        track_length: 4781000,
+        track_length: 4615480,
         book_author: "Kari Erlhoff",
         track_author: "André Minninger"
     },
@@ -44,7 +57,7 @@ var episoden = [
         href: ["https://www.deezer.com/de/album/459465105", "https://music.youtube.com/browse/MPREb_Y4rh3FYDtwC", "https://open.spotify.com/album/1KpVSqapKAUAtAepWWxPWs", "https://music.apple.com/ch/album/folge-221-manuskript-des-satans/1660262900"],
         content: "Ein Manuskript des leibhaftigen Satans und teuflische Lärmattacken - dieser Fall hat es in sich! Begeben die drei ??? sich in höllische Gefahr?<br>Wer steckt hinter dem entsetzlichen Lärmangriff auf das Haus von Professor Bancroft? Während der Wissenschaftler versucht, eine geheimnisvolle alte Handschrift zu übersetzen, machen sich Justus, Peter und Bob auf die Suche nach der Lärmquelle. Haben die Attacken etwas mit dem Manuskript des Satans zu tun, an dem der Professor gerade arbeitet? Die drei Detektive werden es herausfinden.",
         release: "2023-03-03",
-        track_length: 4071000,
+        track_length: 3932520,
         book_author: "Hendrik Buchna",
         track_author: "André Minninger"
     },
@@ -53,9 +66,9 @@ var episoden = [
         number: "220",
         name: "Im Wald der Gefahren",
         href: ["https://www.deezer.com/de/album/431878087", "https://music.youtube.com/browse/MPREb_fx3xgUx153q", "https://open.spotify.com/album/01i4iyB40EU7Qgd6EgKoZt", "https://music.apple.com/ch/album/folge-220-im-wald-der-gefahren/1651435586"],
-        content: "Von Rocky Beach in die Rocky Mountains - die drei ??? freuen sich auf ein Wander-Wochenende. Was harmlos beginnt, wird zum Kampf ums nackte Überleben<br>Noch bevor die Wandergruppe aufbricht, wittern die drei Detektive einen neuen Fall: Ein toter Briefkasten und eine Stolperfalle - will jemand die Tour verhindern? Schon auf der ersten Etappe wird es brenzlig. Ein Bach wird zum reißenden Fluss, und Pilze sollte man mit Vorsicht genießen. Als Peter verschwindet, wird klar: Die Wildnis hat etwas zu verbergen. Die drei ??? finden sich im Wald der Gefahren wieder …",
-        release: "2023-01-27",
-        track_length: 4602000,
+        content: "Von Rocky Beach in die Rocky Mountains - die drei ??? freuen sich auf ein Wander-Wochenende. Was harmlos beginnt, wird zum Kampf ums nackte Überleben!<br>Noch bevor die Wandergruppe aufbricht, wittern die drei Detektive einen neuen Fall: Ein toter Briefkasten und eine Stolperfalle - will jemand die Tour verhindern? Schon auf der ersten Etappe wird es brenzlig. Ein Bach wird zum reißenden Fluss, und Pilze sollte man mit Vorsicht genießen. Als Peter verschwindet, wird klar: Die Wildnis hat etwas zu verbergen. Die drei ??? finden sich im Wald der Gefahren wieder …",
+		release: "2023-01-20",
+        track_length: 4446747,
         book_author: "André Marx",
         track_author: "André Minninger"
     },
@@ -66,7 +79,7 @@ var episoden = [
         href: ["https://www.deezer.com/de/album/431878927", "https://music.youtube.com/browse/MPREb_O8PBlrDNMlN", "https://open.spotify.com/album/6ewdyVIW2LurJhYGU0UBAa", "https://music.apple.com/ch/album/folge-219-und-die-teufelsklippe/1643687102"],
         content: "Peter Shaw - ein Mörder? Ganz bestimmt nicht! Da sind sich Justus und Bob sicher. Können die beiden die Unschuld des Zweiten Detektivs beweisen?<br>Peter sieht ihn fallen, doch die Teufelsklippe gibt ihn nicht wieder her. Verschluckt von den tosenden Wellen bleibt der Mann verschwunden … Was ist passiert? Ausgerechnet der Zweite Detektiv wird beschuldigt, Paul Forsters ins Meer gestoßen zu haben. Im Verhör wird Peter bis ins kleinste Detail befragt. Justus und Bob versuchen derweil mehr über den seltsamen Fall herauszufinden. Können die beiden ihrem Freund helfen?",
         release: "2022-11-18",
-        track_length: 4330000,
+        track_length: 4189547,
         book_author: "Ben Nevis",
         track_author: "André Minninger"
     },
@@ -683,7 +696,7 @@ var episoden = [
         content: "Eigentlich sollen die drei ??? für Onkel Titus nur ein Auto überführen. Doch der dichte Nebel in den Bergen zwingt sie, sich dort eine Unterkunft zu suchen. Ein seltsamer Pick-up-Fahrer führt sie zum 'King of the Mountain', einem heruntergekommenen Hotel ohne einen einzigen Gast. Bald geschehen seltsame Dinge, die nur eins bedeuten können: Das Hotel birgt ein Geheimnis. Hat das Wrack eines vor Jahren in den Bergen abgestürzten Flugzeugs etwas damit zu tun?",
         release: "2013-08-30",
         track_length: 4468413,
-        book_author: "André Minninger",
+        book_author: "Ben Nevis",
         track_author: "André Minninger"
     },
     {
@@ -1233,7 +1246,7 @@ var episoden = [
         content: "Ein markerschütternder Hilfeschrei hallt durch den Wald. Als Justus, Peter und Bob sich alarmiert auf die Suche machen, finden sie ein kleines Mädchen, das zitternd in den Himmel zeigt: \"Es … es war ein Drache! Ein Drache hat mich angegriffen!\" Kurze Zeit später schwebt tatsächlich ein seltsames Tier hoch oben in den Wolken. Eine optische Täuschung? Oder gibt es doch Dinge zwischen Himmel und Erde, die rational nicht erklärbar sind? Die drei Detektive aus Rocky Beach müssen bei ihren Ermittlungen zu diesem Fall sehr genau hinsehen und machen die Erfahrung, dass man selbst den eigenen Augen nicht immer trauen kann …",
         release: "2003-11-24",
         track_length: 3607400,
-        book_author: "André Minninger",
+        book_author: "André Marx",
         track_author: "André Minninger"
     },
     {
@@ -1398,7 +1411,7 @@ var episoden = [
         content: "Mitten in den Magic Mountains wacht eine Frau am Steuer ihres Autos auf: Sie hat keine Ahnung wo sie ist, ihr Kopf schmerzt. Das Einzige, an das sie sich erinnern kann, ist ein Indianer mit Adlerkopfmaske, der sie mitten in der Nacht aus dem Auto gezerrt hat. Die Polizei zweifelt an dem Verstand der Frau, doch die drei ??? glauben ihr. Todesmutig machen sie sich auf in das Tal des Schreckens und erleben die Horrornacht ihres Lebens.",
         release: "2001-08-13",
         track_length: 3772307,
-        book_author: "André Minninger",
+        book_author: "Ben Nevis",
         track_author: "André Minninger"
     },
     {
@@ -1420,7 +1433,7 @@ var episoden = [
         content: "Es brennt! Ein anonymer Anrufer meldet Jusuts ein Feuer am Hafen von Rocky Beach. Doch als er als Helfer in der Not am Brandort eintrifft, wendet sich das Blatt: Die Visitenkarte der drei ??? wird am Tatort gefunden und bringt Justus, Peter und Bob plötzlich in den Verdacht der Brandstiftung. Eine brenzliche Situation! Nur die Überführung des wahren Täters kann die drei Detektive entlasten. Doch der Spur des Brandstifters zu folgen ist ein gefährliches Unterfangen. Die drei ??? müssen scharf kombinieren und vor allem einen kühlen Kopf bewahren.",
         release: "2001-04-09",
         track_length: 3191000,
-        book_author: "André Minninger",
+        book_author: "Katharina Fischer",
         track_author: "André Minninger"
     },
     {
@@ -1431,7 +1444,7 @@ var episoden = [
         content: "Dr. Arroway, Archäologin und Spezialistin auf dem Gebiet der alten Maya-Indianer, erfährt durch Zufall, dass sie bestohlen werden soll: Ein geheimnisvoller Unbekannter hat es auf das heilige Buch der Maya abgesehen, das Popol Vuh. Warum ist dieses Buch so wichtig? Verbirgt sich darin eine geheime Botschaft? Wer hat Interesse daran, sie zu entschlüsseln? Die drei Detektive aus Rocky Beach nehmen sich die Falls an und versuchen das Rätsel zu lösen. Doch als das Popol Vuh gestohlen wird, drängt die Zeit - wer lüftet als Erster das Geheimnis des heiligen Buches?",
         release: "2001-02-12",
         track_length: 3603800,
-        book_author: "André Minninger",
+        book_author: "André Marx",
         track_author: "André Minninger"
     },
     {
@@ -1442,7 +1455,7 @@ var episoden = [
         content: "Zirkus Trinket kommt mit einer unglaublichen Attraktion nach Rocky Beach: In der Manege tritt ein mörderisches Monster aus den Wäldern Alaskas auf. Doch dann entsteigt die Kreatur dem Käfig und verbreitet Angst und Schrecken. Die drei ??? nehmen die Spur des rätselhaften Wesens auf, denn natürlich glauben sie nicht an ein echtes Monster. Doch plötzlich steht es vor ihnen …",
         release: "2000-11-27",
         track_length: 3262720,
-        book_author: "André Minninger",
+        book_author: "André Marx",
         track_author: "André Minninger"
     },
     {
@@ -1453,7 +1466,7 @@ var episoden = [
         content: "Ein Geisterschiff kreuzt vor der Küste von Rocky Beach. Justus, Peter und Bob trauen ihren Augen nicht: Der Dreimaster mit den zerfetzten Segeln gleitet durch die neblige See. Spuk oder Wirklichkeit? Die drei Jungs brauchen starke Nerven, denn Nachforschungen führen sie zu Piraten aus längst vergangenen Zeiten. Hat ein Fluch sie in die Gegenwart zurückgebracht? Um das Rätsel zu lösen, gibt es nur eine Möglichkeit: Die drei Detektive aus Rocky Beach müssen selbst an Bord gehen …",
         release: "2000-11-27",
         track_length: 3592133,
-        book_author: "André Minninger",
+        book_author: "André Marx",
         track_author: "André Minninger"
     },
     {
@@ -1464,7 +1477,7 @@ var episoden = [
         content: "Justus, Peter und Bob sitzen fest. Mitten in der Wüste versagt ihr Auto und das Wasser geht zur Neige. Die Nerven der drei Jungs sind zum Zerreißen gespannt. Plötzlich durchbricht ein Dröhnen die Stille: Ein Tiefflieger zieht über ihre Köpfe hinweg und setzt zur Landung an. Die drei Detektive schöpfen Hoffnung. Das könnte die Rettung bedeuten. Doch unversehens geraten sie in eine tödliche Falle. Ein größenwahnsinniger Weltraumforscher bringt Bob in höchste Lebensgefahr. Wie können die drei cleveren Jungs verhindern, dass Bob ins Weltall geschossen wird?",
         release: "2000-10-09",
         track_length: 3569347,
-        book_author: "André Minninger",
+        book_author: "Ben Nevis",
         track_author: "André Minninger"
     },
     {
@@ -1475,7 +1488,7 @@ var episoden = [
         content: "Der Regisseur Edward Truman hat seinen skandalumwitterten Film kurz vor der Premiere zurückgezogen und an einem geheimen Ort versteckt. Der Hinweis einer alten Schauspielerin führt Justus, Peter und Bob, die drei Detektive aus Rocky Beach, zu Trumans Grundstück. Doch dieses ist umgeben von einem undurchdringlichen Heckenlabyrinth. Die Kombinationsfähigkeit der drei ??? wird auf eine harte Probe gestellt. Rätselhafte Götterstatuen scheinen den Weg durch den Irrgarten zu weisen. Doch irgendjemand legt falsche Spuren, so dass die Detektive die Orientierung verlieren. Wo ist der Ausgang aus dem Labyrinth der Götter?",
         release: "2000-08-14",
         track_length: 3597147,
-        book_author: "André Minninger",
+        book_author: "André Marx",
         track_author: "André Minninger"
     },
     {
@@ -1552,7 +1565,7 @@ var episoden = [
         content: "Was ist nur mit Bob los? Warum reagiert der sonst so ausgeglichene Detektiv plötzlich aggressiv und gereizt auf seine Freunde? Es scheint, als stünde er unter dem Einfluss einer fremden Macht. Justus und Peter beschatten ihren Freund und folgen ihm unauffällig in den Konzertsaal eines Privathauses. Dort lauscht Bob gebannt der Musik eines virtuosen Geigenspielers. Und bevor sie wissen, wie ihnen geschieht, werden auch Justus und Peter von den Klängen gleichsam verhext. Können sie sich dem Bann des Teufelsgeigers entziehen, ehe es zu spät ist?",
         release: "1999-02-08",
         track_length: 3603107,
-        book_author: "André Minninger",
+        book_author: "André Marx",
         track_author: "André Minninger"
     },
     {
@@ -1563,7 +1576,7 @@ var episoden = [
         content: "Statt sich bei einem gemütlichen Segeltörn im pazifischen Ozean die Sonne auf den Bauch brennen zu lassen, geraten Justus, Peter und Bob, die drei Detektive aus Rocky Beach, auf hoher See in eine Meuterei. Binnen Minuten gerät das Forschungsschiff Wavedancer in Gewalt eines fanatischen Wissenschaftlers. Unter seinem Kommando steuert das Schiff in unbekannte Gewässer.",
         release: "1999-02-08",
         track_length: 3558427,
-        book_author: "André Minninger",
+        book_author: "André Marx",
         track_author: "André Minninger"
     },
     {
@@ -2089,7 +2102,7 @@ var episoden = [
         name: "und der Höhlenmensch",
         href: ["https://www.deezer.com/de/album/13032732", "https://music.youtube.com/rowse/MPREb_aDmlRmASXVk", "https://open.spotify.com/album/2REEfC6tVMiYv1eKMlGiOX", "https://music.apple.com/ch/album/folge-35-und-der-h%C3%B6hlenmensch/1092542351"],
         content: "Das Skelett eines Urzeitmenschen lockt Justus, Bob und Peter in den kleinen Ort Citrus Grove. Kaum sind sie dort, als es auch schon zu rätselhaften Zwischenfällen kommt. Erwacht der Urmensch zu geheimnisvollem Leben? Und wieso legen sich plötzlich alle Bewohner von Citrus Grove zum Schlafen in den Park?",
-        release: "1984-10-16",
+		release: "1984-10-16",
         track_length: 3255933,
         book_author: "M. V. Carey",
         track_author: "H. G. Francis"
@@ -2177,7 +2190,7 @@ var episoden = [
         name: "und der magische Kreis",
         href: ["https://www.deezer.com/de/album/12985256", "https://music.youtube.com/browse/MPREb_A6o8yrRRNDE", "https://open.spotify.com/album/2AisAUu4deLpNi6g6qlTLC", "https://music.apple.com/ch/album/folge-27-und-der-magische-kreis/1092535830"],
         content: "In Santa Monica geschehen an einem Abend gleich zwei folgenschwere Ereignisse: Ein Verlag geht in Flammen auf - und im benachbarten Filmlabor werden sämtliche Filme der bekannten Schauspielerin Madeleine Bainbridge gestohlen. Als dann auch noch das Manuskript der der Memoiren Madeleine Bainbridges verschwindet, ist den drei ???, Justus, Peter und Bob, klar, dass hier etwas nicht mit rechten Dingen zugeht.<br>Die Nachforschungen, die sie anstellen, führen die drei Detektive in das unheimliche Reich der Magie. Alles erscheint undurchschaubar. Was bedeutet der magische Kreis, in dem die Zahl 13 eine so große Rolle spielt? Was verbirgt sich hinter Madeleine Bainbridges rätselhafter Vergangenheit und was ist wahr an der Behauptung, sie sei eine Hexe? Gibt es den Mord durch Magie?",
-        release: "1981-05-14",
+        release: "1981-10-21",
         track_length: 3108893,
         book_author: "M. V. Carey",
         track_author: "H. G. Francis"
@@ -2630,10 +2643,23 @@ var episoden = [
 		name: "Eine schreckliche Bescherung",
 		search: "Adventskalender Kalender",
 		href: ["https://www.deezer.com/de/album/358679137", "https://music.youtube.com/browse/MPREb_xnFnStqzCsO", "https://open.spotify.com/album/5u2wd0lYukcINw8dUFCREq", "https://music.apple.com/ch/album/adventskalender-eine-schreckliche-bescherung/1646211883"],
-		content: "Beim Einkaufsbummel im Kaufhaus werden Justus, Peter und Bob Zeugen eines Überfalls. Kein geringerer als der Weihnachtsmann des Shopping-Centers wird angegriffen. Jemand hat es auf den Sack voller Geschenke abgesehen und dieser jemand ist ausgerechnet als Weihnachtself verkleidet. Die drei ??? heften sich an die Fersen des Diebes und finden heraus, auf welches Weihnachtsgeschenk es der Elf abgesehen hat.",
+		content: "Beim Einkaufsbummel im Kaufhaus Garcy's werden Justus, Peter und Bob Zeugen eines Überfalls. Kein geringerer als der Weihnachtsmann des Garcy's wird angegriffen. Jemand hat es auf den Sack voller Geschenke abgesehen … und dieser jemand ist ausgerechnet als Weihnachtself verkleidet.<br>Die drei ??? heften sich an die Fersen des Diebes und finden heraus, auf welches Weihnachtsgeschenk es der Elf abgesehen hat …",
 		release: "2022-10-14",
-		track_length: 9319000,
+		track_length: 9154760,
 		book_author: "Marco Sonnleitner",
+		track_author: "André Minninger"
+	},
+	{
+		checked: false,
+		type: "advent_calender",
+		number: "AK23",
+		name: "Böser die Glocken nie klingen",
+		search: "Adventskalender Kalender",
+		href: ["https://www.deezer.com/de/album/498793661", "https://music.youtube.com/browse/MPREb_VrHFoHBdic3", "https://open.spotify.com/album/0oZaQfEwMWY2TfviD4fEdV", "https://music.apple.com/ch/album/adventskalender-böser-die-glocken-nie-klingen/1711412051"],
+		content: "Weihnachten auf dem Schrottplatz - doch die drei ??? gönnen sich keine Pause. Auch in der besinnlichen Adventszeit übernehmen Justus, Peter und Bob jeden Fall.<br>Die drei Detektive schmücken den Weihnachtsbaum auf dem Schrottplatz, als sie plötzlich einen kryptischen Hilferuf in einem Weihnachtsglöckchen entdecken. Doch wer ist der Absender? Die Spur führt die drei ??? in ein Wohnheim für Jugendliche. Die Zeit drängt - wird es ihnen bis zum 24. Dezember gelingen, den Fall zu lösen?<br>Ein weihnachtlicher Fall in 24 Kapiteln.",
+		release: "2023-11-03",
+		track_length: 12243000,
+		book_author: "André Minninger",
 		track_author: "André Minninger"
 	},
 	{
@@ -2705,7 +2731,7 @@ var episoden = [
 		content: "Kann ein und derselbe Tag dreimal völlig unterschiedlich verlaufen? Kann ein unscheinbares Detail wie ein Colaglas darüber entscheiden, wie sich alle weiteren Geschehnisse entwickeln? Erlebe, wie Justus, Peter und Bob auf den unheimlichen Fluch der Sheldon Street, die mysteriösen Zeichen der Ritter stoßen und den bedrohlichen Fremden Freund stoßen - und zwar zeitgleich am selben Tag!<br>Drei Geschichten von drei Autoren führen dich dreimal durch einen Tag, wie er unterschiedlicher nicht verlaufen könnte.",
 		release: "2010-10-01",
 		track_length: 13078093,
-		book_author: "Hendrik Buchna, Ivar Leon Menger, Tim Wenderoth",
+		book_author: "Hendrik Buchna, Tim Wenderoth, Ivar Leon Menger",
 		track_author: "André Minninger"
 	},
 	{
@@ -2764,7 +2790,7 @@ var episoden = [
 		href: ["https://www.deezer.com/de/album/185329092", "#", "https://open.spotify.com/album/5DyZvpTRRE0ObKVXkJu6wy", "https://music.apple.com/ch/album/das-geheimnis-der-geisterinsel/1539646905"],
 		content: "Ihren Erholungsurlaub auf der Geisterinsel in Südafrika hatten sich die drei Krimihelden Justus Jonas, Peter Shaw und Bob Andrews anders vorgestellt: Dort sorgt der unheimliche Tokolosh für Angst und Schrecken. Und schon stecken sie wieder mittendrin in einem atemberaubenden Abenteuer, das alles übertrifft, was sie bisher erlebt haben.",
 		release: "2007-11-02",
-		track_length: 4324200,
+		track_length: 4503119,
 		book_author: "Philip LaZebnik, Aaron Mendelson",
 		track_author: "Ulf Blanck"
 	},
@@ -2774,25 +2800,27 @@ var episoden = [
 		name: "Das verfluchte Schloss",
 		search: "Film",
 		href: ["https://www.deezer.com/de/album/12761814", "https://music.youtube.com/browse/MPREb_P6jnlecox6Q", "https://open.spotify.com/album/0sCs2S5YTEN0UT1fwWpvKw", "https://music.apple.com/ch/album/das-verfluchte-schloss/1092531155"],
-		content: "Alles beginnt mit einer rätselhaften Videobotschaft. Stammt sie wirklich von Justus Eltern? Was bedeuten die geheimnisvollen Hinweise? Die Spur führt zu einem unheimlichen Schloss mitten im Wald. Doch es scheint ein Fluch auf dem gruseligen Gebäude zu liegen. Was verbirgt sich hinter den alten Mauern? Und was weiß das Mädchen, das sich Kleopatra nennt? Eins ist sicher: Justus, Peter und Bob sind nicht die einzigen lebendigen Wesen in dem Spukschloss. Ein Fall ganz nach dem Geschmack der drei ???: Unheimlich, gefährlich und kaum lösbar.",
+		content: "Alles beginnt mit einer rätselhaften Videobotschaft. Stammt sie wirklich von Justus' Eltern? Was bedeuten die geheimnisvollen Hinweise? Die Spur führt zu einem unheimlichen Schloss mitten im Wald. Doch es scheint ein Fluch auf dem gruseligen Gebäude zu liegen. Was verbirgt sich hinter den alten Mauern? Und was weiß das Mädchen, das sich Kleopatra nennt? Eins ist sicher: Justus, Peter und Bob sind nicht die einzigen lebendigen Wesen in dem Spukschloss. Ein Fall ganz nach dem Geschmack der drei ???: Unheimlich, gefährlich und kaum lösbar.",
 		release: "2009-03-13",
-		track_length: 4749000,
+		track_length: 4737640,
 		book_author: "Philip LaZebnik, Aaron Mendelson",
 		track_author: "Ulf Blanck"
 	},
 	{
+		checked: false,
 		type: "film",
 		number: "F23",
 		name: "Erbe des Drachen",
 		search: "Film",
-		href: ["https://www.deezer.com/de/album/387475747", "https://music.youtube.com/browse/MPREb_h7CIctjAn37", "https://open.spotify.com/album/67Ipucoa0blx27O3sV7yAi", "https://music.apple.com/ch/album/erbe-des-drachen-das-original-hörspiel-zum-kinofilm/1660256515"],
+		href: ["https://www.deezer.com/de/album/387475747", "https://music.youtube.com/browse/MPREb_o9cOnMHRDKz", "https://open.spotify.com/album/67Ipucoa0blx27O3sV7yAi", "https://music.apple.com/ch/album/erbe-des-drachen-das-original-hörspiel-zum-kinofilm/1660256515"],
 		content: "Die drei ??? fliegen nach Transsilvanien und dürfen beim Dreh eines Vampir-Films sein. Dort wartet auch schon der nächste gruselige Fall auf die drei Detektive.<br>Auf Schloss Piatra gehen seltsame Dinge vor sich: Nachts sind Klopfgeräusche zu hören und vor vielen Jahren ist ein Junge verschwunden. Das Filmteam ist beunruhigt. Justus, Peter und Bob machen sich auf die Suche und entdecken ein lang gehütetes Geheimnis. Können sie die Dreharbeiten retten?",
 		release: "2023-01-27",
-		track_length: 5970000,
+		track_length: 5687000,
 		book_author: "André Marx",
 		track_author: "Josef Ulbig"
 	},
 	{
+		checked: false,
 		type: "live",
 		number: "L02",
 		name: "Master of Chess",
@@ -2805,6 +2833,7 @@ var episoden = [
 		track_author: "Stefanie Burkart"
 	},
 	{
+		checked: false,
 		type: "live",
 		number: "L04",
 		name: "und der Super-Papagei 2004 Live",
@@ -2817,6 +2846,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "live",
 		number: "L09",
 		name: "und der seltsame Wecker 2009 - Live and Ticking",
@@ -2829,6 +2859,7 @@ var episoden = [
 		track_author: "Kai Schwind"
 	},
 	{
+		checked: false,
 		type: "live",
 		number: "L14",
 		name: "Phonophobia - Sinfonie der Angst",
@@ -2841,18 +2872,20 @@ var episoden = [
 		track_author: "Kai Schwind"
 	},
 	{
+		checked: false,
 		type: "live",
 		number: "L19",
 		name: "und der dunkle Taipan",
 		search: "Live",
 		href: ["#", "#", "#", "https://music.apple.com/ch/album/und-der-dunkle-taipan-live-25-10-19-berlin-verti-music-hall/1480842354"],
-		content: "Eine alte Bekannte bittet die drei ??? darum auf ihren Hund aufzupassen. Doch das anfangs harmlose Hunde-Sitting ist nur der Auftakt zu einem mysteriösen Fall, der die drei Detektive an geheimnisvolle Orte und in mehr als brenzlige Situationen bringt. Als ihnen klar wird, wer hinter den Kulissen die Fäden zieht, ist es zu spät – die drei ??? sind in akuter Lebensgefahr.",
+		content: "Eine alte Bekannte bittet die drei ??? darum auf ihren Hund aufzupassen. Doch das anfangs harmlose Hunde-Sitting ist nur der Auftakt zu einem mysteriösen Fall, der die drei Detektive an geheimnisvolle Orte und in mehr als brenzlige Situationen bringt. Als ihnen klar wird, wer hinter den Kulissen die Fäden zieht, ist es zu spät - die drei ??? sind in akuter Lebensgefahr.",
 		release: "2019-10-25",
 		track_length: 7079000,
 		book_author: "Hendrik Buchna",
 		track_author: "Andreas Fröhlich"
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB01",
 		name: "Jens Wawrczeck liest… und das Gespensterschloss",
@@ -2865,6 +2898,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB02",
 		name: "Jan Böhmermann liest… und die flüsternde Mumie",
@@ -2877,6 +2911,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB03",
 		name: "Tim Grobe liest… und der Fluch des Rubins",
@@ -2889,6 +2924,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB04",
 		name: "Henning May liest… und der seltsame Wecker",
@@ -2901,6 +2937,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB05",
 		name: "Karin Lieneweg liest… und der sprechende Totenkopf",
@@ -2913,6 +2950,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB06",
 		name: "Oliver Kalkofe liest… und der lachende Schatten",
@@ -2925,6 +2963,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB07",
 		name: "Axel Prahl liest… und die schwarze Katze",
@@ -2937,6 +2976,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB08",
 		name: "Oliver Rohrbeck liest… und der Super-Papagei",
@@ -2949,6 +2989,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB11",
 		name: "Anna Thalbach liest… und die Geisterinsel",
@@ -2961,6 +3002,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB14",
 		name: "Bastian Pastewka liest… und der grüne Geist",
@@ -2973,6 +3015,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB15",
 		name: "Katrin Fröhlich liest… und die singende Schlange",
@@ -2985,6 +3028,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB16",
 		name: "Mai Thi Nguyen-Kim liest… und die rätselhaften Bilder",
@@ -2997,6 +3041,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB18",
 		name: "Jannik Schümann liest… und der Phantomsee",
@@ -3009,6 +3054,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB19",
 		name: "Jürgen Thormann liest… und der Zauberspiegel",
@@ -3021,6 +3067,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB20",
 		name: "Holger Mahlich liest… und die gefährliche Erbschaft",
@@ -3033,6 +3080,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB21",
 		name: "Andreas Fröhlich liest… und der Karpatenhund",
@@ -3045,6 +3093,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB23",
 		name: "Bela B liest… und der tanzende Teufel",
@@ -3057,6 +3106,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB26",
 		name: "Nicholas Müller liest… und die silberne Spinne",
@@ -3069,6 +3119,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB27",
 		name: "Jessica Schwarz liest… und der magische Kreis",
@@ -3081,6 +3132,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB31",
 		name: "Judy Winter liest… und der Ameisenmensch",
@@ -3093,6 +3145,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB34",
 		name: "Eckart Dux liest… und der Höhlenmensch",
@@ -3105,6 +3158,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB43",
 		name: "Sascha Draeger liest… und der gestohlene Preis",
@@ -3117,6 +3171,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "audiobook",
 		number: "HB45",
 		name: "Klaas Heufer-Umlauf liest… und der schrullige Millionär",
@@ -3129,6 +3184,7 @@ var episoden = [
 		track_author: ""
 	},
 	{
+		checked: false,
 		type: "documentation",
 		number: "WF",
 		name: "Die Welt der drei Fragezeichen",
@@ -3141,6 +3197,7 @@ var episoden = [
 		track_author: "C. R. Rodenwald"
 	},
 	{
+		checked: false,
 		type: "documentation",
 		number: "WH",
 		name: "Die drei ??? und die Welt der Hörspiele",
