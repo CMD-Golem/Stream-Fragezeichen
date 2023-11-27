@@ -450,9 +450,9 @@ async function createId() {
 		body: json_remote_data,
 	});
 
-	var response_object = await response.json();
-
 	if (response.status == 200) {
+		var response_object = await response.json();
+
 		user_data.user_id = response_object.user_id;
 		input_user_id.value = user_data.user_id;
 		storeUserData(false);
@@ -462,7 +462,6 @@ async function createId() {
 	else {
 		alert("ID konnte nicht erstellt werden!");
 		console.log(response);
-		console.log(response_object);
 	}
 }
 
@@ -487,7 +486,6 @@ async function deleteId() {
 		else {
 			alert("ID konnte nicht gelöscht werden!");
 			console.log(response);
-			console.log(await response.json());
 		}
 	}
 }

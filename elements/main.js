@@ -154,9 +154,10 @@ async function loadData() {
 				body: user_data.user_id,
 			});
 
-			var response_object = await response.json();
 
 			if (response.status == 200) {
+				var response_object = await response.json();
+
 				user_data.random_settings = response_object.random_settings;
 				user_data.list = response_object.list;
 				user_data.a_name = response_object.a_name;
@@ -172,7 +173,6 @@ async function loadData() {
 			else {
 				alert("Benutzer Daten konnten nicht heruntergeladen werden!");
 				console.error(response);
-				console.error(response_object);
 			}
 		}
 
@@ -252,7 +252,6 @@ async function storeUserData(remote) {
 		else {
 			alert("Benutzer Daten konnte nicht hochgeladen werden!");
 			console.error(response);
-			console.error(await response.json());
 		}
 	}
 }
