@@ -616,7 +616,7 @@ var episoden = [
         number: "170",
         name: "Straße des Grauens",
         href: ["https://www.deezer.com/de/album/14530416", "https://music.youtube.com/browse/MPREb_nZZzohhP2Kg", "https://open.spotify.com/album/62CKj2RCiWDDUtBWTn4KxQ", "https://music.apple.com/ch/album/folge-170-stra%C3%9Fe-des-grauens/1149906410"],
-        content: "Ex-Kommissar Reynolds wurde entführt! Justus, Peter und Bob machen sich sofort auf die Spur des Täters. Der der verbietet ihnen jeglichen Kontakt zur Polizei, schickt ihnen ein Paket mit fragwürdigem Inhalt und lässt ihnen seltsame Hinweise zukommen. Durch die glühende Hitze der Wüste jagen die drei ??? ihren ruchlosen Gegner. Und dann verschwindet auch noch Bob! Wie weit werden die Detektive gehen, um ihre Freunde zu retten?",
+        content: "Ex-Kommissar Reynolds wurde entführt! Justus, Peter und Bob machen sich sofort auf die Spur des Täters. Doch der verbietet ihnen jeglichen Kontakt zur Polizei, schickt ihnen ein Paket mit fragwürdigem Inhalt und lässt ihnen seltsame Hinweise zukommen. Durch die glühende Hitze der Wüste jagen die drei ??? ihren ruchlosen Gegner. Und dann verschwindet auch noch Bob! Wie weit werden die Detektive gehen, um ihre Freunde zu retten?",
         release: "2014-08-29",
         track_length: 4816533,
         book_author: "Kari Erlhoff",
