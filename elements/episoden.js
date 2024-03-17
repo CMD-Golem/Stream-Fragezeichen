@@ -17,14 +17,24 @@
 
 var episoden = [
 	{
-		checked: false,
+		type: "normal",
+        number: "225",
+        name: "und der Puppenmacher",
+        href: ["https://www.deezer.com/de/album/521389312", "https://music.youtube.com/browse/MPREb_sV2Z1eSwlkx", "https://open.spotify.com/album/0FuC7q4bJG41g1naKBx4ot", "https://music.apple.com/ch/album/folge-225-und-der-puppenmacher/1716920454"],
+        content: "Schaurige Maispuppen, Schüsse und verurteilte Verbrecher – keine guten Vorzeichen für eine Hochzeit. Die drei ??? geben ihr Bestes, um das Fest zu retten.<br>Deep Spring, ein verschlafener Ort in der Wüste von Arizona: Die drei ??? reisen an, um die Hochzeit eines alten Bekannten zu besuchen. Doch während die Vorbereitungen in vollem Gange sind, pflastern unheimliche Puppen den Weg der Detektive. Als sie schließlich ein Hochzeitspaar aus Mais, aufgehängt im Gebälk, entdecken, bekommt nicht nur die Braut kalte Füße. Können Justus, Peter und Bob die seltsamen Geschehnisse aufklären?",
+        release: "2024-01-26",
+        track_length: 10696453,
+        book_author: "André Marx",
+        track_author: "André Minninger"
+    },
+	{
 		type: "normal",
         number: "224",
         name: "Die Yacht des Verrats",
         href: ["https://www.deezer.com/de/album/498823311", "https://music.youtube.com/browse/MPREb_NOXRMqYU6pv", "https://open.spotify.com/album/7JhdaReI98XYFrzb3jJPFa", "https://music.apple.com/de/album/folge-224-die-yacht-des-verrats/1697887952"],
         content: "Justus Jonas ist einmalig - oder etwa nicht? Unerwarteter Besuch und ein Diebstahl führen die drei ??? auf die Yacht des Verrats.<br>Justus, Peter und Bob trauen ihren Augen kaum als ihnen lan Carew gegenübersteht. lan und Justus sind sich wie aus dem Gesicht geschnitten. Ein alter Fall verbindet die Detektive mit dem Sohn des Präsidenten von Nanda. Kein Wunder, dass lan erneut ihre Hilfe sucht. Er ist im Auftrag seines Landes in Rocky Beach, doch jemand verfolgt ihn und in sein Hotelzimmer wurde eingebrochen. Können die drei ??? ihrem Freund helfen?",
         release: "2023-11-24",
-        track_length: 4377000,
+        track_length: 4363613,
         book_author: "Ben Nevis",
         track_author: "André Minninger"
     },
@@ -2100,7 +2110,7 @@ var episoden = [
         type: "normal",
         number: "035",
         name: "und der Höhlenmensch",
-        href: ["https://www.deezer.com/de/album/13032732", "https://music.youtube.com/rowse/MPREb_aDmlRmASXVk", "https://open.spotify.com/album/2REEfC6tVMiYv1eKMlGiOX", "https://music.apple.com/ch/album/folge-35-und-der-h%C3%B6hlenmensch/1092542351"],
+        href: ["https://www.deezer.com/de/album/13032732", "https://music.youtube.com/browse/MPREb_aDmlRmASXVk", "https://open.spotify.com/album/2REEfC6tVMiYv1eKMlGiOX", "https://music.apple.com/ch/album/folge-35-und-der-h%C3%B6hlenmensch/1092542351"],
         content: "Das Skelett eines Urzeitmenschen lockt Justus, Bob und Peter in den kleinen Ort Citrus Grove. Kaum sind sie dort, als es auch schon zu rätselhaften Zwischenfällen kommt. Erwacht der Urmensch zu geheimnisvollem Leben? Und wieso legen sich plötzlich alle Bewohner von Citrus Grove zum Schlafen in den Park?",
 		release: "1984-10-16",
         track_length: 3255933,
