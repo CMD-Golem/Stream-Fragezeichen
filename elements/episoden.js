@@ -2001,7 +2001,7 @@ var episoden = [
         number: "045",
         name: "und das Gold der Wikinger",
         href: ["https://www.deezer.com/de/album/13150562", "https://music.youtube.com/browse/MPREb_tQm8w2k2L36", "https://open.spotify.com/album/39mWWzaUZp0AXyN9Vnp4od", "https://music.apple.com/ch/album/folge-45-und-das-gold-der-wikinger/1092504628"],
-        content: "Auf der Insel Ragnarson Rock geschehen geheimnisvolle Dinge! Fotos, die Bob gemacht hat, müssen der Schlüssel sein. Doch Justus, Bob und Peter - die drei Detektive - können zunächst Besonderes darauf entdecken. Aber dann heult ein Wolf auf der Insel und Justus spitzt die Ohren. Kommt er dem Geheimnis auf die Spur?",
+        content: "Auf der Insel Ragnarson Rock geschehen geheimnisvolle Dinge! Fotos, die Bob gemacht hat, müssen der Schlüssel sein. Doch Justus, Bob und Peter - die drei Detektive - können zunächst nichts Besonderes darauf entdecken. Aber dann heult ein Wolf auf der Insel und Justus spitzt die Ohren. Kommt er dem Geheimnis auf die Spur?",
         release: "1989-04-01",
         track_length: 2827347,
         book_author: "William Arden",
