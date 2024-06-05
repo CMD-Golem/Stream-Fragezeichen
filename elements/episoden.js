@@ -18,6 +18,28 @@
 var episoden = [
 	{
 		type: "normal",
+        number: "227",
+        name: "Melodie der Rache",
+        href: ["https://www.deezer.com/de/album/564691502", "https://music.youtube.com/browse/MPREb_A6EO0blEYX5", "https://open.spotify.com/album/2CMXywsh8wVXXCmr2bLTZ6", "https://music.apple.com/ch/album/folge-227-melodie-der-rache/1733201774"],
+        content: "Die drei ??? ermitteln für einen berühmten Rockstar und lauschen der Melodie der Rache. Können die Detektive Licht ins Dunkel bringen?<br>Als Peter Journey die drei ??? um Hilfe bittet, sind die Detektive hellauf begeistert, denn PJ ist eine echte Rocklegende. In der Ferienanlage des Musikers herrscht Chaos: Eine wertvolle Bassgitarre wurde gestohlen und ein Gast brutal niedergeschlagen. Justus, Peter und Bob buchen sich kurzerhand selbst ein Zimmer im Hotel und stoßen auf ein dunkles Geheimnis der Vergangenheit.",
+        release: "2024-05-10",
+        track_length: 3870227,
+        book_author: "Christoph Dittert",
+        track_author: "André Minninger"
+    },
+	{
+		type: "normal",
+        number: "226",
+        name: "Die Spur der Toten",
+        href: ["https://www.deezer.com/de/album/542047762", "https://music.youtube.com/browse/MPREb_enhdAAz3A6b", "https://open.spotify.com/album/3Sv5tE8PcAlGY6Ys2ISQXF", "https://music.apple.com/ch/album/folge-226-die-spur-der-toten/1725807486"],
+        content: "Bob Andrews stockt der Atem – unerwartet erhält er Post von einem Anwalt. Die Vergangenheit holt ihn ein und lässt ihn an seinem Verstand zweifeln.<br>Das Vermächtnis, das eine alte Bekannte dem dritten Detektiv hinterlässt, ist ebenso unheimlich wie bizarr: Nach ihrem Ableben soll er die Spur ihres Mörders aufnehmen und ihn unter allen Umständen dingfest machen. Können die drei ??? ihren Tod aufklären und den Täter finden? Justus, Peter und Bob folgen den Spuren, die bis in das Reich der Toten führen.",
+        release: "2024-03-22",
+        track_length: 4953600,
+        book_author: "André Minninger",
+        track_author: "André Minninger"
+    },
+	{
+		type: "normal",
         number: "225",
         name: "und der Puppenmacher",
         href: ["https://www.deezer.com/de/album/521389312", "https://music.youtube.com/browse/MPREb_sV2Z1eSwlkx", "https://open.spotify.com/album/0FuC7q4bJG41g1naKBx4ot", "https://music.apple.com/ch/album/folge-225-und-der-puppenmacher/1716920454"],
