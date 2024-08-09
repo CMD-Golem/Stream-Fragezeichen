@@ -2,7 +2,7 @@
 const standard_settings = {
 	user_id: undefined,
 	provider: 0,
-	cover_size: "2",
+	cover_size: "50",
 	hide_episode_title: false,
 	backwards: true,
 	sort_date: false,

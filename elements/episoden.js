@@ -18,6 +18,17 @@
 var episoden = [
 	{
 		type: "normal",
+        number: "228",
+        name: "Der Ruf der Krähen",
+        href: ["https://www.deezer.com/de/album/602812252", "https://music.youtube.com/browse/MPREb_MVYljhSoKYA", "https://open.spotify.com/album/6sNAlohza1ZTWVMGhFTGJW", "https://music.apple.com/ch/album/folge-228-der-ruf-der-krähen/1757389491"],
+        content: "Lautes Gekrächze und Hilfeschreie schallen durch den Palisades Park. Peter eilt zu Hilfe, als ein Mann von einem wild gewordenen Schwarm Krähen attackiert wird.<br>Mit ihren spitzen Schnäbeln hacken die Vögel wütend auf den Mann ein und lassen nur schwerlich von ihm ab. Was hat die Krähen so in Aufregung versetzt?<br>Justus, Peter und Bob folgen dem Ruf der Krähen und stoßen auf ein geheimes Projekt, das die Zukunft der Menschheit auf den Kopf stellt.",
+        release: "2024-07-12",
+        track_length: 4761320,
+        book_author: "André Minninger",
+        track_author: "André Minninger"
+    },
+	{
+		type: "normal",
         number: "227",
         name: "Melodie der Rache",
         href: ["https://www.deezer.com/de/album/564691502", "https://music.youtube.com/browse/MPREb_A6EO0blEYX5", "https://open.spotify.com/album/2CMXywsh8wVXXCmr2bLTZ6", "https://music.apple.com/ch/album/folge-227-melodie-der-rache/1733201774"],

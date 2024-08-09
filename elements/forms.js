@@ -1,12 +1,10 @@
 // Textarea
 var el_textarea = document.getElementsByTagName("textarea");
 for (var i = 0; i < el_textarea.length; i++) {
-	el_textarea[i].addEventListener("input", textarea);
-}
-
-function textarea(edited_textarea) {
-	edited_textarea.target.style.height = "auto";
-	edited_textarea.target.style.height = edited_textarea.target.scrollHeight + 12 + "px";
+	el_textarea[i].addEventListener("input", (e) => {
+		e.target.style.height = "auto";
+		e.target.style.height = e.target.scrollHeight + 12 + "px";
+	});
 }
 
 

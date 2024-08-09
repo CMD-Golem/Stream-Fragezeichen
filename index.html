@@ -137,7 +137,7 @@
 			</div>
 			<label class="input_slider">
 				<span>Covergrösse</span>
-				<input type="range" min="0" max="4" step="1" onchange="changeCoverSize(this.value)" id="settings_cover_size">
+				<input type="range" min="0" max="100" oninput="changeCoverSize(this.value)" id="settings_cover_size" onchange="storeUserData(false);">
 			</label>
 			<div class="border_button settings_ignored" onclick="showEpisoden('ignore_list', ignore_list_count)">Ignorierte Folgen</div>
 		</div>

@@ -95,10 +95,6 @@ ol.hide_episode_title div {
 	margin-bottom: 4px;
 }
 
-ol.hide_watch_list .add, ol.hide_watch_list .remove {
-	display: none;
-}
-
 /* ####################################################################### */
 /* On cover buttons */
 .control_button {
@@ -154,6 +150,12 @@ ol div.in_watch_list:hover .remove,
 	ol div.in_watch_list .remove {
 		display: block;
 	}
+}
+
+
+
+main.hide_watch_list .add, main.hide_watch_list .remove {
+	display: none !important;
 }
 
 /* ####################################################################### */

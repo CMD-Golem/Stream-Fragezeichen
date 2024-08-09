@@ -494,27 +494,43 @@ async function deleteId() {
 //#################################################################################################
 // Cover size
 function changeCoverSize(size) {
-	main.classList.remove('hide_watch_list');
-
 	user_data.cover_size = size;
-	storeUserData(false);
-	
-	if (size == "0") {
-		var size_array = ["120px", "40px", "9px", "71px", "71px", "71px", "9px"];
+	var screen_width = document.body.clientWidth;
+
+	if (screen_width >= 310) var max_width = 260;
+	else var max_width = screen_width - 50;
+
+	// define cover size (max_width - min_width) * size_percentage / 100 + min_width
+	var cover_size = (max_width - 120) * size / 100 + 120;
+
+	// calc depending on size
+	if (cover_size <= 150) {
+		var play_button_size = 40;
+		var play_button_right = 0.054 * cover_size + 3;
+		var buttons_left = play_button_right;
+		var play_button_top = cover_size - 40 - play_button_right;
+		var watch_list_top = 100;
+		var info_button_top = play_button_top;
 		main.classList.add('hide_watch_list');
 	}
-	else if (size == "1") { var size_array = ["155px", "60px", "11px", "84px", "51px", "104px", "9px"]; }
-	else if (size == "2") { var size_array = ["190px", "60px", "16px", "114px", "81px", "134px", "9px"]; }
-	else if (size == "3") { var size_array = ["225px", "60px", "16px", "146px", "111px", "169px", "14px"]; }
-	else if (size == "4") { var size_array = ["260px", "60px", "16px", "184px", "146px", "204px", "14px"]; }
+	else {
+		var play_button_size = 60;
+		var play_button_right = 0.054 * cover_size + 3;
+		var buttons_left = 0.00029 * cover_size * cover_size - 0.068 * cover_size + 12;
+		var play_button_top = 0.00303 * cover_size * cover_size - 0.33 * cover_size + 65;
+		var watch_list_top = play_button_top + 20;
+		var info_button_top = watch_list_top - (0.057 * cover_size + 43);
+		main.classList.remove('hide_watch_list');
+	}
 
-	css_root.style.setProperty("--cover_size", size_array[0]);
-	css_root.style.setProperty("--play_button_size", size_array[1]);
-	css_root.style.setProperty("--play_button_right", size_array[2]);
-	css_root.style.setProperty("--play_button_top", size_array[3]);
-	css_root.style.setProperty("--info_button_top", size_array[4]);
-	css_root.style.setProperty("--watch_list_top", size_array[5]);
-	css_root.style.setProperty("--buttons_left", size_array[6]);
+	// set
+	css_root.style.setProperty("--cover_size", cover_size + "px");
+	css_root.style.setProperty("--play_button_size", play_button_size + "px");
+	css_root.style.setProperty("--play_button_top", play_button_top + "px");
+	css_root.style.setProperty("--watch_list_top", watch_list_top + "px");
+	css_root.style.setProperty("--info_button_top", info_button_top + "px");
+	css_root.style.setProperty("--play_button_right", play_button_right + "px");
+	css_root.style.setProperty("--buttons_left", buttons_left + "px");
 }
 
 // change visibility of episode titles
