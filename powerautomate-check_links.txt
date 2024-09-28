@@ -1,0 +1,28 @@
+/# Als Platzhalter kann https://dervinylist.com/ genutzt werden.
+
+Bei Deezer, Spotify, Apple Music kann eine leere Beschreibung der Webseite als 404 erkennung genutzt werden.
+Bei Youtube Music ist der Text der Webseite von 404 gleich wie die Variable YTmusic#/
+
+File.ReadTextFromFile.ReadText File: $'''B:\\Desktop\\test.json''' Encoding: File.TextFileEncoding.UTF8 Content=> JSON
+Variables.ConvertJsonToCustomObject Json: JSON CustomObject=> AlleFolgen
+WebAutomation.LaunchEdge.AttachToTheForegroundEdge AttachTimeout: 5 BrowserInstance=> Browser
+Variables.CreateNewList List=> KaputteLinks
+DISABLE Variables.CreateNewList List=> Neu
+SET YTmusic TO $'''Anmelden
+Startseite
+Entdecken
+Mediathek
+Anmelden
+Melde dich an, um Playlists zu erstellen und zu teilen, personalisierte Empfehlungen zu erhalten und vieles mehr.
+Neue Empfehlungen
+Player-Steuerleiste'''
+LOOP FOREACH Folge IN AlleFolgen
+    WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: Folge.href[0] WaitForPageToLoadTimeout: 60
+    WebAutomation.GetDetailsOfWebPage BrowserInstance: Browser DetailsType: WebAutomation.DetailsType.Description Details=> WebPageProperty
+    IF IsEmpty(WebPageProperty) THEN
+        Variables.AddItemToList Item: Folge.number List: KaputteLinks
+    DISABLE ELSE
+        DISABLE WebAutomation.GetDetailsOfWebPage BrowserInstance: Browser DetailsType: WebAutomation.DetailsType.URLAddress Details=> NeueAdresse
+        DISABLE Variables.AddItemToList Item: $'''%Folge.number%, %NeueAdresse%''' List: Neu
+    END
+END
