@@ -4,6 +4,7 @@ const standard_settings = {
 	provider: 0,
 	cover_size: "50",
 	hide_episode_title: false,
+	theme: false,
 	backwards: true,
 	sort_date: false,
 	list:[],
@@ -140,9 +141,11 @@ async function loadData() {
 		user_data = JSON.parse(json_user_data);
 
 		// int list sorting
+		user_data.theme = !user_data.theme;
 		user_data.backwards = !user_data.backwards;
 		user_data.sort_date = !user_data.sort_date;
 		user_data.hide_episode_title = !user_data.hide_episode_title;
+		toggleTheme();
 		toggleOrder();
 		toggleSort();
 		toggleEpisodeTitle();

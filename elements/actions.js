@@ -33,6 +33,24 @@ function handleNav(visible_element, type, keep_open) {
 	}
 }
 
+function toggleTheme() {
+	user_data.theme = !user_data.theme;
+	document.getElementById("settings_toggle_theme").checked = user_data.theme;
+	storeUserData(false);
+	
+	if (user_data.theme) {
+		var set_dark = document.styleSheets[0].cssRules[3];
+		var set_light = document.styleSheets[0].cssRules[2];
+	}
+	else {
+		var set_dark = document.styleSheets[0].cssRules[2];
+		var set_light = document.styleSheets[0].cssRules[3];
+	}
+
+	set_dark.media.mediaText = "(prefers-color-scheme: dark)";
+	set_light.media.mediaText = "(prefers-color-scheme: light)";
+}
+
 //#################################################################################################
 // Aside
 var aside = document.getElementsByTagName("aside")[0];
@@ -540,7 +558,7 @@ function toggleEpisodeTitle() {
 	storeUserData(false);
 	
 	if (user_data.hide_episode_title) {
-		episoden_list.classList.add('hide_episode_title');;
+		episoden_list.classList.add('hide_episode_title');
 	}
 	else {
 		episoden_list.classList.remove('hide_episode_title');

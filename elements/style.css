@@ -43,6 +43,8 @@
 	}
 }
 
+/* DONT INSERT ANY OTHER CSS RULES ABOVE. THIS WOULD BREAK elements/actions.js:toggleTheme() */
+
 html {
 	height: 100%;
 	min-width: 310px;
