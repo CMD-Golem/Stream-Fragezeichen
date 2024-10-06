@@ -97,7 +97,7 @@ var is_small_screen = false;
 
 function infoHeight() {
 	var description_header_height = info_name.parentElement.parentElement.scrollHeight;
-	var window_height = window.innerHeight;
+	var window_height = document.documentElement.clientHeight;
 	var window_width = window.innerWidth;
 	var show_small_screen = false;
 
