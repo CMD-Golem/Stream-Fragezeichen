@@ -92,6 +92,49 @@ function showAside(visible_element, keep_open) {
 	}
 }
 
+// hide aside with touch
+var touch_store = {};
+aside.addEventListener("touchstart", (e) => {
+	touch_store.start = e.touches[0].clientY;
+	touch_store.height = aside.offsetHeight;
+	touch_store.time = new Date().getTime();
+
+	aside.addEventListener("touchmove", checkTouch);
+	aside.addEventListener("touchend", endTouch);
+});
+
+
+function checkTouch(e) {
+	touch_store.now = e.touches[0].clientY;
+	var distance = Math.min(0, touch_store.now - touch_store.start);
+	e.preventDefault();
+
+	if (distance < 0) {
+		aside.style.transform = `translateY(${distance}px)`;
+	}
+}
+
+function endTouch() {
+	var elapsed_time = new Date().getTime() - touch_store.time;
+	var distance = touch_store.start - touch_store.now;
+
+	if (distance > touch_store.height / 2 || distance / elapsed_time > 0.5) {
+		aside.removeEventListener("touchmove", checkTouch);
+
+		css_root.style.setProperty("--aside_height", "0");
+		aside.classList.remove("show_" + active_aside);
+		document.getElementsByClassName("nav_active")[0].classList.remove("nav_active");
+		active_aside = undefined;
+		preventScroll(false);
+
+		setTimeout(function(){
+			aside.style.transform = "";
+		}, 400);
+	}
+	else aside.style.transform = "";
+}
+	
+
 // calc aside height
 var is_small_screen = false;
 
