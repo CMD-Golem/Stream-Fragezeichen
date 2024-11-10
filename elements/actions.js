@@ -93,18 +93,16 @@ function showAside(visible_element, keep_open) {
 }
 
 // hide aside with touch
+var hide_aside = document.getElementsByClassName("hide_aside")[0];
 var touch_store = {};
-aside.addEventListener("touchstart", (e) => {
+hide_aside.addEventListener("touchstart", (e) => {
 	touch_store.start = e.touches[0].clientY;
 	touch_store.height = aside.offsetHeight;
 	touch_store.time = new Date().getTime();
-
-	aside.addEventListener("touchmove", checkTouch);
-	aside.addEventListener("touchend", endTouch);
 });
 
 
-function checkTouch(e) {
+hide_aside.addEventListener("touchmove", (e) => {
 	touch_store.now = e.touches[0].clientY;
 	var distance = Math.min(0, touch_store.now - touch_store.start);
 	e.preventDefault();
@@ -112,15 +110,13 @@ function checkTouch(e) {
 	if (distance < 0) {
 		aside.style.transform = `translateY(${distance}px)`;
 	}
-}
+});
 
-function endTouch() {
+hide_aside.addEventListener("touchend", () => {
 	var elapsed_time = new Date().getTime() - touch_store.time;
 	var distance = touch_store.start - touch_store.now;
 
 	if (distance > touch_store.height / 2 || distance / elapsed_time > 0.5) {
-		aside.removeEventListener("touchmove", checkTouch);
-
 		css_root.style.setProperty("--aside_height", "0");
 		aside.classList.remove("show_" + active_aside);
 		document.getElementsByClassName("nav_active")[0].classList.remove("nav_active");
@@ -132,11 +128,29 @@ function endTouch() {
 		}, 400);
 	}
 	else aside.style.transform = "";
-}
-	
+});
 
 // calc aside height
 var is_small_screen = false;
+
+function infoHeightNew() {
+	var description_header_height = info_name.parentElement.parentElement.scrollHeight;
+	var window_height = document.documentElement.clientHeight;
+	var window_width = window.innerWidth;
+	var show_small_screen = false;
+
+	
+	// width: 506px: overflow nav, stacked user settings
+	// width: 710px: bottom nav, stacked info box
+
+
+
+	if (active_aside == "info" || active_aside == "random_episode") var aside_height = 340;
+	else if (active_aside == "settings") var aside_height = 400;
+	else if (active_aside == "user_data") var aside_height = 270;
+
+	css_root.style.setProperty("--aside_height", aside_height + "px");
+}
 
 function infoHeight() {
 	var description_header_height = info_name.parentElement.parentElement.scrollHeight;
@@ -144,14 +158,16 @@ function infoHeight() {
 	var window_width = window.innerWidth;
 	var show_small_screen = false;
 
+	var info_height = "unset";
+
 	if (active_aside == "info" || active_aside == "random_episode") {
 		// Height for Desktop view
-		if (window_width > 682) {
+		if (window_width > 710) {
 			var aside_height = "340px";
 			var info_height = (248 - info_name.parentElement.scrollHeight - info_author.parentElement.scrollHeight) + "px";
 		}
 		// Height for small screens (mobile with open keyboard)
-		else if (window_height <= 600 && window_width <= 682) {
+		else if (window_height <= 600 && window_width <= 710) {
 			var aside_height = (window_height - 120) + "px";
 			var info_height = "unset";
 			show_small_screen = true;
@@ -175,7 +191,7 @@ function infoHeight() {
 	else if (active_aside == "settings") {
 		aside_height = "400px";
 		// Height for small screens (mobile with open keyboard)
-		if (window_height <= 600 && window_width <= 682) {
+		if (window_height <= 600 && window_width <= 710) {
 			var aside_height = (window_height - 120) + "px";
 			show_small_screen = true;
 		}

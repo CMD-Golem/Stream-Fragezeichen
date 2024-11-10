@@ -432,12 +432,6 @@ footer svg {
 		padding: 9px 20px;
 	}
 	footer {
-		height: 120px;
-	}
-}
-
-@media (max-width: 530px) {
-	footer {
 		height: 160px;
 		padding: 0;
 		padding-top: 15px;

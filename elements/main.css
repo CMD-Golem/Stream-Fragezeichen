@@ -20,18 +20,12 @@ body {
 main {
 	max-width: 1140px;
 	margin: 20px auto;
-	/* display: flex;
-	justify-content: center;
-	margin: 20px 0; */
 }
 
 ol {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
-	/* display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-	max-width: 1140px; */
 	padding: 0;
 	margin: 0;
 }
@@ -218,16 +212,6 @@ aside.show_user_data {
 	margin: 0;
 }
 
-/* aside::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	width: 100vw;
-	bottom: 0;
-	height: 35px;
-	background-color: black;
-} */
-
 .small_screen .hide_aside {
 	display: none;
 }
@@ -252,16 +236,6 @@ aside.show_user_data {
 
 .hover_svg:hover svg {
 	fill: var(--nav-hover-color);
-}
-
-@media (max-width: 682px) {
-	.aside_content {
-		width: unset;
-		flex-direction: column;
-		height: calc(100% - 55px);
-		padding: 20px;
-		padding-bottom: 35px;
-	}
 }
 
 /* Info Box */
@@ -341,9 +315,13 @@ aside.show_user_data {
 	fill-opacity: 1;
 }
 
-@media (max-width: 682px) {
+@media (max-width: 710px) {
+	.aside_content {
+		flex-direction: column;
+	}
 	.info_box {
 		margin-right: 0;
+		padding: 0 20px;
 	}
 	#info_play {
 		margin: 0 auto;
@@ -380,7 +358,7 @@ aside.show_user_data {
 }
 
 .settings_welcome {
-	padding: 10px 10px;
+	padding: 10px 20px;
 }
 
 .small_screen .settings_welcome {
@@ -409,10 +387,6 @@ aside.show_user_data {
 .settings_more_info {
 	margin-top: 20px;
 	margin-bottom: 30px;
-}
-
-.provider_sel {
-	height: 60px;
 }
 
 .provider_sel img, .provider_sel svg {
@@ -444,7 +418,7 @@ aside.show_user_data {
 	margin-top: 20px;
 }
 
-@media (max-width: 458px) {
+@media (max-width: 506px) {
 	.settings_box {
 		display: block;
 	}
@@ -453,11 +427,5 @@ aside.show_user_data {
 	}
 	.user_data_box {
 		margin-bottom: 40px;
-	}
-}
-
-@media (max-width: 403px) {
-	.switch_box {
-		margin-top: 40px;
 	}
 }

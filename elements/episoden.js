@@ -1,5 +1,7 @@
 // track_length sollte ohne Inhaltsangabe, Prolog und Outro sein (ausnahme Hörbücher)
 
+// track 020 has the longest description
+
 // {
 //	checked: false, // alle Daten sind mit dreimetadaten oder anderen zuverlässigen Quellen abgeglichen
 //	type: "normal",
@@ -18,9 +20,20 @@
 var episoden = [
 	{
 		type: "normal",
+		number: "230",
+		name: "Der Tag der Toten",
+		href: ["https://www.deezer.com/de/album/645405121", "https://music.youtube.com/browse/MPREb_eVuxrPAEmwj", "https://open.spotify.com/album/154I9rUwPuFHj6snU4amYg", "https://music.apple.com/ch/album/folge-230-der-tag-der-toten/1764904056"],
+		content: "Skelette säumen Linus' Weg. Seit Tagen begegnen sie ihm auf Fotos, in der Post oder gar persönlich. Überall sieht der junge Mann die knöchernen Gestalten.<br>Verzweifelt wendet sich Linus an Justus, Peter und Bob. Können die drei Detektive ihm helfen, herauszufinden, was hinter diesen rätselhaften Begegnungen steckt? In Linus rufen die Skelette Erinnerungen an seine Kindheit hervor. Dinge, die er lange verdrängt hat. Wer will hier die Geister der Vergangenheit wecken? Die drei ??? übernehmen den Fall.",
+		release: "2024-11-08",
+		track_length: 4209093,
+		book_author: "Marco Sonnleitner",
+		track_author: "André Minninger"
+	},
+	{
+		type: "normal",
 		number: "229",
 		name: "Drehbuch der Täuschung",
-		href: ["https://www.deezer.com/de/album/618921781", "https://music.youtube.com/playlist?list=OLAK5uy_mkNbuqfQnL76U3w1TI-lz4JlmPnbw_bXU", "https://open.spotify.com/album/6SMOmIWODrO1gND2YPpjHf", "https://music.apple.com/ch/album/folge-229-drehbuch-der-t%C3%A4uschung/1753904987"],
+		href: ["https://www.deezer.com/de/album/618921781", "https://music.youtube.com/browse/MPREb_i9FNZSVOEG3", "https://open.spotify.com/album/6SMOmIWODrO1gND2YPpjHf", "https://music.apple.com/ch/album/folge-229-drehbuch-der-t%C3%A4uschung/1753904987"],
 		content: "Gefangen auf Sumatra! Jayden ist verschwunden und soll gegen seinen Willen auf die indonesische Insel verschleppt worden sein.<br>Der Mitbewohner des verschwundenen Studenten macht sich große Sorgen um seinen Freund und bittet Justus, Peter und Bob um Hilfe. Er hat einen seltsamen Anruf von Jayden erhalten – direkt von Sumatra. Aber wie ist der junge Mann dort hingekommen und vor allem warum? Die drei Detektive übernehmen den Fall. Doch bald schon nehmen die Ermittlungen eine unerwartete Wendung …",
 		release: "2024-09-06",
 		track_length: 4757200,
