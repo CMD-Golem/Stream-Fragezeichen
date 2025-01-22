@@ -20,6 +20,17 @@
 var episoden = [
 	{
 		type: "normal",
+		number: "231",
+		name: "und der Dreiäugige Schakal",
+		href: ["https://www.deezer.com/de/album/671832711", "https://music.youtube.com/browse/MPREb_ZSOEgNJlMaw", "https://open.spotify.com/album/6isiJbL3hh7e60KigIgKuY", "https://music.apple.com/ch/album/folge-231-und-der-drei%C3%A4ugige-schakal/1777986506"],
+		content: "Peter sitzt mit Kelly im Park, als ihm mulmig zumute wird. Irgendetwas stimmt hier nicht: Bobachtet die Statue des Dreiäugigen Schakals sie etwa?<br>Die beiden nehmen die Bronzefigur genauer unter die Lupe, als plötzlich etwas geschieht, mit dem niemand gerechnet hat! Peter und Kelly verlassen vor lauter Schreck fluchtartig den Park. Die Statue mit dem Schakalkopf hat eindeutig ein dunkles Geheimnis. Was verbirgt sich hinter der kalten Hülle? Justus und Bob stehen ihrem Freund zur Seite – die drei ??? beginnen ihre Recherche.",
+		release: "2025-01-17",
+		track_length: 4548160,
+		book_author: "Ben Nevis",
+		track_author: "André Minninger"
+	},
+	{
+		type: "normal",
 		number: "230",
 		name: "Der Tag der Toten",
 		href: ["https://www.deezer.com/de/album/645405121", "https://music.youtube.com/browse/MPREb_eVuxrPAEmwj", "https://open.spotify.com/album/154I9rUwPuFHj6snU4amYg", "https://music.apple.com/ch/album/folge-230-der-tag-der-toten/1764904056"],
