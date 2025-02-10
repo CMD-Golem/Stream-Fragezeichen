@@ -2728,7 +2728,6 @@ var episoden = [
 		track_author: "André Minninger"
 	},
 	{
-		checked: false,
 		type: "advent_calender",
 		number: "AK23",
 		name: "Böser die Glocken nie klingen",
@@ -2736,7 +2735,7 @@ var episoden = [
 		href: ["https://www.deezer.com/de/album/602784752", "https://music.youtube.com/browse/MPREb_6RTTgXstKxM", "https://open.spotify.com/album/0oZaQfEwMWY2TfviD4fEdV", "https://music.apple.com/ch/album/adventskalender-b%C3%B6ser-die-glocken-nie-klingen/1752450018"],
 		content: "Weihnachten auf dem Schrottplatz - doch die drei ??? gönnen sich keine Pause. Auch in der besinnlichen Adventszeit übernehmen Justus, Peter und Bob jeden Fall.<br>Die drei Detektive schmücken den Weihnachtsbaum auf dem Schrottplatz, als sie plötzlich einen kryptischen Hilferuf in einem Weihnachtsglöckchen entdecken. Doch wer ist der Absender? Die Spur führt die drei ??? in ein Wohnheim für Jugendliche. Die Zeit drängt - wird es ihnen bis zum 24. Dezember gelingen, den Fall zu lösen?<br>Ein weihnachtlicher Fall in 24 Kapiteln.",
 		release: "2023-11-03",
-		track_length: 12243000,
+		track_length: 12210266,
 		book_author: "André Minninger",
 		track_author: "André Minninger"
 	},
@@ -2894,7 +2893,20 @@ var episoden = [
 		content: "Die drei ??? fliegen nach Transsilvanien und dürfen beim Dreh eines Vampir-Films sein. Dort wartet auch schon der nächste gruselige Fall auf die drei Detektive.<br>Auf Schloss Piatra gehen seltsame Dinge vor sich: Nachts sind Klopfgeräusche zu hören und vor vielen Jahren ist ein Junge verschwunden. Das Filmteam ist beunruhigt. Justus, Peter und Bob machen sich auf die Suche und entdecken ein lang gehütetes Geheimnis. Können sie die Dreharbeiten retten?",
 		release: "2023-01-27",
 		track_length: 5687000,
-		book_author: "André Marx",
+		book_author: "Anil Kizilbuga",
+		track_author: "Josef Ulbig"
+	},
+	{
+		checked: false,
+		type: "film",
+		number: "F25",
+		name: "und der Karpatenhund",
+		search: "Film",
+		href: ["https://www.deezer.com/de/album/685569051", "https://music.youtube.com/browse/MPREb_iDqufaaxWYh", "https://open.spotify.com/album/4MoN1GbGjfl1LjRsV14BAh", "https://music.apple.com/ch/album/die-drei-und-der-karpatenhund-das-original-h%C3%B6rspiel/1786074450"],
+		content: "Gibt es Geister? Diesem Mysterium gehen die drei ??? nach, denn bei Mr Prentice passieren seltsame Dinge: Das Licht flackert, ein unheimliches Heulen ist zu hören und die Wände seiner Wohnung beginnen zu beben. Justus, Peter und Bob sehen sich bei Mr Prentice um und nehmen auch den Apartmentkomplex Mulholland View unter die Lupe. Wer treibt ein böses Spiel mit ihrem Auftraggeber? Doch nicht nur die Geistererscheinungen bereiten ihnen Sorge. Die wert volle Statue des Karpatenhundes wird gestohlen. Die Detektive folgen den Spuren und plötzlich hat die ganze Nachbarschaft ein Motiv.",
+		release: "2025-01-24",
+		track_length: 6495000,
+		book_author: "Anil Kizilbuga",
 		track_author: "Josef Ulbig"
 	},
 	{

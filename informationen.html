@@ -40,8 +40,9 @@
 			<summary>Einstellungen</summary>
 			<div>
 				<p>Um mit der Nutzung der Webseite zu beginnen, muss zunächst ein Streaming Anbieter ausgewählt werden. Somit kann die Webseite automatisch auf die angeklickte Folge auf dem ausgewählten Anbieter weiterleiten.</p>
-				<p>Zusätzlich kann in den Einstellungen auch noch ausgewählt werden, ob das Theme (Hell oder Dunkel) vom Browser übernommen oder das jeweilig andere Theme verwendet werden soll. Ebenfalls kann man wählen, ob in der Folgenliste zuerst Folge 1 oder die neuste Folge angezeigt werden soll und ob die Folgen nach dem Erscheinungsdatum oder nach den Folgenarten (Spezialfälle, Adventsfolgen, Hörbücher) sortiert werden sollen.</p>
-				<p>Ausserdem kann eingestellt werden, ob die Folgentitel jeweils in der Liste (unterhalb vom Cover) angezeigt werden sollen und wie gross die Cover sein sollen. Der letzte Button ermöglicht den Zugriff auf die Folgen, welche im Zufallsgenerator ignoriert werden <dfn onclick="spoiler(document.getElementById('random_episode'), true)" title="Zeige zufällige Folge">(siehe Zufällige Folge)</dfn>.</p>
+				<p>In den Einstellungen wird zwischen Folgenliste und Zufälligen Folgen anpassen unterschieden:</p>
+				<p>In den Folgenlisten Einstellungen kann ausgewählt werden, ob das Theme (Hell oder Dunkel) vom Browser übernommen oder das jeweilig andere Theme verwendet werden soll. Ebenfalls kann man wählen, ob in der Folgenliste zuerst Folge 1 oder die neuste Folge angezeigt werden soll und ob die Folgen nach dem Erscheinungsdatum oder nach den Folgenarten (Spezialfälle, Adventsfolgen, Hörbücher) sortiert werden sollen. Ausserdem kann eingestellt werden, ob die Folgentitel jeweils in der Liste (unterhalb vom Cover) angezeigt werden sollen und wie gross die Cover sein sollen.</p>
+				<p>Die Einstellungen der zufälligen Folgen werden im zugehörigen Abschnitt erklärt. <dfn onclick="spoiler(document.getElementById('random_episode'), true)" title="Zeige zufällige Folge">(siehe Zufällige Folge)</dfn></p>
 			</div>
 		</details>	
 
@@ -77,21 +78,8 @@
 			<svg viewBox="0 0 24 24"><g><path d="M12 10.9c-.61 0-1.1.49-1.1 1.1s.49 1.1 1.1 1.1c.61 0 1.1-.49 1.1-1.1s-.49-1.1-1.1-1.1zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm2.19 12.19L6 18l3.81-8.19L18 6l-3.81 8.19z"/></g></svg>
 			<summary>Zufällige Folge</summary>
 			<div>
-				<p>Über das Icon in der Navigationsleiste wird eine zufällige Folge vorgeschlagen. Falls diese nicht passen sollte, kann das Icon nochmals angeklickt werden, wodurch eine neue Folge angezeigt wird. Der Zufallsgenerator wählt immer eine der 20 am längsten nicht gehörten Fällen aus, wobei jede Folge nur einmal ausgewählt wird, bis die Webseite neu geladen wird. Falls die Folge gar nicht mehr vorgeschlagen werden soll, kann diese in der Folgeinfo zu den ignorierten Folgen hinzugefügt werden.</p>
-				<p>Alle ignorierten Folgen können in den Einstellungen angezeigt werden.</p>
-				<p>Advanced: Um zu verändern, aus wie vielen der am längsten nicht gehörten Folgen ausgewählt werden soll, muss auf dem Computer die Entwicklerkonsole des Browsers geöffnet werden. Hier kann folgender Befehl eingegeben werden: «<span>random_settings[0] = 20</span>». Die 20 kann durch die gewünschte Anzahl ersetzt werden.</p>
-				<p>Advanced: Um zu verändern, welche Folgenarten im Zufallsgenerator angezeigt werden sollen, muss auf dem Computer die Entwicklerkonsole des Browsers öffnet werden. Hier können die Befehle aus der folgenden Liste eingegeben werden. Wenn die Variable auf true gesetzt wird, wird die Folgenart angezeigt und wenn sie auf false gesetzt wird, wird sie ausgeblendet.</p>
-				<ul>
-					<li>Normale Folgen: <span>random_settings[1] = true</span></li>
-					<li>Special und Top Secret Folgen: <span>random_settings[2] = true</span></li>
-					<li>Adventskalender: <span>random_settings[3] = false</span></li>
-					<li>Kopfhörer-Hörspiele: <span>random_settings[4] = false</span></li>
-					<li>Kurzgeschichten: <span>random_settings[5] = false</span></li>
-					<li>Hörspiele zu Filmen: <span>random_settings[6] = false</span></li>
-					<li>Liveshows: <span>random_settings[7] = false</span></li>
-					<li>Hörbucher: <span>random_settings[8] = false</span></li>
-					<li>Die Welt der drei Fragezeichen: <span>random_settings[9] = false</span></li>
-				</ul>
+				<p>Über das Icon in der Navigationsleiste wird eine zufällige Folge vorgeschlagen. Falls diese nicht passen sollte, kann das Icon nochmals angeklickt werden, wodurch eine neue Folge angezeigt wird. Der Zufallsgenerator wählt immer eine bestimmte Anzahl der am längsten nicht gehörten Fällen aus, wobei jede Folge nur einmal ausgewählt wird, bis die Webseite neu geladen wird. Falls die Folge gar nicht mehr vorgeschlagen werden soll, kann diese in der Folgeinfo zu den ignorierten Folgen hinzugefügt werden.</p>
+				<p>In den Einstellungen kann eine Liste aller ignorierte Folgen angezeigt werden. Ausserdem kann verändert werden, aus wie vielen der am längsten nicht gehörten Folgen gewählt werden soll. Der Standardwert liegt bei 20. Zuletzt kann auch ausgewählt werden, welche Folgenarten im Zufallsgenerator angezeigt werden sollen.</p>
 			</div>
 		</details>
 
@@ -100,6 +88,15 @@
 			<summary>Suche</summary>
 			<div>
 				<p>Mit der Suche kann nach der Folgennummer, dem Folgenname, dem Folgenautor und nach der Folgenart gesucht werden. Geöffnet wird die Suche über das Icon in der Navigationsleiste.</p>
+				<p style="margin-bottom: 0; display: none;">Mit sogenannten Keys können nur bestimmte Eigenschaften durchsucht werden:</p>
+				<ul style="margin-top: 0; display: none;">
+					<li>#: Folgentitel</li>
+					<li>*: Erscheinungsjahr</li>
+					<li>@: Autoren</li>
+					<li>$: Bekannte Personen die Folgen vorkommen</li>
+					<li>%: Haupthandlungsort</li>
+					<li>!: Spezielle Tags</li>
+				</ul>
 			</div>
 		</details>
 

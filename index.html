@@ -28,6 +28,8 @@
 			<div class="nav_button hide_mobile active_blue toggle_aside" style="left: 180px;" id="nav_user_data" onclick="showAside('user_data')" title="Nutzerdaten"><svg viewBox="0 0 24 24"><g><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,6c1.93,0,3.5,1.57,3.5,3.5S13.93,13,12,13 s-3.5-1.57-3.5-3.5S10.07,6,12,6z M12,20c-2.03,0-4.43-0.82-6.14-2.88C7.55,15.8,9.68,15,12,15s4.45,0.8,6.14,2.12 C16.43,19.18,14.03,20,12,20z"/></g></svg></div>
 
 			<div class="toggle_aside" id="nav_info" style="display: none;"></div>
+			<div class="toggle_aside" id="nav_list_settings" style="display: none;"></div>
+			<div class="toggle_aside" id="nav_random_settings" style="display: none;"></div>
 			<div class="toggle_episoden" id="nav_ignore_list" style="display: none;"></div>
 			
 			<div class="nav_search" id="search_box">
@@ -118,7 +120,11 @@
 					<span>Apple Music</span>
 				</div>
 			</div>
-			<div class="switch_box">
+			<div class="settings_center settings_column settings_margin">
+				<button class="border_button" onclick="showAside('list_settings')">Folgenliste anpassen</button>
+				<button class="border_button" onclick="showAside('random_settings')">Zufällige Folgen anpassen</button>
+			</div>
+			<!-- <div class="settings_margin">
 				<label class="switch">
 					<input type="checkbox" onclick="toggleTheme()" id="settings_toggle_theme">
 					<span class="slider"></span>
@@ -144,13 +150,13 @@
 				<span>Covergrösse</span>
 				<input type="range" min="0" max="100" oninput="changeCoverSize(this.value)" id="settings_cover_size" onchange="storeUserData(false);">
 			</label>
-			<div class="border_button settings_ignored" onclick="showEpisoden('ignore_list', ignore_list_count)">Ignorierte Folgen</div>
+			<div class="border_button settings_margin" onclick="showEpisoden('ignore_list', ignore_list_count)">Ignorierte Folgen</div> -->
 		</div>
 		<div class="aside_content center"> <!-- User Data Box -->
 			<div class="settings_box">
 				<div class="user_data_box">
 					<span>Nutzerdaten verwalten:</span>
-					<div class="settings_center">
+					<div class="settings_center settings_column">
 						<button onclick="exportUserData()" class="border_button">Export</button>
 						<button onclick="import_user_data.click();" class="border_button">Import</button>
 						<button onclick="resetUserData()" class="border_button">Zurücksetzen</button>
@@ -158,7 +164,7 @@
 				</div>
 				<div>
 					<span>ID für geräteübergreifende Synchronisation:</span>
-					<div class="settings_center">
+					<div class="settings_center settings_column">
 						<input oninput="importNewIdShow()" class="border_input" placeholder="Vorhandene ID einfügen" style="width: 190px" id="user_id" maxlength="18"></input>
 						<button onclick="importNewId()" class="border_button" id="check_id">Anwenden</button>
 						<button onclick="createId()" class="border_button" id="new_id">Neue ID erstellen</button>
@@ -168,8 +174,95 @@
 				</div>
 			</div>
 		</div>
+		<div class="aside_content center"> <!-- List Settings -->
+			<p>Folgenlisten Einstellungen</p>
+			<label class="switch">
+				<input type="checkbox" onclick="toggleTheme()" id="settings_toggle_theme">
+				<span class="slider"></span>
+				<span class="slider_text">Theme wechseln</span>
+			</label><br>
+			<label class="switch">
+				<input type="checkbox" onclick="toggleOrder()" id="settings_sort_list">
+				<span class="slider"></span>
+				<span class="slider_text">Erste Episode zuoberst</span>
+			</label><br>
+			<label class="switch">
+				<input type="checkbox" onclick="toggleSort()" id="settings_episode_number">
+				<span class="slider"></span>
+				<span class="slider_text">Nach Erscheinungsdatum sortieren</span>
+			</label><br>
+			<label class="switch">
+				<input type="checkbox" onclick="toggleEpisodeTitle()" id="settings_episode_title">
+				<span class="slider"></span>
+				<span class="slider_text">Episodentitel in Liste ausblenden</span>
+			</label>
+			<label class="input_slider">
+				<span>Covergrösse</span>
+				<input type="range" min="0" max="100" oninput="changeCoverSize(this.value)" id="settings_cover_size" onchange="storeUserData(false);">
+			</label>
+			<div class="border_button settings_margin" onclick="showAside('settings')">Zurück zu den Einstellungen</div>
+		</div>
+		<div class="aside_content center"> <!-- Zufällige Folgen Settings -->
+			<p>Zufällige Folgen Einstellungen</p>
+			<div class="border_button" onclick="showEpisoden('ignore_list', ignore_list_count)">Ignorierte Folgen</div>
+
+			<label class="settings_center settings_column settings_margin">
+				<span class="slider_text">Wie vielen der am längsten nicht gehörten Folgen sollen ausgewählt werden</span>
+				<input oninput="changeRandomAmount()" class="border_input" style="width: 65px;" placeholder="Vorhandene ID einfügen" id="settings_random_amount">
+			</label>
+			<div class="settings_margin">
+				<label class="switch">
+					<input type="checkbox" onclick="randomSelection('normal')" id="type_selection_normal">
+					<span class="slider"></span>
+					<span class="slider_text">Zeige normale Folgen</span>
+				</label><br>
+				<label class="switch">
+					<input type="checkbox" onclick="randomSelection('special')" id="type_selection_special">
+					<span class="slider"></span>
+					<span class="slider_text">Zeige Special Folgen und Top Secret</span>
+				</label><br>
+				<label class="switch">
+					<input type="checkbox" onclick="randomSelection('advent_calender')" id="type_selection_advent_calender">
+					<span class="slider"></span>
+					<span class="slider_text">Zeige Adventskalender</span>
+				</label><br>
+				<label class="switch">
+					<input type="checkbox" onclick="randomSelection('headphones')" id="type_selection_headphones">
+					<span class="slider"></span>
+					<span class="slider_text">Zeige Kopfhörer-Hörspiele</span>
+				</label><br>
+				<label class="switch">
+					<input type="checkbox" onclick="randomSelection('short_story')" id="type_selection_short_story">
+					<span class="slider"></span>
+					<span class="slider_text">Zeige Kurzgeschichten</span>
+				</label><br>
+				<label class="switch">
+					<input type="checkbox" onclick="randomSelection('film')" id="type_selection_film">
+					<span class="slider"></span>
+					<span class="slider_text">Zeige Hörspiele zu Filmen</span>
+				</label><br>
+				<label class="switch">
+					<input type="checkbox" onclick="randomSelection('live')" id="type_selection_live">
+					<span class="slider"></span>
+					<span class="slider_text">Zeige Liveshows</span>
+				</label><br>
+				<label class="switch">
+					<input type="checkbox" onclick="randomSelection('audiobook')" id="type_selection_audiobook">
+					<span class="slider"></span>
+					<span class="slider_text">Zeige Hörbücher</span>
+				</label><br>
+				<label class="switch">
+					<input type="checkbox" onclick="randomSelection('documentation')" id="type_selection_documentation">
+					<span class="slider"></span>
+					<span class="slider_text">Zeige die Welt der drei Fragezeichen</span>
+				</label><br>
+				<div class="border_button settings_margin" onclick="showAside('settings')">Zurück zu den Einstellungen</div>
+			</div>
+			
+		</div>
 		<button onclick="showAside()" class="hide_aside_mobile hover_svg" title="Schliessen"><svg viewBox="0 0 24 24"><g><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></g></svg></button>
 		<button onclick="showAside()" class="hide_aside border_button">Schliessen</button>
+		<div class="hide_aside_pill"></div>
 	</aside>
 
 	<main>

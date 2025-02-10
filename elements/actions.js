@@ -93,7 +93,7 @@ function showAside(visible_element, keep_open) {
 }
 
 // hide aside with touch
-var hide_aside = document.getElementsByClassName("hide_aside")[0];
+var hide_aside = document.getElementsByClassName("hide_aside_pill")[0];
 var touch_store = {};
 hide_aside.addEventListener("touchstart", (e) => {
 	touch_store.start = e.touches[0].clientY;
@@ -107,9 +107,7 @@ hide_aside.addEventListener("touchmove", (e) => {
 	var distance = Math.min(0, touch_store.now - touch_store.start);
 	e.preventDefault();
 
-	if (distance < 0) {
-		aside.style.transform = `translateY(${distance}px)`;
-	}
+	if (distance < 0) aside.style.transform = `translateY(${distance}px)`;
 });
 
 hide_aside.addEventListener("touchend", () => {
@@ -131,99 +129,32 @@ hide_aside.addEventListener("touchend", () => {
 });
 
 // calc aside height
-var is_small_screen = false;
-
-function infoHeightNew() {
-	var description_header_height = info_name.parentElement.parentElement.scrollHeight;
-	var window_height = document.documentElement.clientHeight;
-	var window_width = window.innerWidth;
-	var show_small_screen = false;
-
-	
-	// width: 506px: overflow nav, stacked user settings
-	// width: 710px: bottom nav, stacked info box
-
-
-
-	if (active_aside == "info" || active_aside == "random_episode") var aside_height = 340;
-	else if (active_aside == "settings") var aside_height = 400;
-	else if (active_aside == "user_data") var aside_height = 270;
-
-	css_root.style.setProperty("--aside_height", aside_height + "px");
-}
-
 function infoHeight() {
-	var description_header_height = info_name.parentElement.parentElement.scrollHeight;
-	var window_height = document.documentElement.clientHeight;
-	var window_width = window.innerWidth;
-	var show_small_screen = false;
+	if (active_aside == undefined) return;
 
 	var info_height = "unset";
+	var aside_padding = 80;
+	aside.classList.remove("small_screen");
 
-	if (active_aside == "info" || active_aside == "random_episode") {
-		// Height for Desktop view
-		if (window_width > 710) {
-			var aside_height = "340px";
-			var info_height = (248 - info_name.parentElement.scrollHeight - info_author.parentElement.scrollHeight) + "px";
+	if (window.innerWidth > 710) {
+		if (active_aside == "info" || active_aside == "random_episode") {
+			info_height = (248 - info_name.parentElement.scrollHeight - info_author.parentElement.scrollHeight) + "px";
+			var aside_height = 340;
 		}
-		// Height for small screens (mobile with open keyboard)
-		else if (window_height <= 600 && window_width <= 710) {
-			var aside_height = (window_height - 120) + "px";
-			var info_height = "unset";
-			show_small_screen = true;
-		}
-		// Height for small screens but text doesn't fit on page without scrolling (description_header_height + 224 >= window_height - 220)
-		else if (description_header_height + 444 >= window_height) {
-			var aside_height = (window_height - 120) + "px";
-			var info_height = "unset";
-			show_small_screen = true;
-		}
-		// Height for small screens but text fits on page without scrolling
-		else if (description_header_height + 444 < window_height) {
-			var aside_height = (description_header_height + 224) + "px";
-			var info_height = "unset";
-		}
-
-		css_root.style.setProperty("--description_height", info_height);
-	}
-
-	// Settings Height
-	else if (active_aside == "settings") {
-		aside_height = "400px";
-		// Height for small screens (mobile with open keyboard)
-		if (window_height <= 600 && window_width <= 710) {
-			var aside_height = (window_height - 120) + "px";
-			show_small_screen = true;
-		}
-	}
-
-	// User Data Height
-	else if (active_aside == "user_data") {
-		if (window_height <= 580 && window_width <= 458) {
-			var aside_height = (window_height - 120) + "px";
-			show_small_screen = true;
-		}
-		else if (window_width <= 458) {
-			aside_height = "400px";
-		}
-		else {
-			aside_height = "270px";
-		}
-	}
-
-	// change small_screen class when needed
-	if (!is_small_screen && show_small_screen) {
-		is_small_screen = true;
-		aside.classList.add("small_screen");
-		preventScroll(true);
-	}
-	else if (is_small_screen && !show_small_screen) {
-		is_small_screen = false;
-		aside.classList.remove("small_screen");
+		else if (active_aside == "settings" || active_aside == "random_settings" || active_aside == "list_settings") var aside_height = 400;
+		else if (active_aside == "user_data") var aside_height = 280;
 		preventScroll(false);
 	}
+	else {
+		if (active_aside == "info" || active_aside == "random_episode") aside.classList.add("small_screen");
+		if (window.matchMedia("(pointer: coarse)").matches) aside_padding = 110;
+		var aside_height = document.documentElement.clientHeight - 121.6;
+		preventScroll(true);
+	}
 
-	css_root.style.setProperty("--aside_height", aside_height);
+	css_root.style.setProperty("--aside_height", aside_height + "px");
+	css_root.style.setProperty("--aside_padding", "calc(100% - " + aside_padding + "px)");
+	css_root.style.setProperty("--description_height", info_height);
 }
 
 // prevent scroll
@@ -252,46 +183,34 @@ function getRandomEpisode() {
 
 	for (var i = 0; i < episoden.length; i++) {
 		var episode = episoden[i];
-		var keep = false;
-
-		if (user_data.random_settings[1] && episode.type == "normal") { keep = true; }
-		else if (user_data.random_settings[2] && episode.type == "special") { keep = true; }
-		else if (user_data.random_settings[3] && episode.type == "advent_calender") { keep = true; }
-		else if (user_data.random_settings[4] && episode.type == "headphones") { keep = true; }
-		else if (user_data.random_settings[5] && episode.type == "short_story") { keep = true; }
-		else if (user_data.random_settings[6] && episode.type == "film") { keep = true; }
-		else if (user_data.random_settings[7] && episode.type == "live") { keep = true; }
-		else if (user_data.random_settings[8] && episode.type == "audiobook") { keep = true; }
-		else if (user_data.random_settings[9] && episode.type == "documentation") { keep = true; }
 
 		// remove unreleased episodes
-		if (episode.href[0] == "#new") { keep = false; }
+		if (episode.href[0] == "#new") continue;
 
 		// remove ignored episodes
-		if (episode.user_data_index != undefined && user_data.list[episode.user_data_index].ignored == "true") { keep = false; }
+		if (!user_data.random_settings[episode.type]) continue;
+		if (episode.user_data_index != undefined && user_data.list[episode.user_data_index].ignored == "true") continue;
 
-		// generate arrays array
-		if (keep) {
-			var history = undefined;
-			if (episode.user_data_index != undefined) {
-				history = user_data.list[episode.user_data_index].history;
-			}
-			if (history == undefined) {
-				history = "1999-01-01T00:00:00.000Z";
-				not_listened_counter_all++;
-				if (!episode.random_shown) { not_listened_counter_filtered++; }
-			}
+		// store history
+		var history = undefined;
+		if (episode.user_data_index != undefined) history = user_data.list[episode.user_data_index].history;
 
-			// array with all episodes
-			all_possible_episoden.push({episoden_index:i, history:history});
-
-			// array without already shown episodes
-			if (!episode.random_shown) { filtered_episoden.push({episoden_index:i, history:history}); }
+		// check unlistened
+		if (history == undefined) {
+			history = "1999-01-01T00:00:00.000Z";
+			not_listened_counter_all++;
+			if (!episode.random_shown) not_listened_counter_filtered++;
 		}
+
+		// array with all episodes
+		all_possible_episoden.push({episoden_index:i, history:history});
+
+		// array without already shown episodes
+		if (!episode.random_shown) filtered_episoden.push({episoden_index:i, history:history});
 	}
 
 	// if there are not shown episodes, use filtered_episoden array
-	if (filtered_episoden.length != 0) { 
+	if (filtered_episoden.length != 0) {
 		var random_episoden = filtered_episoden; 
 		var not_listened_counter = not_listened_counter_filtered;
 	}
@@ -302,24 +221,18 @@ function getRandomEpisode() {
 
 	// sort array by the history
 	random_episoden.sort((a, b) => {
-		if (a.history < b.history) { return -1; } // sort a before b
-		if (a.history > b.history) { return 1; } // sort a after b
+		if (a.history < b.history) return -1; // sort a before b
+		if (a.history > b.history) return 1; // sort a after b
 		return 0;
 	});
 
-	var defined_max_length = user_data.random_settings[0];
 
-	// decrease max_length if not enough episodes possible as defined in settings
-	if (defined_max_length >= random_episoden.length) {
-		var max_length = random_episoden.length;
-	}
 	// set max_length to not_listened_counter if it is bigger
-	else if (defined_max_length <= not_listened_counter) {
+	if (not_listened_counter >= user_data.random_amount) {
 		var max_length = not_listened_counter;
 	}
-	else {
-		var max_length = defined_max_length + 1;
-	}
+	// decrease max_length if not enough episodes possible as defined in settings
+	else var max_length = random_episoden.length;
 
 	// get random episode
 	var random_episode = random_episoden[Math.floor(Math.random() * max_length)];
@@ -344,24 +257,18 @@ function showInfo(episoden_index, is_random_episode) {
 		hours_length = min_length /60;
 		min_length = 0;
 	}
-	if (min_length < 10) { min_length = "0" + min_length; }
+	if (min_length < 10) min_length = "0" + min_length;
 
-	if (hours_length != 0) { hours_length = hours_length + "h " }
-	else {hours_length = ""}
+	if (hours_length != 0) hours_length = hours_length + "h ";
+	else hours_length = ""
 
 	document.getElementById("info_duration").innerHTML = hours_length + min_length + "min";
 
 	// history
 	info_href.setAttribute("onclick", `refreshHistory('${episoden_index}', new Date())`);
-	if (episode.user_data_index == undefined) {
-		info_history.value = "nie";
-	}
-	else if (user_data.list[episode.user_data_index].history == undefined) {
-		info_history.value = "nie";
-	}
-	else {
-		info_history.value = new Date(user_data.list[episode.user_data_index].history).toLocaleDateString("fr-CH");
-	}
+	if (episode.user_data_index == undefined) info_history.value = "nie";
+	else if (user_data.list[episode.user_data_index].history == undefined) info_history.value = "nie";
+	else info_history.value = new Date(user_data.list[episode.user_data_index].history).toLocaleDateString("fr-CH");
 
 	// link and text
 	info_href.href = episode.href[user_data.provider];
@@ -385,12 +292,8 @@ function showInfo(episoden_index, is_random_episode) {
 	}
 
 	// show in aside
-	if (is_random_episode) {
-		showAside("random_episode", true);
-	}
-	else {
-		showAside("info", true);
-	}
+	if (is_random_episode) showAside("random_episode", true);
+	else showAside("info", true);
 	
 	// Prepare Edit History (defined in main.js)
 	info_history.disabled = true;
@@ -466,7 +369,7 @@ import_user_data.onchange = e => {
 				document.location.reload();
 			}
 		}
-		catch (e) { alert("Die Datei ist beschädigt!") }
+		catch (e) { alert("Die Datei ist beschädigt!") };
 	}
 }
 
@@ -512,7 +415,7 @@ function importNewId() {
 }
 
 async function createId() {
-	if (user_data.user_id != undefined) { return }
+	if (user_data.user_id != undefined) return;
 
 	var remote_data = {};
 	remote_data.a_name = user_data.a_name;
@@ -557,9 +460,7 @@ async function deleteId() {
 			body: user_data.user_id,
 		});
 
-		if (response.status == 200) {
-			disconnectId();
-		}
+		if (response.status == 200) disconnectId();
 		else {
 			alert("ID konnte nicht gelöscht werden!");
 			console.log(response);
@@ -569,6 +470,7 @@ async function deleteId() {
 
 
 //#################################################################################################
+// list settings
 // Cover size
 function changeCoverSize(size) {
 	user_data.cover_size = size;
@@ -579,6 +481,7 @@ function changeCoverSize(size) {
 
 	// define cover size (max_width - min_width) * size_percentage / 100 + min_width
 	var cover_size = (max_width - 120) * size / 100 + 120;
+	// var episodes_per_row = parseInt(main.clientWidth / (cover_size + 16));
 
 	// calc depending on size
 	if (cover_size <= 150) {
@@ -616,12 +519,8 @@ function toggleEpisodeTitle() {
 	document.getElementById("settings_episode_title").checked = user_data.hide_episode_title;
 	storeUserData(false);
 	
-	if (user_data.hide_episode_title) {
-		episoden_list.classList.add('hide_episode_title');
-	}
-	else {
-		episoden_list.classList.remove('hide_episode_title');
-	}
+	if (user_data.hide_episode_title) episoden_list.classList.add('hide_episode_title');
+	else episoden_list.classList.remove('hide_episode_title');
 }
 
 // change direction of episode list
@@ -631,12 +530,8 @@ function toggleOrder() {
 	storeUserData(false);
 	loadEpisodes();
 
-	if (user_data.backwards) {
-		document.getElementById("sort_list").style.transform = "scaleY(1)";
-	}
-	else {
-		document.getElementById("sort_list").style.transform = "scaleY(-1)";
-	}
+	if (user_data.backwards) document.getElementById("sort_list").style.transform = "scaleY(1)";
+	else document.getElementById("sort_list").style.transform = "scaleY(-1)";
 }
 
 // sort episode list according to release date or numbering
@@ -658,6 +553,25 @@ function toggleSort() {
 
 
 //#################################################################################################
+// Zufällige Folgen Settings
+var settings_random_amount = document.getElementById("settings_random_amount")
+
+function randomSelection(type) {
+	user_data.random_settings[type] = !user_data.random_settings[type];
+	storeUserData(false);
+}
+
+function changeRandomAmount() {
+	var value = settings_random_amount.value.replace(/[^0-9.]/g, '')
+	settings_random_amount.value = value;
+	if (value >= 1) {
+		user_data.random_amount = value;
+		storeUserData(false);
+	}
+}
+
+
+//#################################################################################################
 // show episoden list
 var episoden_list = document.getElementsByTagName("ol")[0];
 var main = document.getElementsByTagName("main")[0];
@@ -670,13 +584,12 @@ function showEpisoden(visible_element, counter) {
 	var action = handleNav(visible_element, "toggle_episoden");
 	
 	// show or hide not found message
-	if (counter == 0) { main.classList.add("show_not_found"); }
-	else { main.classList.remove("show_not_found"); }
+	if (counter == 0) main.classList.add("show_not_found");
+	else main.classList.remove("show_not_found");
 
 	// load list, currently episode list is visible
-	if (action == true) {
-		main.classList.add("show_" + visible_element);
-	}
+	if (action == true) main.classList.add("show_" + visible_element);
+
 	// close element
 	else if (action == false) {
 		main.classList.remove("show_" + current_active);
@@ -698,21 +611,21 @@ function showHistory() {
 
 //#################################################################################################
 // Overflow menu for navbar on mobile
-function overflowMenu(show_overflow_menu) {
-	var overflow_menu_hidden = search_box.parentNode.classList.contains("overflow_menu");
+function overflowMenu(manuall) {
+	var action = search_box.parentNode.classList.contains("overflow_menu");
 	var overflow_menu_button = document.getElementById("nav_overflow_menu");
 
-	if (show_overflow_menu == true && overflow_menu_hidden) {
-		search_box.parentNode.classList.add("overflow_menu");
-		overflow_menu_button.classList.add("nav_active");
-	}
-	else if (show_overflow_menu == false && !overflow_menu_hidden) {
+	if (typeof manuall == "boolean") action = manuall;
+
+	if (action) {
 		search_box.parentNode.classList.remove("overflow_menu");
 		overflow_menu_button.classList.remove("nav_active");
+		css_root.style.setProperty("--overflow_menu_margin", "0px");
 	}
 	else {
-		search_box.parentNode.classList.toggle("overflow_menu");
-		overflow_menu_button.classList.toggle("nav_active");
+		search_box.parentNode.classList.add("overflow_menu");
+		overflow_menu_button.classList.add("nav_active");
+		css_root.style.setProperty("--overflow_menu_margin", "60px");
 	}
 }
 
@@ -735,30 +648,22 @@ function siteSearch() {
 
 			// Check if keywords are in input
 			for (var k = 0; k < search_data.length; k++) {
-				if (search_data[k].startsWith(search_input[j])) { var prehide = false; }
+				if (search_data[k].startsWith(search_input[j])) var prehide = false;
 			}
-			if (prehide == false && hide != true) { var hide = false; }
-			else { var hide = true; }
+			if (prehide == false && hide != true) var hide = false;
+			else var hide = true;
 		}
 
 		// hide/ unhide
-		if (hide == true) {
-			article[i].classList.add("hide_search");
-		}
-		else {
-			article[i].classList.remove("hide_search");
-		}
+		if (hide == true) article[i].classList.add("hide_search");
+		else article[i].classList.remove("hide_search");
 	}
 
 	// not found
 	var hide_search = document.getElementsByClassName("hide_search").length;
 
-	if (article.length - hide_search <= 0) {
-		not_found.style.display = "block";
-	}
-	else {
-		not_found.style.display = "none";
-	}
+	if (article.length - hide_search <= 0) not_found.style.display = "block";
+	else not_found.style.display = "none";
 }
 
 function startSearch() {
@@ -769,7 +674,7 @@ function startSearch() {
 		if (window.screen.width <= 506) {
 			search_box.parentNode.style.justifyContent = "flex-end";
 			showAside("search");
-			overflowMenu(false);
+			overflowMenu(true);
 		}
 
 		setTimeout(function(){ input.focus() }, 100);

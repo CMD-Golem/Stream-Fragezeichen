@@ -8,7 +8,18 @@ const standard_settings = {
 	backwards: true,
 	sort_date: false,
 	list:[],
-	random_settings: [20, true, true, false, false, false, false, false, false, false]
+	random_amount: 20,
+	random_settings: {
+		normal: true,
+		special: true, 
+		advent_calender: false,
+		headphones: false,
+		short_story: false,
+		film: false,
+		live: false,
+		audiobook: false,
+		documentation: false
+	}
 }
 
 // load episodes
@@ -18,30 +29,27 @@ function loadEpisodes() {
 	for (var i = 0; i < episoden.length; i++) {
 		var episode = episoden[i];
 		var episode_class = "";
+		episode.index = i;
 
 		// get user_data index
 		if (episode.user_data_index != undefined) {
 			var episode_data = user_data.list[episode.user_data_index];
 		}
-		else {
-			var episode_data = {};
-		}
+		else var episode_data = {};
 
 		// get index of episode 001
-		if (episode.number == "001") {
-			var first_episode_index = i + 1;
-		}
+		if (episode.number == "001") var first_episode_index = i + 1;
 
-		// generate title
-		var title = episode.name;
-		var search_number = "";
-		var search = "";
+		// generate title		
 		if (episode.type == "normal") {
-			title = `<b>Folge ${episode.number}</b>: ${episode.name}`;
-			search_number = episode.number + " ";
+			var title = `<b>Folge ${episode.number}</b>: ${episode.name}`;
+			var alt = `Folge ${episode.number}: ${episode.name}`;
+			var search = episode.number + " ";
 		}
 		else {
-			search = " " + episode.search;
+			var title = episode.name;
+			var alt = episode.name;
+			var search = episode.search + " ";
 		}
 
 
@@ -74,9 +82,9 @@ function loadEpisodes() {
 		}
 
 		episode_html.push(`
-		<div data-release="${episode.release}" data-history="${episode_data.history}" id="${i}" class="${episode_class}" data-filter="die drei fragezeichen ??? ${search_number}${episode.name} ${episode.book_author}${search}">
+		<div data-release="${episode.release}" data-history="${episode_data.history}" id="${i}" class="${episode_class}" data-filter="die drei fragezeichen ??? ${search}${episode.name} ${episode.book_author}">
 			<a ${href}>
-				<img src="img/${episode.number}.jpg" alt="${title}">
+				<img src="img/${episode.number}.jpg" alt="${alt}">
 				<p>${title}</p>
 				<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M5.142 0v24L24 12z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 			</a>
@@ -161,7 +169,6 @@ async function loadData() {
 			if (response.status == 200) {
 				var response_object = await response.json();
 
-				user_data.random_settings = response_object.random_settings;
 				user_data.list = response_object.list;
 				user_data.a_name = response_object.a_name;
 
@@ -185,9 +192,9 @@ async function loadData() {
 			var found_episode = false;
 
 			// init counters
-			if (episode.list == "true") { watch_list_count++; }
+			if (episode.list == "true") watch_list_count++;
 
-			if (episode.ignored == "true") { ignore_list_count++; }
+			if (episode.ignored == "true") ignore_list_count++;
 
 			// store user data array 
 			for (var j = 0; j < episoden.length; j++) {
@@ -208,12 +215,18 @@ async function loadData() {
 		user_data = standard_settings;
 
 		showAside('settings'); //actions.js
-		if (window.innerWidth <= 506) { overflowMenu(true); }
+		if (window.innerWidth <= 506) overflowMenu(false);
 	}
 
 	// setup selected provider (deezer = 0, youtube = 1, spotify = 2, apple = 3)
 	last_provider_selected = document.getElementById("provider_" + user_data.provider);
 	last_provider_selected.classList.add("provider_selected");
+
+	// setup zufällige folge
+	settings_random_amount.value = user_data.random_amount;
+	for (type in user_data.random_settings) {
+		document.getElementById("type_selection_" + type).checked = user_data.random_settings[type];
+	}
 
 	// setup cover size
 	document.getElementById("settings_cover_size").value = user_data.cover_size;
@@ -234,7 +247,6 @@ async function storeUserData(remote) {
 		var remote_data = {};
 		remote_data.a_name = user_data.a_name;
 		remote_data.a_latest_upload = new Date();
-		remote_data.random_settings = user_data.random_settings;
 		remote_data.list = user_data.list;
 
 		var fetch_body = {
@@ -373,6 +385,8 @@ function toggleIgnoreList(episoden_index, el_button) {
 	storeUserData(true);
 }
 
+
+
 //#################################################################################################
 // History
 var info_history = document.getElementById("info_history");
@@ -455,6 +469,7 @@ function saveEditHistory(episoden_index) {
 // Check user input (origin: https://stackoverflow.com/a/43473017/14225364)
 info_history.onkeyup = function(evt) {
 	var size = info_history.value.length;
+	var year = new Date().getFullYear();
 	if (size <= 9 && finished_input) {
 		finished_input = false;
 		edit_history.style.display = "inline-block";
@@ -465,11 +480,11 @@ info_history.onkeyup = function(evt) {
 		if (size == 2 && info_history.value > 31) {
 			info_history.value = "31";
 		}
-		if (size == 5 && Number(info_history.value.split('.')[1]) > 12) {
+		if (size == 5 && Number(info_history.value.split(".")[1]) > 12) {
 			info_history.value = info_history.value.slice(0, -2) + "12";
 		}
-		if (size == 10 && Number(info_history.value.split('.')[2]) < 2000 && info_history.value != "01.01.1999") {
-			info_history.value = info_history.value.slice(0, -4) + new Date().getFullYear();
+		if (size == 10 && Number(info_history.value.split(".")[2]) < 2000 && info_history.value != "01.01.1999") {
+			info_history.value = info_history.value.slice(0, -4) + year;
 		}
 		if (size == 10) {
 			finished_input = true;
@@ -477,8 +492,11 @@ info_history.onkeyup = function(evt) {
 			done_history.style.display = "inline-block";
 		}
 
-		if ((size == 2 && info_history.value < 32) || (size == 5 && Number(info_history.value.split('.')[1]) < 13)) {
-			info_history.value += '.';        
+		if ((size == 2 && info_history.value < 32)) {
+			info_history.value += ".";        
+		}
+		else if (size == 5 && Number(info_history.value.split(".")[1]) < 13) {
+			info_history.value += "." + Math.floor(year/100);
 		}
 	}
 	
