@@ -5,7 +5,7 @@ var body = document.getElementsByTagName("body")[0];
 function handleNav(visible_element, type, keep_open) {
 	visible_element = "nav_" + visible_element;
 	var currently_visible = document.getElementsByClassName(type + " nav_active")[0];
-
+	
 	// currently no visible element
 	if (currently_visible == undefined && visible_element != "nav_undefined") {
 		document.getElementById(visible_element).classList.add("nav_active");
@@ -117,8 +117,8 @@ hide_aside.addEventListener("touchend", () => {
 	if (distance > touch_store.height / 2 || distance / elapsed_time > 0.5) {
 		css_root.style.setProperty("--aside_height", "0");
 		aside.classList.remove("show_" + active_aside);
-		document.getElementsByClassName("nav_active")[0].classList.remove("nav_active");
 		active_aside = undefined;
+		handleNav(active_aside, "toggle_aside")
 		preventScroll(false);
 
 		setTimeout(function(){
@@ -671,11 +671,12 @@ function startSearch() {
 
 	if (active_main == "search") {
 		search_box.style.display = "flex";
+		if (window.screen.width <= 710 && active_aside != undefined) showAside();
 		if (window.screen.width <= 506) {
 			search_box.parentNode.style.justifyContent = "flex-end";
-			showAside("search");
 			overflowMenu(true);
 		}
+		
 
 		setTimeout(function(){ input.focus() }, 100);
 	}
