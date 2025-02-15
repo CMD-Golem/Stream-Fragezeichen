@@ -161,8 +161,8 @@ main.hide_watch_list .add, main.hide_watch_list .remove {
 aside {
 	position: sticky;
 	z-index: 1;
-	right: 0;
 	top: 60px;
+	width: 100%;
 	height: var(--aside_height);
 	overflow: hidden;
 	border-bottom: var(--text-color) solid 1px;
@@ -196,6 +196,14 @@ aside.show_user_data,
 aside.show_list_settings,
 aside.show_random_settings {
 	overflow: visible;
+}
+
+aside.cover_size_hidden, aside.cover_size_hidden *:not(#settings_cover_size) {
+	visibility: hidden;
+}
+
+aside.cover_size_hidden #settings_cover_size {
+	visibility: visible;
 }
 
 .aside_content {
@@ -252,7 +260,7 @@ aside.show_random_settings {
 .hide_aside_pill::after {
 	content: "";
 	height: 5px;
-	width: 30px;
+	width: 50px;
 	border-radius: 3px;
 	background-color: var(--text-color);
 	display: block;
@@ -353,6 +361,9 @@ aside.show_random_settings {
 }
 
 @media (max-width: 710px) {
+	aside {
+		position: fixed;
+	}
 	.aside_content {
 		flex-direction: column;
 	}

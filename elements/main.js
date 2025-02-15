@@ -7,6 +7,7 @@ const standard_settings = {
 	theme: false,
 	backwards: true,
 	sort_date: false,
+	observer: true,
 	list:[],
 	random_amount: 20,
 	random_settings: {
@@ -21,6 +22,17 @@ const standard_settings = {
 		documentation: false
 	}
 }
+
+// load images on scroll
+const observer = new IntersectionObserver((entries, observer) => {
+	for (var i = 0; i < entries.length; i++) {
+		if (entries[i].isIntersecting) {
+			var episode = entries[i].target;
+			episode.querySelector("img").src = `img/${episoden[episode.id].number}.jpg`;
+			observer.unobserve(episode);
+		}
+	}
+});
 
 // load episodes
 function loadEpisodes() {
@@ -61,8 +73,8 @@ function loadEpisodes() {
 		}
 		// add message for unreleased episodes
 		else if (episode.href[0] == "#new") {
-			var href = `href="#" onclick="alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.');"`;
-			var info = `alert('Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.')`;
+			var href = `href="#" onclick="openDialog(false, '<p>Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.</p>');"`;
+			var info = `openDialog(false, '<p>Diese Folge ist erst ab dem ${episode.href[1]} verfügbar.</p>')`;
 		}
 		// setup episodes links
 		else {
@@ -81,10 +93,14 @@ function loadEpisodes() {
 			episode_class += " in_ignore_list";
 		}
 
+		// images
+		if (user_data.observer) var img = "";
+		else var img = `img/${episode.number}.jpg`;
+
 		episode_html.push(`
 		<div data-release="${episode.release}" data-history="${episode_data.history}" id="${i}" class="${episode_class}" data-filter="die drei fragezeichen ??? ${search}${episode.name} ${episode.book_author}">
 			<a ${href}>
-				<img src="img/${episode.number}.jpg" alt="${alt}">
+				<img src="${img}" alt="${alt}">
 				<p>${title}</p>
 				<button class="control_button play" title="Abspielen"><svg viewBox="0 0 24 24" focusable="false"><g><path d="M5.142 0v24L24 12z" style="fill:#ffffff;stroke-width:1.71429"></path></g></svg></button>
 			</a>
@@ -131,8 +147,18 @@ function loadEpisodes() {
 	else if (!user_data.backwards) {
 		episode_html = episode_html.slice(0, first_episode_index).reverse().concat(episode_html.slice(first_episode_index));
 	}
-	
-	episoden_list.innerHTML = episode_html.join("");
+
+	// show episoden either with observer or not
+	if (user_data.observer) {
+		observer.disconnect();
+
+		episoden_list.innerHTML = episode_html.join("");
+
+		for (var i = 0; i < episoden_list.children.length; i++) {
+			observer.observe(episoden_list.children[i]);
+		}
+	}
+	else episoden_list.innerHTML = episode_html.join("");
 }
 
 //#################################################################################################
@@ -149,10 +175,11 @@ async function loadData() {
 		user_data = JSON.parse(json_user_data);
 
 		// int list sorting
-		user_data.theme = !user_data.theme;
-		user_data.backwards = !user_data.backwards;
-		user_data.sort_date = !user_data.sort_date;
-		user_data.hide_episode_title = !user_data.hide_episode_title;
+		user_data.theme = !user_data.theme ?? !standard_settings.theme;
+		user_data.backwards = !user_data.backwards ?? !standard_settings.backwards;
+		user_data.sort_date = !user_data.sort_date ?? !standard_settings.sort_date;
+		user_data.hide_episode_title = !user_data.hide_episode_title ?? !standard_settings.hide_episode_title;
+		user_data.observer = !user_data.observer ?? !standard_settings.observer;
 		toggleTheme();
 		toggleOrder();
 		toggleSort();
@@ -174,14 +201,15 @@ async function loadData() {
 
 				changeIdButton("delete_id"); // action.js
 				input_user_id.value = user_data.user_id;
+				chronicle.href = "chronik.html/?id=" + user_data.user_id;
 				console.log("Server Daten vom " + response_object.a_latest_upload + " wurden geladen.");
 			}
 			else if (response.status == 502) {
-				alert("Die registierte ID ist fehlerhaft oder entfernt worden!");
+				openDialog(false, "<p>Die registierte ID ist fehlerhaft oder entfernt worden!</p>");
 				disconnectId();
 			}
 			else {
-				alert("Benutzer Daten konnten nicht heruntergeladen werden!");
+				openDialog(false, "<p>Benutzer Daten konnten nicht heruntergeladen werden!</p>");
 				console.error(response);
 			}
 		}
@@ -219,18 +247,20 @@ async function loadData() {
 	}
 
 	// setup selected provider (deezer = 0, youtube = 1, spotify = 2, apple = 3)
-	last_provider_selected = document.getElementById("provider_" + user_data.provider);
+	last_provider_selected = document.getElementById("provider_" + (user_data.provider ?? standard_settings.provider));
 	last_provider_selected.classList.add("provider_selected");
 
 	// setup zufällige folge
-	settings_random_amount.value = user_data.random_amount;
-	for (type in user_data.random_settings) {
-		document.getElementById("type_selection_" + type).checked = user_data.random_settings[type];
+	settings_random_amount.value = user_data.random_amount ?? standard_settings.random_amount;
+	for (type in standard_settings.random_settings) {
+		var random_settings = user_data.random_settings ?? standard_settings.random_settings;
+		document.getElementById("type_selection_" + type).checked = random_settings[type];
 	}
 
 	// setup cover size
-	document.getElementById("settings_cover_size").value = user_data.cover_size;
+	document.getElementById("settings_cover_size").value = user_data.cover_size ?? standard_settings.cover_size;
 	changeCoverSize(user_data.cover_size); // actions.js
+	aside.classList.remove('cover_size_hidden')
 
 	// load html
 	loadEpisodes();
@@ -265,7 +295,7 @@ async function storeUserData(remote) {
 			console.log("Uploaded Episode data");
 		}
 		else {
-			alert("Benutzer Daten konnte nicht hochgeladen werden!");
+			openDialog(false, "<p>Benutzer Daten konnte nicht hochgeladen werden!</p>");
 			console.error(response);
 		}
 	}

@@ -1,0 +1,21 @@
+{
+	"name": "Stream Fragezeichen",
+	"short_name": "Stream Fragezeichen",
+	"description": "Deine Seite um drei Fragezeichen Hörbücher von Spotify, Youtube Music, Apple Music oder Deezer zu streamen.",
+	"start_url": ".",
+	"background_color": "#030303",
+	"theme_color": "#02abeb",
+	"display": "standalone",
+	"icons": [
+		{
+			"src": "graphics/favicon.png",
+			"sizes": "264x264",
+			"type": "image/png"
+		},
+		{
+			"src": "graphics/icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml"
+		}
+	]
+}

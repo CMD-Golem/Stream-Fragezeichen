@@ -97,24 +97,29 @@ var hide_aside = document.getElementsByClassName("hide_aside_pill")[0];
 var touch_store = {};
 hide_aside.addEventListener("touchstart", (e) => {
 	touch_store.start = e.touches[0].clientY;
-	touch_store.height = aside.offsetHeight;
-	touch_store.time = new Date().getTime();
+	// touch_store.height = aside.offsetHeight;
+	// touch_store.time = new Date().getTime();
+	touch_store.tbefore = new Date().getTime();
+	touch_store.before = e.touches[0].clientY;
 });
 
 
 hide_aside.addEventListener("touchmove", (e) => {
+	touch_store.before = touch_store.now;
 	touch_store.now = e.touches[0].clientY;
+	touch_store.tbefore = touch_store.tnow;
+	touch_store.tnow = new Date().getTime();
 	var distance = Math.min(0, touch_store.now - touch_store.start);
 	e.preventDefault();
 
 	if (distance < 0) aside.style.transform = `translateY(${distance}px)`;
 });
 
-hide_aside.addEventListener("touchend", () => {
-	var elapsed_time = new Date().getTime() - touch_store.time;
-	var distance = touch_store.start - touch_store.now;
-
-	if (distance > touch_store.height / 2 || distance / elapsed_time > 0.5) {
+hide_aside.addEventListener("touchend", (e) => {
+	// var elapsed_time = new Date().getTime() - touch_store.time;
+	// var distance = touch_store.start - touch_store.now;
+	// if (distance > touch_store.height / 2 || distance / elapsed_time > 0.5) {
+	if ((touch_store.tbefore - touch_store.tnow) / (touch_store.before - touch_store.now) >= -1) {
 		css_root.style.setProperty("--aside_height", "0");
 		aside.classList.remove("show_" + active_aside);
 		active_aside = undefined;
@@ -160,12 +165,12 @@ function infoHeight() {
 // prevent scroll
 var prevents_scroll = false;
 
-function preventScroll(prevent_scroll) {
-	if (prevent_scroll && !prevents_scroll) {
+function preventScroll(enable) {
+	if (enable && !prevents_scroll) {
 		body.style.overflow = "hidden";
 		prevents_scroll = true;
 	}
-	else if (!prevent_scroll && prevents_scroll) {
+	else if (!enable && prevents_scroll) {
 		body.style.overflow = "visible";
 		prevents_scroll = false;
 	}
@@ -318,7 +323,7 @@ function selectProvider(el_button) {
 //#################################################################################################
 // User data
 async function resetUserData() {
-	var confirm_msg = confirm("Deine lokalen und synchronisierten Nutzerdaten werden unwiederruflich gelöscht! Deine ID bleibt ohne Daten bestehen.");
+	var confirm_msg = await openDialog(true, "<p>Deine lokalen und synchronisierten Nutzerdaten werden unwiederruflich gelöscht! Deine ID bleibt ohne Daten bestehen.</p>");
 	if (confirm_msg == true) {
 		var user_id = user_data.user_id;
 		var a_name = user_data.a_name;
@@ -356,7 +361,7 @@ import_user_data.onchange = e => {
 		try {
 			new_user_data = JSON.parse(json_user_data);
 			if (new_user_data.provider == undefined || new_user_data.backwards == undefined || new_user_data.sort_date == undefined) {
-				alert("Die Datei enthält keine Nutzerdaten!");
+				openDialog(false, "<p>Die Datei enthält keine Nutzerdaten!</p>");
 			}
 			else {
 				// keep current user id if not defined in new user data
@@ -369,7 +374,10 @@ import_user_data.onchange = e => {
 				document.location.reload();
 			}
 		}
-		catch (e) { alert("Die Datei ist beschädigt!") };
+		catch (e) {
+			openDialog(false, "<p>Die Datei ist beschädigt!</p>");
+			console.error(e);
+		};
 	}
 }
 
@@ -380,12 +388,14 @@ var new_id = document.getElementById("new_id");
 var delete_id = document.getElementById("delete_id");
 var check_id = document.getElementById("check_id");
 var remove_id = document.getElementById("remove_id");
+var chronicle = document.getElementById("chronicle");
 
 function changeIdButton(button) {
 	new_id.style.display = "none";
 	delete_id.style.display = "none";
 	check_id.style.display = "none";
 	remove_id.style.display = "none";
+	chronicle.style.display = "none";
 
 	if (button == "new_id") {
 		new_id.style.display = "inline-block";
@@ -393,6 +403,7 @@ function changeIdButton(button) {
 	else if (button == "delete_id") {
 		delete_id.style.display = "inline-block";
 		remove_id.style.display = "inline-block";
+		chronicle.style.display = "inline-block";
 	}
 	else if (button == "check_id") {
 		check_id.style.display = "inline-block";
@@ -403,12 +414,16 @@ function importNewIdShow() {
 	if (input_user_id.value.length == 18) {
 		changeIdButton("check_id");
 	}
+	else {
+		changeIdButton("new_id");
+	}
 }
 
-function importNewId() {
-	var confirm_msg = confirm("Durch das Einfügen dieser ID werden deine lokalen Episoden Daten überschrieben!");
+async function importNewId() {
+	var confirm_msg = await openDialog(true, "<p>Durch das Einfügen dieser ID werden deine lokalen Episoden Daten überschrieben!</p>");
 	if (confirm_msg == true) {
 		user_data.user_id = input_user_id.value;
+		chronicle.href = "chronik.html/?id=" + user_data.user_id;
 		storeUserData(false);
 		document.location.reload();
 	}
@@ -420,7 +435,6 @@ async function createId() {
 	var remote_data = {};
 	remote_data.a_name = user_data.a_name;
 	remote_data.a_latest_upload = new Date();
-	remote_data.random_settings = user_data.random_settings;
 	remote_data.list = user_data.list;
 
 	var json_remote_data = JSON.stringify(remote_data);
@@ -435,25 +449,33 @@ async function createId() {
 
 		user_data.user_id = response_object.user_id;
 		input_user_id.value = user_data.user_id;
+		chronicle.href = "chronik.html/?id=" + user_data.user_id;
 		storeUserData(false);
 
 		changeIdButton("delete_id");
+		openDialog(false, `
+			<h1>Geräteübergreifenden Synchronisation</h1>
+			<p>Die ID wurde generiert. Füge diese ID anschliessend auf den gewünschten Geräten ein.</p>
+			<p><span style="font-weight: bold; color: var(--red);">Wichtig</span>: Pro ID darf immer nur ein Gerät gleichzeitig mit der Webseite verbunden sein, um Datenverluste zu vermeiden. Beim Wechsel des Geräts muss die Webseite immer neu geladen werden, damit alle Änderungen korrekt übernommen werden.</p>
+			<p>Sollten Synchronisierungsprobleme auftreten, können unter Chronik alle Änderungen der letzten 5 Tage angezeigt und wiederhergestellt werden.</p>
+		`);
 	}
 	else {
-		alert("ID konnte nicht erstellt werden!");
-		console.log(response);
+		openDialog(false, "<p>ID konnte nicht erstellt werden!</p>");
+		console.error(response);
 	}
 }
 
 function disconnectId() {
 	input_user_id.value = "";
 	user_data.user_id = undefined;
+	chronicle.href = "chronik.html";
 	storeUserData(false);
 	changeIdButton("new_id");
 }
 
 async function deleteId() {
-	var confirm_msg = confirm("Deine ID und die dazugehörigen Daten werden unwiederruflich gelöscht! Lokale Daten beleiben aber weiterhin bestehen.");
+	var confirm_msg = await openDialog(false, "<p>Deine ID und die dazugehörigen Daten werden unwiederruflich gelöscht!</p><p>Lokale Daten beleiben aber weiterhin bestehen.</p>");
 	if (confirm_msg == true) {
 		var response = await fetch("/.netlify/functions/db_delete", {
 			method: "POST",
@@ -462,8 +484,8 @@ async function deleteId() {
 
 		if (response.status == 200) disconnectId();
 		else {
-			alert("ID konnte nicht gelöscht werden!");
-			console.log(response);
+			openDialog(false, "<p>ID konnte nicht gelöscht werden!</p>");
+			console.error(response);
 		}
 	}
 }
@@ -479,9 +501,10 @@ function changeCoverSize(size) {
 	if (screen_width >= 310) var max_width = 260;
 	else var max_width = screen_width - 50;
 
+	if (screen_width < 710) aside.classList.add("cover_size_hidden");
+
 	// define cover size (max_width - min_width) * size_percentage / 100 + min_width
 	var cover_size = (max_width - 120) * size / 100 + 120;
-	// var episodes_per_row = parseInt(main.clientWidth / (cover_size + 16));
 
 	// calc depending on size
 	if (cover_size <= 150) {
@@ -692,26 +715,60 @@ function startSearch() {
 }
 
 //#################################################################################################
+// Error messages
+var dialog = document.querySelector("dialog")
+
+function openDialog(show_cancle, content) {
+	return new Promise((resolve) => {
+		dialog.showModal();
+
+		if (show_cancle) {
+			dialog.innerHTML = content +  `
+				<div class="settings_box">
+					<button id="dialog_ok" class='border_button settings_center'>OK</button>
+					<button id="dialog_cancle" class='border_button settings_center'>Abbrechen</button>
+				</div>`;
+			
+			document.getElementById("dialog_ok").addEventListener("click", () => {
+				resolve(true);
+				dialog.close();
+			});
+			document.getElementById("dialog_cancle").addEventListener("click", () => {
+				resolve(false);
+				dialog.close();
+			});
+		}
+		else {
+			dialog.innerHTML = content +  "<button id='dialog_ok' class='border_button settings_center'>OK</button>";
+			document.getElementById("dialog_ok").addEventListener("click", () => {
+				dialog.close();
+			});
+			resolve(true);
+		}
+	});
+};
+
+//#################################################################################################
 // Calc ms
 function calcDuration(min, s) {
 	return (min * 60 + s) * 1000;
 }
 
 // User counter
-async function userCounter() {
-	var local_date = new Date();
-	var current_day = local_date.getFullYear + "." + local_date.getMonth + "." + local_date.getDay;
-	var was_counted = window.localStorage.getItem("user_counter");
-	var user_role = window.localStorage.getItem("user_role"); // window.localStorage.setItem("user_role", "hidden")
+// async function userCounter() {
+// 	var local_date = new Date();
+// 	var current_day = local_date.getFullYear + "." + local_date.getMonth + "." + local_date.getDay;
+// 	var was_counted = window.localStorage.getItem("user_counter");
+// 	var user_role = window.localStorage.getItem("user_role"); // window.localStorage.setItem("user_role", "hidden")
 
-	if (was_counted != current_day && user_role != "hidden") {
-		window.localStorage.setItem("user_counter", current_day);
+// 	if (was_counted != current_day && user_role != "hidden") {
+// 		window.localStorage.setItem("user_counter", current_day);
 
-		var country_response = await fetch("/get-country");
-		var geo_data = await country_response.json();
-		fetch(`/.netlify/functions/user_counter/` + geo_data.geo.geo.country.name);
-	}
-}
+// 		var country_response = await fetch("/get-country");
+// 		var geo_data = await country_response.json();
+// 		fetch(`/.netlify/functions/user_counter/` + geo_data.geo.geo.country.name);
+// 	}
+// }
 
 // also reactivate episode counter in refreshHistory() in main.js
 // userCounter();

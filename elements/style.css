@@ -43,6 +43,12 @@
 	}
 }
 
+:root {
+	--blue: #02abeb;
+	--red: #e91b24;
+	--white: #dadada;
+}
+
 /* DONT INSERT ANY OTHER CSS RULES ABOVE. THIS WOULD BREAK elements/actions.js:toggleTheme() */
 
 html {
@@ -78,11 +84,11 @@ a:link, a:visited, a:link:active, a:visited:active {
 	text-decoration: none;
 }
 
-.visible_links a:link, .visible_links a:visited, .visible_links a:link:active, .visible_links a:visited:active {
+.visible_links a:link, .visible_links a:visited, .visible_links a:link:active, .visible_links a:visited:active, dfn {
 	text-decoration: underline var(--background-text);
 }
   
-a:hover, .visible_links a:hover {
+a:hover, .visible_links a:hover, dfn:hover {
 	text-decoration: underline;
 }
 
@@ -243,7 +249,7 @@ button:focus, input:focus {
 input:checked + .slider {
 	width: 42px;
 	height: 22px;
-	background-color: #02abeb;
+	background-color: var(--blue);
 	border: none;
 }
 
@@ -263,13 +269,17 @@ dialog {
 	margin: 0;
 	min-width: 171px;
 	transform: translate(-50%, -50%);
-	background-color: var(--aside-background-color);
-	backdrop-filter: blur(20px);
+	background-color: transparent;
 	color: inherit;
 	padding: 30px 40px;
 	padding-bottom: 15px;
 	border: 1px solid var(--text-color);
 	border-radius: 5px;
+}
+
+dialog::backdrop {
+	background-color: var(--aside-background-color);
+	backdrop-filter: blur(20px);
 }
 
 dialog p {
@@ -330,13 +340,13 @@ nav {
 }
 
 .active_white.nav_active {
-	background-color: #dadada;
+	background-color: var(--white);
 }
 .active_red.nav_active {
-	background-color: #e91b24;
+	background-color: var(--red);
 }
 .active_blue.nav_active {
-	background-color: #02abeb;
+	background-color: var(--blue);
 }
 
 .nav_search {
@@ -468,12 +478,12 @@ footer svg {
 		height: 120px;
 	}
 	.active_white.nav_active {
-		background-color: #e91b24;
+		background-color: var(--red);
 	}
 	.active_red.nav_active {
-		background-color: #02abeb;
+		background-color: var(--blue);
 	}
 	.active_blue.nav_active {
-		background-color: #dadada;
+		background-color: var(--white);
 	}
 }

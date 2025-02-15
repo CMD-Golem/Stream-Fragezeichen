@@ -10,6 +10,7 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="elements/style.css"/>
 	<link rel="stylesheet" type="text/css" href="elements/main.css"/>
+	<link rel="manifest" href="manifest.json"/>
 	<link rel="icon" href="graphics/favicon.png">
 </head>
 <body>
@@ -124,33 +125,6 @@
 				<button class="border_button" onclick="showAside('list_settings')">Folgenliste anpassen</button>
 				<button class="border_button" onclick="showAside('random_settings')">Zufällige Folgen anpassen</button>
 			</div>
-			<!-- <div class="settings_margin">
-				<label class="switch">
-					<input type="checkbox" onclick="toggleTheme()" id="settings_toggle_theme">
-					<span class="slider"></span>
-					<span class="slider_text">Theme wechseln</span>
-				</label><br>
-				<label class="switch">
-					<input type="checkbox" onclick="toggleOrder()" id="settings_sort_list">
-					<span class="slider"></span>
-					<span class="slider_text">Erste Episode zuoberst</span>
-				</label><br>
-				<label class="switch">
-					<input type="checkbox" onclick="toggleSort()" id="settings_episode_number">
-					<span class="slider"></span>
-					<span class="slider_text">Nach Erscheinungsdatum sortieren</span>
-				</label><br>
-				<label class="switch">
-					<input type="checkbox" onclick="toggleEpisodeTitle()" id="settings_episode_title">
-					<span class="slider"></span>
-					<span class="slider_text">Episodentitel in Liste ausblenden</span>
-				</label>
-			</div>
-			<label class="input_slider">
-				<span>Covergrösse</span>
-				<input type="range" min="0" max="100" oninput="changeCoverSize(this.value)" id="settings_cover_size" onchange="storeUserData(false);">
-			</label>
-			<div class="border_button settings_margin" onclick="showEpisoden('ignore_list', ignore_list_count)">Ignorierte Folgen</div> -->
 		</div>
 		<div class="aside_content center"> <!-- User Data Box -->
 			<div class="settings_box">
@@ -170,6 +144,7 @@
 						<button onclick="createId()" class="border_button" id="new_id">Neue ID erstellen</button>
 						<button onclick="deleteId()" class="border_button" id="delete_id">ID löschen</button>
 						<button onclick="disconnectId()" class="border_button" id="remove_id">Von ID trennen</button>
+						<a href="chronik.html" class="border_button" id="chronicle">Chronik</a>
 					</div>
 				</div>
 			</div>
@@ -198,7 +173,7 @@
 			</label>
 			<label class="input_slider">
 				<span>Covergrösse</span>
-				<input type="range" min="0" max="100" oninput="changeCoverSize(this.value)" id="settings_cover_size" onchange="storeUserData(false);">
+				<input type="range" min="0" max="100" oninput="changeCoverSize(this.value)" onchange="aside.classList.remove('cover_size_hidden')" id="settings_cover_size" onchange="storeUserData(false);">
 			</label>
 			<div class="border_button settings_margin" onclick="showAside('settings')">Zurück zu den Einstellungen</div>
 		</div>
@@ -272,6 +247,8 @@
 		<div id="no_ignore_list" class="not_found">Keine Folge werden im Zufallsgenerator ignoriert.</div>
 		<div id="no_history" class="not_found">Noch keine Folge gehört.</div>
 	</main>
+
+	<dialog></dialog>
 
 	<footer>
 		<div class="footer_flex">
