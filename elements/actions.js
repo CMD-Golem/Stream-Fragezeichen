@@ -536,6 +536,11 @@ function changeCoverSize(size) {
 	css_root.style.setProperty("--buttons_left", buttons_left + "px");
 }
 
+function saveCoverSize() {
+	if (document.body.clientWidth < 710) aside.classList.remove('cover_size_hidden');
+	storeUserData(false);
+}
+
 // change visibility of episode titles
 function toggleEpisodeTitle() {
 	user_data.hide_episode_title = !user_data.hide_episode_title;

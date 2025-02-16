@@ -173,7 +173,7 @@
 			</label>
 			<label class="input_slider">
 				<span>Covergrösse</span>
-				<input type="range" min="0" max="100" oninput="changeCoverSize(this.value)" onchange="aside.classList.remove('cover_size_hidden')" id="settings_cover_size" onchange="storeUserData(false);">
+				<input type="range" min="0" max="100" oninput="changeCoverSize(this.value)" onchange="saveCoverSize()" id="settings_cover_size">
 			</label>
 			<div class="border_button settings_margin" onclick="showAside('settings')">Zurück zu den Einstellungen</div>
 		</div>
