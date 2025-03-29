@@ -97,8 +97,7 @@ var hide_aside = document.getElementsByClassName("hide_aside_pill")[0];
 var touch_store = {};
 hide_aside.addEventListener("touchstart", (e) => {
 	touch_store.start = e.touches[0].clientY;
-	// touch_store.height = aside.offsetHeight;
-	// touch_store.time = new Date().getTime();
+	touch_store.height = aside.offsetHeight;
 	touch_store.tbefore = new Date().getTime();
 	touch_store.before = e.touches[0].clientY;
 });
@@ -116,14 +115,14 @@ hide_aside.addEventListener("touchmove", (e) => {
 });
 
 hide_aside.addEventListener("touchend", (e) => {
-	// var elapsed_time = new Date().getTime() - touch_store.time;
-	// var distance = touch_store.start - touch_store.now;
-	// if (distance > touch_store.height / 2 || distance / elapsed_time > 0.5) {
-	if ((touch_store.tbefore - touch_store.tnow) / (touch_store.before - touch_store.now) >= -1) {
+	var distance = Math.max(0, touch_store.start - touch_store.now);
+	console.log(distance)
+	console.log(touch_store.height)
+	if (distance > touch_store.height / 2 || (touch_store.tbefore - touch_store.tnow) / (touch_store.before - touch_store.now) >= -1) {
 		css_root.style.setProperty("--aside_height", "0");
 		aside.classList.remove("show_" + active_aside);
 		active_aside = undefined;
-		handleNav(active_aside, "toggle_aside")
+		handleNav(active_aside, "toggle_aside");
 		preventScroll(false);
 
 		setTimeout(function(){

@@ -20,6 +20,17 @@
 var episoden = [
 	{
 		type: "normal",
+		number: "232",
+		name: "Die Stadt aus Gold",
+		href: ["https://www.deezer.com/de/album/708969811", "https://music.youtube.com/browse/MPREb_qBgPKZ7IyA1", "https://open.spotify.com/album/1Qnn3AAN3Nquv7GlNk41YQ", "https://music.apple.com/ch/album/folge-232-die-stadt-aus-gold/1794782655"],
+		content: "Eine Stadt, erbaut aus purem Gold. Das kann nicht mehr als eine Legende sein. Oder gibt es sie, verborgen in der Wildnis, etwa doch?<br>Das möchte auch Professor Mathewson herausfinden, doch ausgerechnet seine eigene Tochter stiehlt ihm seine Forschungsunterlagen. Verzweifelt wendet er sich an die drei ???. Die Detektive kennen Barbara und können sich nicht erklären, warum sie ihren Vater hintergeht und dann spurlos verschwindet. Weiß Barbara mehr über die Landkarte, die angeblich den Weg zur sagenumwobenen Stadt weist? Justus, Peter und Bob übernehmen den Fall.",
+		release: "2025-03-21",
+		track_length: 4529120,
+		book_author: "Christoph Dittert",
+		track_author: "André Minninger"
+	},
+	{
+		type: "normal",
 		number: "231",
 		name: "und der Dreiäugige Schakal",
 		href: ["https://www.deezer.com/de/album/671832711", "https://music.youtube.com/browse/MPREb_ZSOEgNJlMaw", "https://open.spotify.com/album/6isiJbL3hh7e60KigIgKuY", "https://music.apple.com/ch/album/folge-231-und-der-drei%C3%A4ugige-schakal/1777986506"],
