@@ -152,7 +152,7 @@ function infoHeight() {
 	else {
 		if (active_aside == "info" || active_aside == "random_episode") aside.classList.add("small_screen");
 		if (window.matchMedia("(pointer: coarse)").matches) aside_padding = 110;
-		var aside_height = document.documentElement.clientHeight - 121.6;
+		var aside_height = window.innerHeight - 121.6;
 		preventScroll(true);
 	}
 
