@@ -1,7 +1,9 @@
+map $uri $cache_control {
+    ~/img/    "public, max-age=2592000, immutable";
+}
+
 server {
-    location /img/ {
-        add_header Cache-Control "public, max-age=2592000, immutable";
-    }
+    add_header Cache-Control $cache_control;
 
     location / {
         root /usr/share/nginx/html;
