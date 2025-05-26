@@ -438,31 +438,31 @@ async function createId() {
 
 	var json_remote_data = JSON.stringify(remote_data);
 
-	var response = await fetch("/.netlify/functions/db_create", {
-		method: "POST",
-		body: json_remote_data,
-	});
+	// var response = await fetch("", {
+	// 	method: "POST",
+	// 	body: json_remote_data,
+	// });
 
-	if (response.status == 200) {
-		var response_object = await response.json();
+	// if (response.status == 200) {
+	// 	var response_object = await response.json();
 
-		user_data.user_id = response_object.user_id;
-		input_user_id.value = user_data.user_id;
-		chronicle.href = "chronik.html/?id=" + user_data.user_id;
-		storeUserData(false);
+	// 	user_data.user_id = response_object.user_id;
+	// 	input_user_id.value = user_data.user_id;
+	// 	chronicle.href = "chronik.html/?id=" + user_data.user_id;
+	// 	storeUserData(false);
 
-		changeIdButton("delete_id");
-		openDialog(false, `
-			<h1>Geräteübergreifenden Synchronisation</h1>
-			<p>Die ID wurde generiert. Füge diese ID anschliessend auf den gewünschten Geräten ein.</p>
-			<p><span style="font-weight: bold; color: var(--red);">Wichtig</span>: Pro ID darf immer nur ein Gerät gleichzeitig mit der Webseite verbunden sein, um Datenverluste zu vermeiden. Beim Wechsel des Geräts muss die Webseite immer neu geladen werden, damit alle Änderungen korrekt übernommen werden.</p>
-			<p>Sollten Synchronisierungsprobleme auftreten, können unter Chronik alle Änderungen der letzten 5 Tage angezeigt und wiederhergestellt werden.</p>
-		`);
-	}
-	else {
+	// 	changeIdButton("delete_id");
+	// 	openDialog(false, `
+	// 		<h1>Geräteübergreifenden Synchronisation</h1>
+	// 		<p>Die ID wurde generiert. Füge diese ID anschliessend auf den gewünschten Geräten ein.</p>
+	// 		<p><span style="font-weight: bold; color: var(--red);">Wichtig</span>: Pro ID darf immer nur ein Gerät gleichzeitig mit der Webseite verbunden sein, um Datenverluste zu vermeiden. Beim Wechsel des Geräts muss die Webseite immer neu geladen werden, damit alle Änderungen korrekt übernommen werden.</p>
+	// 		<p>Sollten Synchronisierungsprobleme auftreten, können unter Chronik alle Änderungen der letzten 5 Tage angezeigt und wiederhergestellt werden.</p>
+	// 	`);
+	// }
+	// else {
 		openDialog(false, "<p>ID konnte nicht erstellt werden!</p>");
 		console.error(response);
-	}
+	// }
 }
 
 function disconnectId() {
@@ -476,7 +476,7 @@ function disconnectId() {
 async function deleteId() {
 	var confirm_msg = await openDialog(false, "<p>Deine ID und die dazugehörigen Daten werden unwiederruflich gelöscht!</p><p>Lokale Daten beleiben aber weiterhin bestehen.</p>");
 	if (confirm_msg == true) {
-		var response = await fetch("/.netlify/functions/db_delete", {
+		var response = await fetch("", {
 			method: "POST",
 			body: user_data.user_id,
 		});
@@ -768,9 +768,9 @@ function calcDuration(min, s) {
 // 	if (was_counted != current_day && user_role != "hidden") {
 // 		window.localStorage.setItem("user_counter", current_day);
 
-// 		var country_response = await fetch("/get-country");
+// 		var country_response = await fetch();
 // 		var geo_data = await country_response.json();
-// 		fetch(`/.netlify/functions/user_counter/` + geo_data.geo.geo.country.name);
+// 		fetch();
 // 	}
 // }
 

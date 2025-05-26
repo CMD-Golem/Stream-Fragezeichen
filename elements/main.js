@@ -186,8 +186,9 @@ async function loadData() {
 		toggleEpisodeTitle();
 
 		// read remote episode data and overwrite local episode data (null can be removed)
+		disconnectId();
 		if (user_data.user_id != undefined) {
-			var response = await fetch("/.netlify/functions/db_read", {
+			var response = await fetch("", {
 				method: "POST",
 				body: user_data.user_id,
 			});
@@ -286,7 +287,7 @@ async function storeUserData(remote) {
 	
 		var json_fetch_body = JSON.stringify(fetch_body);
 	
-		var response = await fetch("/.netlify/functions/db_update", {
+		var response = await fetch("", {
 			method: "POST",
 			body: json_fetch_body,
 		});
@@ -461,7 +462,7 @@ function refreshHistory(episoden_index, date) {
 
 	// Click counter
 	// if (user_role != "hidden" && date != undefined && date != false) {
-	// 	fetch("/.netlify/functions/episode_counter/");
+	// 	fetch("");
 	// }
 }
 

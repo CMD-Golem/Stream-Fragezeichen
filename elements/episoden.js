@@ -19,6 +19,18 @@
 
 var episoden = [
 	{
+		checked: "not-content",
+		type: "normal",
+		number: "233",
+		name: "Die Nacht der Gewitter",
+		href: ["https://www.deezer.com/de/album/738897411", "https://music.youtube.com/browse/MPREb_tUNcFHS9iQ1", "https://open.spotify.com/album/0qZ0R61AqoD2i8GnzUk91C", "https://music.apple.com/ch/album/folge-233-die-nacht-der-gewitter/1807053258"],
+		content: "Helle Blitze und Donnergrollen überraschen die drei Detektive auf ihrem Weg nach Orange Bay, einem kleinen Ort direkt an der kalifornischen Pazifikküste.<br>Nur mit viel Glück kommen die drei ??? endlich an, denn die Brücke in den von hohen Küstenklippen umschlossenen Ort wurde vom Unwetter zerstört. Niemand kann Orange Bay mehr erreichen, geschweige denn verlassen. Dennoch verschwindet kurz darauf ein 1967er Ford Shelby Mustang GT Super Snake aus seiner Garage. Wer hat den wertvollen Wagen gestohlen? Abgeschottet von der Außenwelt machen sich Justus, Peter und Bob auf die Suche nach dem seltenen Auto.",
+		release: "2025-05-23",
+		track_length: 4127520,
+		book_author: "Marco Sonnleitner",
+		track_author: "André Minninger"
+	},
+	{
 		type: "normal",
 		number: "232",
 		name: "Die Stadt aus Gold",

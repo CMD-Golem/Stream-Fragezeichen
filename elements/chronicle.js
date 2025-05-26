@@ -13,7 +13,7 @@ async function loadId(id, manuall) {
 	if (!manuall) document.getElementById('user_id').value = user_id;
 
 	// fetch data
-	var response = await fetch("/.netlify/functions/db_chronicle", {
+	var response = await fetch("", {
 		method: "POST",
 		body: user_id
 	});
@@ -94,7 +94,7 @@ async function uploadData(index) {
 
 	var json_fetch_body = JSON.stringify(fetch_body);
 
-	var response = await fetch("/.netlify/functions/db_update", {
+	var response = await fetch("", {
 		method: "POST",
 		body: json_fetch_body,
 	});
