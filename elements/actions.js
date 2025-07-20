@@ -116,8 +116,6 @@ hide_aside.addEventListener("touchmove", (e) => {
 
 hide_aside.addEventListener("touchend", (e) => {
 	var distance = Math.max(0, touch_store.start - touch_store.now);
-	console.log(distance)
-	console.log(touch_store.height)
 	if (distance > touch_store.height / 2 || (touch_store.tbefore - touch_store.tnow) / (touch_store.before - touch_store.now) >= -1) {
 		css_root.style.setProperty("--aside_height", "0");
 		aside.classList.remove("show_" + active_aside);

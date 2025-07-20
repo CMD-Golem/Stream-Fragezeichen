@@ -432,8 +432,16 @@ aside.cover_size_hidden #settings_cover_size {
 }
 
 .settings_more_info {
+	display: flex;
+	gap: 5px;
+	flex-wrap: wrap;
+	justify-content: center;
 	margin-top: 20px;
 	margin-bottom: 30px;
+}
+
+.settings_more_info a {
+	margin: 0;
 }
 
 .provider_sel img, .provider_sel svg {
