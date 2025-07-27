@@ -19,7 +19,18 @@
 
 var episoden = [
 	{
-		checked: "not-content",
+		checked: "not-time",
+		type: "normal",
+		number: "234",
+		name: "und der lebende Tresor",
+		href: ["https://www.deezer.com/de/album/764998931", "https://music.youtube.com/browse/MPREb_YlOcBvR4rp6", "https://open.spotify.com/album/4sQsFeHojdbFPB07vSg3Rd", "https://music.apple.com/ch/album/folge-234-und-der-lebende-tresor/1817631978"],
+		content: "Lucy Apple benötigt die Hilfe der Detektive, denn ihr Freund verbirgt etwas vor ihr. Bei den Ermittlungen stoßen die drei auf recht bizarre Vorkommnisse.<br>Skeptisch beginnen die drei ??? mit den Recherchen zu Lucys Partner Ronald und heften sich an dessen Fersen. Doch bei ihren Ermittlungen geraten die Detektive nicht nur gehörig ins Schleudern, sondern in allergrößte Gefahr: Wer treibt hier mit wem ein übles Spiel? Ein mehr als außergewöhnlicher Fall für Justus, Peter und Bob. Können die drei ??? den lebenden Tresor knacken?",
+		release: "2025-07-25",
+		track_length: 4980000,
+		book_author: "André Minninger",
+		track_author: "André Minninger"
+	},
+	{
 		type: "normal",
 		number: "233",
 		name: "Die Nacht der Gewitter",
