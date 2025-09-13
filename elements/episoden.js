@@ -19,14 +19,24 @@
 
 var episoden = [
 	{
-		checked: "not-time",
+		type: "normal",
+		number: "235",
+		name: "und das Fantasmofon",
+		href: ["https://www.deezer.com/de/album/795324851", "https://music.youtube.com/browse/MPREb_yxK3tprZXZS", "https://open.spotify.com/album/031exGT0P6IWBYY6faqoLV", "https://music.apple.com/ch/album/folge-235-und-das-fantasmofon/1829447719"],
+		content: "Kann man mit einem Geistertelefon die Stimmen Verstorbener hören? Die drei ??? begeben sich in ein Künstlerhaus, um diese Theorie zu widerlegen.<br>Dort hat einst ein selbst ernannter Wundertechniker gelebt, der mit seinem Fantasmofon Kontakt ins Reich der Toten aufgenommen haben will. Heute sollen junge Musiker im Fogmire House Inspiration finden. Gar nicht so einfach, wenn das Licht flackert, unheimliche Stimmen flüstern und ein dumpfes Brummen ertönt. Können die drei Detektive dem Spuk ein Ende setzen? Justus, Peter und Bob machen sich auf die Suche nach dem Fantasmofon.",
+		release: "2025-09-12",
+		track_length: 4891240,
+		book_author: "Kari Erlhoff",
+		track_author: "André Minninger"
+	},
+	{
 		type: "normal",
 		number: "234",
 		name: "und der lebende Tresor",
 		href: ["https://www.deezer.com/de/album/764998931", "https://music.youtube.com/browse/MPREb_YlOcBvR4rp6", "https://open.spotify.com/album/4sQsFeHojdbFPB07vSg3Rd", "https://music.apple.com/ch/album/folge-234-und-der-lebende-tresor/1817631978"],
 		content: "Lucy Apple benötigt die Hilfe der Detektive, denn ihr Freund verbirgt etwas vor ihr. Bei den Ermittlungen stoßen die drei auf recht bizarre Vorkommnisse.<br>Skeptisch beginnen die drei ??? mit den Recherchen zu Lucys Partner Ronald und heften sich an dessen Fersen. Doch bei ihren Ermittlungen geraten die Detektive nicht nur gehörig ins Schleudern, sondern in allergrößte Gefahr: Wer treibt hier mit wem ein übles Spiel? Ein mehr als außergewöhnlicher Fall für Justus, Peter und Bob. Können die drei ??? den lebenden Tresor knacken?",
 		release: "2025-07-25",
-		track_length: 4980000,
+		track_length: 4868280,
 		book_author: "André Minninger",
 		track_author: "André Minninger"
 	},
