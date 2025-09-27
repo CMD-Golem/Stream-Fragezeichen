@@ -5,43 +5,41 @@
 	<meta name="robots" content="noindex, nofollow, noarchive"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="elements/style.css"/>
-	<link rel="stylesheet" type="text/css" href="elements/forms.css"/>
-	<link rel="icon" href="graphics/favicon.png">
+	<link rel="stylesheet" type="text/css" href="/elements/style.css"/>
+	<link rel="stylesheet" type="text/css" href="/elements/forms.css"/>
+	<link rel="icon" href="/graphics/favicon.png">
 </head>
 <body>
 	<nav>
-		<a class="nav_button nav_home" href="./"><h1>Stream Fragezeichen</h1></a>
+		<a class="nav_button nav_home" href="/"><h1>Stream Fragezeichen</h1></a>
 	</nav>
 
 	<main class="center">
-		<h1>Kontakt</h1>
+		<section id="form">
+			<h1>Kontakt</h1>
 
-		<p><a href="mailto:info@cmd-golem.com">info@cmd-golem.com</a></p>
-
-		<!-- <form name="Contact" netlify onsubmit="validateForm()" method="POST" style="text-align: left;">
 			<p>Deine E-Mail Adresse <small>(nur falls eine Rückmeldung gewünscht ist)</small></p>
-			<input type="email" name="Email" placeholder="Deine Antwort">
+			<input type="email" id="email" placeholder="Deine Antwort">
 
 			<p>Betreff</p>
-			<input type="text" name="Betreff" id="subject" list="subjects" placeholder="Deine Antwort"></input>
+			<input type="text" id="subject" list="subjects" placeholder="Deine Antwort"></input>
 
 			<p>Beschreibung</p>
-			<textarea type="text" name="Beschreibung" rows="2" class="autosize" id="description" placeholder="Deine Antwort"></textarea>
+			<textarea type="text" rows="2" class="autosize" id="description" placeholder="Deine Antwort"></textarea>
 
 			<div class="center" style="margin-top: 40px;">
-				<button type="submit" class="border_button">Senden</button>
+				<button onclick="sendForm()" class="border_button">Senden</button>
 			</div>
-		</form>
+		</section>
 
-		<section style="display: none;">
+		<section style="display: none;" id="success">
 			<p>Vielen Dank für Ihre Nachricht.</p>
 			<p>Sie wurde erfolgreich versendet.</p>
 
 			<div style="height:10vh;"></div>
 
 			<a href="/" class="border_button settings_more_info">Zurück zur Startseite</a>
-		</section> -->
+		</section>
 	</main>
 
 	<datalist id="subjects">
@@ -68,6 +66,6 @@
 		</div>
 	</footer>
 
-	<script src="elements/forms.js"></script>
+	<script src="/elements/forms.js"></script>
 </body>
 </html>
