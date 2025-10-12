@@ -2868,6 +2868,19 @@ var episoden = [
 		track_author: "André Minninger"
 	},
 	{
+		checked: false,
+		type: "special",
+		number: "DA",
+		name: "Die Auferstehung",
+		search: "",
+		href: ["https://www.deezer.com/de/album/800399101", "https://music.youtube.com/browse/", "https://open.spotify.com/album/4oprA1H2km3RoCqY8MpXIC", "#"],
+		content: "Auferstehung oder Täuschung? Wer einmal spurlos im Amazonas verschwunden ist, kehrt nie mehr zurück. Tracy - vor Jahren verschollen - schafft jedoch das Unmögliche. Irgendetwas aber stimmt nicht - ihre Stimme, ihre Bewegungen wirken fremd. Die Familie hat Zweifel und bittet den mittlerweile erwachsenen Justus Jonas um Hilfe. Getrieben von alten Instinkten übernimmt er den Auftrag. Doch nichts ist, wie es scheint. Zwischen falschen Identitäten und einer Wahrheit, die nie ans Licht kommen sollte, wird ihm nicht nur der Charme der jungen Frau gefährlich. Ohne seine Kollegen Peter Shaw und Bob Andrews stößt er schnell an seine Grenzen. Die Wege der Detektive von einst kreuzen sich und sie müssen sich den Geistern der Vergangenheit stellen - können sie dabei auch ihre Freundschaft retten?<br>Ein Fall mit dunklen Wendungen - über Erinnerung, Hoffnung und die Frage, wie weit ein Mensch gehen würde, um jemanden zurückzubekommen, den er verloren hat.",
+		release: "2025-08-22",
+		track_length: 42086000,
+		book_author: "Andreas Eschbach",
+		track_author: ""
+	},
+	{
 		type: "short_story",
 		number: "KG1",
 		name: "und die Geisterlampe",
