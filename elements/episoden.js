@@ -2689,6 +2689,18 @@ var episoden = [
 	},
 	{
 		type: "special",
+		number: "S8",
+		name: "Das Dorf der Teufel",
+		search: "Special Spezial",
+		href: ["https://www.deezer.com/de/album/814801351", "https://music.youtube.com/browse/MPREb_fmtwhGAUimZ", "https://open.spotify.com/album/09pBOlMa7AxGh1JbdXmrgc", "https://music.apple.com/ch/album/das-dorf-der-teufel/1837170319"],
+		content: "Die drei ??? staunen nicht schlecht, als sie auf der Suche nach einem vermissten Freund des Chauffeurs Morton in Redwood Falls ankommen. Als wäre die Zeit stehen geblieben … Die Bewohner des abgelegenen Dorfes lehnen jegliche Form des Fortschritts ab. Doch dies ist nicht die einzige Überraschung für Justus, Peter und Bob.<br>Bereits nach kurzer Zeit überschlagen sich die Ereignisse und das Dorf der Teufel zeigt sein wahres Gesicht …",
+		release: "2025-10-10",
+		track_length: 5314413,
+		book_author: "Ivar Leon Menger, John Beckmann",
+		track_author: "Ivar Leon Menger, John Beckmann"
+	},
+	{
+		type: "special",
 		number: "TS1",
 		name: "Brainwash: Gefangene Gedanken",
 		search: "Top Secret",
