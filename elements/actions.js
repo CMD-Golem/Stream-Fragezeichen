@@ -756,6 +756,18 @@ function calcDuration(min, s) {
 	return (min * 60 + s) * 1000;
 }
 
+function calcDurationSpotify(json) {
+	// https://developer.spotify.com/documentation/web-api/reference/get-an-albums-tracks
+	// intro und outro abziehen
+	var obj = JSON.parse(json);
+	var duration = 0;
+	for (var i = 0; i < obj.items.length; i++) {
+		duration += obj.items[i].duration_ms;
+	}
+
+	return duration;
+}
+
 // User counter
 // async function userCounter() {
 // 	var local_date = new Date();
