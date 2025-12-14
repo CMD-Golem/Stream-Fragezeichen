@@ -20,6 +20,17 @@
 var episoden = [
 	{
 		type: "normal",
+		number: "236",
+		name: "im Bann des Barrakudas",
+		href: ["https://www.deezer.com/de/album/845965352", "https://music.youtube.com/browse/MPREb_3Ka1S3inUZy", "https://open.spotify.com/album/5yCEzMfmMnSG97SXDFGjR8", "https://music.apple.com/ch/album/folge-236-im-bann-des-barrakudas/1849190704"],
+		content: "Ein vor über hundert Jahren verstorbener Magier scheint zurückgekehrt zu sein. Wer will den Abriss seines Wohnhauses verhindern?<br> Noch immer hat Aden Tangury viele Fans, die das Grundstück des Magiers retten wollen. Sie erzählen noch heute davon, wie Tangury sich damals bei einem seiner Zaubertricks in einen riesengroßen Barrakuda verwandelte. Nun demonstrieren seine Anhänger vor der Baustelle und es kommt sogar zu nächtlichen Sabotageakten. Können die drei ??? für Klarheit sorgen und die Demonstranten aus dem Bann des Barrakudas befreien?",
+		release: "2025-12-12",
+		track_length: 4757191,
+		book_author: "Hendrik Buchna",
+		track_author: "André Minninger"
+	},
+	{
+		type: "normal",
 		number: "235",
 		name: "und das Fantasmofon",
 		href: ["https://www.deezer.com/de/album/795324851", "https://music.youtube.com/browse/MPREb_yxK3tprZXZS", "https://open.spotify.com/album/031exGT0P6IWBYY6faqoLV", "https://music.apple.com/ch/album/folge-235-und-das-fantasmofon/1829447719"],
