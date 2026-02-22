@@ -758,7 +758,7 @@ function calcDuration(min, s) {
 
 function calcDurationSpotify(json) {
 	// https://developer.spotify.com/documentation/web-api/reference/get-an-albums-tracks
-	// intro und outro abziehen
+	// wihtout Inhaltsangabe, intro, prolog and outro (exeption: Hörbücher)
 	var obj = JSON.parse(json);
 	var duration = 0;
 	for (var i = 0; i < obj.items.length; i++) {

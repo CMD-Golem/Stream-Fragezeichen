@@ -1,5 +1,3 @@
-// track_length sollte ohne Inhaltsangabe, Prolog und Outro sein (ausnahme Hörbücher)
-
 // track 020 has the longest description
 
 // {
@@ -20,12 +18,23 @@
 var episoden = [
 	{
 		type: "normal",
+		number: "237",
+		name: "und der rote Büffel",
+		href: ["https://www.deezer.com/de/album/897204572", "https://music.youtube.com/browse/MPREb_uRngWscHai7", "https://open.spotify.com/album/1IkEurD7s47M9ukevi0bWA", "https://music.apple.com/ch/album/folge-237-und-der-rote-büffel/1868936291"],
+		content: "Der rote Büffel ist in Gefahr! Um das wertvolle Kunstwerk zu retten, wenden sich die drei ??? an ihren größten Widersacher – Victor Hugenay.<br>Die Zeit drängt, denn Justus, Peter und Bob sind nicht die Einzigen, die das Gemälde suchen. Ohne die Hilfe des Meisterdiebs, ist das Versteck des Bildes nicht aufzuspüren. Können die Detektive ihm vertrauen? Zwar sitzt er hinter Gittern, doch Hugenay ist zu allem fähig. Ist er wirklich so hilfsbereit, wie er sich gibt oder tappen die drei ??? in eine Falle?",
+		release: "2026-02-20",
+		track_length: 4871297,
+		book_author: "André Marx",
+		track_author: "André Minninger"
+	},
+	{
+		type: "normal",
 		number: "236",
 		name: "im Bann des Barrakudas",
 		href: ["https://www.deezer.com/de/album/845965352", "https://music.youtube.com/browse/MPREb_3Ka1S3inUZy", "https://open.spotify.com/album/5yCEzMfmMnSG97SXDFGjR8", "https://music.apple.com/ch/album/folge-236-im-bann-des-barrakudas/1849190704"],
 		content: "Ein vor über hundert Jahren verstorbener Magier scheint zurückgekehrt zu sein. Wer will den Abriss seines Wohnhauses verhindern?<br> Noch immer hat Aden Tangury viele Fans, die das Grundstück des Magiers retten wollen. Sie erzählen noch heute davon, wie Tangury sich damals bei einem seiner Zaubertricks in einen riesengroßen Barrakuda verwandelte. Nun demonstrieren seine Anhänger vor der Baustelle und es kommt sogar zu nächtlichen Sabotageakten. Können die drei ??? für Klarheit sorgen und die Demonstranten aus dem Bann des Barrakudas befreien?",
 		release: "2025-12-12",
-		track_length: 4757191,
+		track_length: 4754653,
 		book_author: "Hendrik Buchna",
 		track_author: "André Minninger"
 	},
@@ -2892,6 +2901,42 @@ var episoden = [
 		track_author: "André Minninger"
 	},
 	{
+		type: "rocky_beach_crimes",
+		number: "RBC1",
+		name: "Tödliche Törtchen",
+		search: "Tante Mathilda Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/874405892", "https://music.youtube.com/browse/MPREb_L3PFPZPcOkr", "https://open.spotify.com/album/05Nc9NjE8Kl8qPMPkQ2hK1", "#"],
+		content: "Tante Mathilda ermitttelt<br>Kaum weilen die drei ??? einmal nicht im sonnigen Rocky Beach, geschehen dort heikle Verbrechen: Beim Backwettbewerb sackt Jury-Mitglied Gregory Weston ausgerechnet über Tante Mathildas Kirschkuchen in sich zusammen. Das kann Mathilda Jonas nicht auf sich sitzen lassen. Kann sie den Tod des berühmten Schauspielers aufklären? Beherzt und voller Tatendrang mach sich Justus' Tante auf die Suche nach der Wahrheit.",
+		release: "2026-01-02",
+		track_length: 16487863,
+		book_author: "Kari Erlhoff",
+		track_author: ""
+	},
+	{
+		type: "rocky_beach_crimes",
+		number: "RBC2",
+		name: "Mord unter Palmen",
+		search: "Victor Hugenay Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/877520522", "https://music.youtube.com/browse/MPREb_fwlQvTboV2y", "https://open.spotify.com/album/0p1KjVQaxp5kQOqXuAlIp5", "#"],
+		content: "Victor Hugenay ermittelt<br>Der legendäre Kunstdieb Victor Hugenay kehrt zurück nach Rocky Beach. Dass Justus, Peter und Bob gerade außerhalb ihres Heimatortes ermitteln, kommt ihm gerade recht, denn er hat es auf ein ganz bestimmtes Gemälde abgesehen. Doch in der Villa des kürzlich verstorbenen Harald Hastings wird er fälschlicherweise für einen Privatdetektiv gehalten. Die Erben wollen, dass er das verschollene Testament des Toten sucht. Kann Hugenay den letzten Willen und das wertvolle Kunstwerk finden?",
+		release: "2026-01-02",
+		track_length: 17131151,
+		book_author: "Evelyn Boyd",
+		track_author: ""
+	},
+	{
+		type: "rocky_beach_crimes",
+		number: "RBC3",
+		name: "Eiskalter Rausch",
+		search: "Kommissar Reynolds Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/874407072", "https://music.youtube.com/browse/MPREb_Z9cf4yhh9BH", "https://open.spotify.com/album/0HV7C2bXMtiApWyNEJ0IKU", "#"],
+		content: "Kommissar Reynolds ermittelt<br>Kommissar Reynolds genießt seinen wohlverdienten Ruhestand, aber sehnt er sich nicht insgeheim zurück nach der Verbrecherjagd? Als Rubbish George ihm von verdächtigen Überfahrten eines Bootes im Hafen von Rocky Beach berichtet, wird er hellhörig. Wenig später erscheint Rubbish nicht zum vereinbarten Treffpunkt. Reynolds nimmt seine Spur auf, denn die drei ??? sind gerade anderweitig beschäftigt. Der Kommissar läuft zu alter Hochform auf und übernimmt den Fall. Wird er Rubbish George finden?",
+		release: "2026-01-02",
+		track_length: 17317239,
+		book_author: "Evelyn Boyd",
+		track_author: ""
+	},
+	{
 		checked: false,
 		type: "audiobook",
 		number: "DA",
@@ -2999,6 +3044,19 @@ var episoden = [
 		content: "Gibt es Geister? Diesem Mysterium gehen die drei ??? nach, denn bei Mr Prentice passieren seltsame Dinge: Das Licht flackert, ein unheimliches Heulen ist zu hören und die Wände seiner Wohnung beginnen zu beben. Justus, Peter und Bob sehen sich bei Mr Prentice um und nehmen auch den Apartmentkomplex Mulholland View unter die Lupe. Wer treibt ein böses Spiel mit ihrem Auftraggeber? Doch nicht nur die Geistererscheinungen bereiten ihnen Sorge. Die wert volle Statue des Karpatenhundes wird gestohlen. Die Detektive folgen den Spuren und plötzlich hat die ganze Nachbarschaft ein Motiv.",
 		release: "2025-01-24",
 		track_length: 6495000,
+		book_author: "Anil Kizilbuga",
+		track_author: "Josef Ulbig"
+	},
+	{
+		checked: false,
+		type: "film",
+		number: "F26",
+		name: "Toteninsel",
+		search: "Film",
+		href: ["https://www.deezer.com/de/album/880875852", "https://music.youtube.com/browse/MPREb_3LxF9DAfaR1", "https://open.spotify.com/album/2YWVtCaQLAUYyJrjCgw6qG", "https://music.apple.com/ch/album/toteninsel-das-original-hörspiel-zum-kinofilm/1862726248"],
+		content: "Die Sommerferien haben begonnen, und Justus Jonas, Peter Shaw und Bob Andrews planen einen Roadtrip.<br>Doch bevor sie losfahren können, klingelt das Telefon in ihrer Zentrale - ein mysteriöser Anrufer übergibt ihnen einen neuen Fall. Die Spur führt zu einem geheimnisvollen Geheimbund namens Sphinx, angeführt vom rätselhaften Archäologie-Professor Phoenix und seinem Assistenten Olin. Die Organisation betreibt illegale Ausgrabungen und verkauft gestohlene Kunstschätze.<br>Bald richtet sich der Fokus auf die aktive Vulkaninsel Makatao, auch bekannt als die Toteninsel. Dort befindet sich eine uralte Grabstätte, die angeblich mit einem tödlichen Fluch belegt ist: Niemand, der die Insel betritt, kehrt lebend zurück.<br>Die drei Detektive stehen vor ihrer bisher gefährlichsten Mission. Was steckt hinter der Expedition von Sphinx? Und welche Rolle spielt der einflussreiche Unternehmer Joseph Saito Hadden in diesem rätselhaften Abenteuer?",
+		release: "2026-01-23",
+		track_length: 6268664,
 		book_author: "Anil Kizilbuga",
 		track_author: "Josef Ulbig"
 	},
