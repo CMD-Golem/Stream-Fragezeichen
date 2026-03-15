@@ -38,6 +38,6 @@ async function sendForm() {
 	else {
 		var error = await response.text();
 		console.error(error);
-		alert("Es ist ein Fehler aufgetreten: " + error);
+		alert("Es ist ein Fehler aufgetreten.\nKontaktiere uns über support@tabq.ch");
 	}
 }

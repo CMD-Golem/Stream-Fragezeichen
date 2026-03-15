@@ -23,7 +23,7 @@ var episoden = [
 		href: ["https://www.deezer.com/de/album/897204572", "https://music.youtube.com/browse/MPREb_uRngWscHai7", "https://open.spotify.com/album/1IkEurD7s47M9ukevi0bWA", "https://music.apple.com/ch/album/folge-237-und-der-rote-büffel/1868936291"],
 		content: "Der rote Büffel ist in Gefahr! Um das wertvolle Kunstwerk zu retten, wenden sich die drei ??? an ihren größten Widersacher – Victor Hugenay.<br>Die Zeit drängt, denn Justus, Peter und Bob sind nicht die Einzigen, die das Gemälde suchen. Ohne die Hilfe des Meisterdiebs, ist das Versteck des Bildes nicht aufzuspüren. Können die Detektive ihm vertrauen? Zwar sitzt er hinter Gittern, doch Hugenay ist zu allem fähig. Ist er wirklich so hilfsbereit, wie er sich gibt oder tappen die drei ??? in eine Falle?",
 		release: "2026-02-20",
-		track_length: 4871297,
+		track_length: 4736333,
 		book_author: "André Marx",
 		track_author: "André Minninger"
 	},
@@ -2718,6 +2718,18 @@ var episoden = [
 		track_length: 5314413,
 		book_author: "Ivar Leon Menger, John Beckmann",
 		track_author: "Ivar Leon Menger, John Beckmann"
+	},
+	{
+		type: "special",
+		number: "S9",
+		name: "und die singende Schlange",
+		search: "Special Spezial",
+		href: ["https://www.deezer.com/de/album/875916842", "https://music.youtube.com/browse/MPREb_sbw29j0PYZG", "https://open.spotify.com/album/7pkVk9UgZBBcc2D2ySHaRM", "https://music.apple.com/ch/album/und-die-singende-schlange-neufassung/1860827440"],
+		content: "Zugegeben, Mrs. Patricia Osborne ist eine etwas seltsame Dame. Ihrer Nichte Allie geht sie damit auf die Nerven, dass sie behauptet, Spinnweben seien hervorragende Heilkräuter.<br>Sie erzählt Allie, dass sie abends vor dem Schlafengehen mit einem Messer einen Kreis um ihr Bett zieht, um sich vor drohendem Unheil zu schützen. Außerdem lädt sie nachts zu geheimnisvollen Zusammenkünften ein.<br>Allie bittet deshalb die drei ???, diesen Rätseln auf den Grund zu gehen. Unsere Detektive schleichen sich bei Mrs. Osborne ein und beobachten schauerliche Dinge. Was sie wohl gesehen haben?",
+		release: "2026-03-13",
+		track_length: 5419374,
+		book_author: "M. V. Carey",
+		track_author: "André Minninger"
 	},
 	{
 		type: "special",
