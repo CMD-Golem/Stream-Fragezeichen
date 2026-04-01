@@ -18,6 +18,17 @@
 var episoden = [
 	{
 		type: "normal",
+		number: "238",
+		name: "Falsche Schuld",
+		href: ["https://www.deezer.com/de/album/913235691", "https://music.youtube.com/browse/MPREb_aX7IJH3RBWY", "https://open.spotify.com/album/00Pxqrupz6xjkI0vd4Otxb", "https://music.apple.com/ch/album/folge-238-falsche-schuld/1874900327"],
+		content: "Eine geteilte Insel, eine spirituelle Sekte und ein Einbruch. Die drei ??? finden heraus, wer Schuld hat und wer nicht.<br>Justus, Peter und Bob werden Zeugen eines Einbruchs, doch der Täter entkommt ihnen knapp. Alles, was sie finden, ist eine Holzkugel mit einem seltsamen Symbol. Alle Spuren führen nach Holy Island, einer Insel vor der Küste von Rocky Beach. Rubbish George bringt sie auf seinem Boot dort hin. Aber nicht nur die Überfahrt gestaltet sich schwieriger als gedacht …<br>Die heilige Insel ist ein Ort der Zwietracht. Können die drei Detektive den Einbrecher dingfest machen?",
+		release: "2026-03-20",
+		track_length: 4767493,
+		book_author: "Ben Nevis",
+		track_author: "André Minninger"
+	},
+	{
+		type: "normal",
 		number: "237",
 		name: "und der rote Büffel",
 		href: ["https://www.deezer.com/de/album/897204572", "https://music.youtube.com/browse/MPREb_uRngWscHai7", "https://open.spotify.com/album/1IkEurD7s47M9ukevi0bWA", "https://music.apple.com/ch/album/folge-237-und-der-rote-büffel/1868936291"],
