@@ -18,6 +18,17 @@
 var episoden = [
 	{
 		type: "normal",
+		number: "239",
+		name: "Das Geheimnis der sieben Palmen",
+		href: ["https://www.deezer.com/de/album/945481241", "https://music.youtube.com/browse/MPREb_dvRbxAfeUId", "https://open.spotify.com/album/2mh0BDhRAJFa7clABwut3L", "https://music.apple.com/ch/album/folge-239-das-geheimnis-der-sieben-palmen/1887229472"],
+		content: "Wer hat die Bibliothek von Mr. Lehmann verwüstet? Die drei ??? stehen vor einem Rätsel, das sie zu einem Nobelpreisträger führt.<br>Bei Mr. Lehmann wurde eingebrochen, doch nicht nur ein wertvolles Buch wurde gestohlen, auch alte Briefe seiner Eltern sind verschwunden. Als wenig später auch bei Lehmanns Bruder eingebrochen wird, werden die Detektive hellhörig. Die Ermittlungen führen Justus, Peter und Bob nach Seven Palms, dem Haus von Thomas Mann in Kalifornien. Was hat die Familie Lehmann mit dem Schriftsteller zu tun?",
+		release: "2026-05-22",
+		track_length: 4751600,
+		book_author: "Marco Sonnleitner",
+		track_author: "André Minninger"
+	},
+	{
+		type: "normal",
 		number: "238",
 		name: "Falsche Schuld",
 		href: ["https://www.deezer.com/de/album/913235691", "https://music.youtube.com/browse/MPREb_aX7IJH3RBWY", "https://open.spotify.com/album/00Pxqrupz6xjkI0vd4Otxb", "https://music.apple.com/ch/album/folge-238-falsche-schuld/1874900327"],
