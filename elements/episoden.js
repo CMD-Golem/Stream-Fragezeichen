@@ -18,6 +18,17 @@
 var episoden = [
 	{
 		type: "normal",
+		number: "240",
+		name: "und die schwarze Rose",
+		href: ["https://www.deezer.com/de/album/985501051", "https://music.youtube.com/browse/MPREb_9O0Z0iw90aj", "https://open.spotify.com/album/55djiROmSQZWDVzzUwyKFc", "https://music.apple.com/ch/album/folge-240-und-die-schwarze-rose/6770563852"],
+		content: "Wer schickt dem ersten Detektiv eine schwarze Rose? Justus ist beunruhigt und macht sich mit seinen Freunden auf die Suche nach dem Absender.<br>Schnell finden die drei ??? heraus, aus welcher Gärtnerei die Blume stammt, und machen sich auf den Weg zu der ehemaligen Klosteranlage. Hinter den efeuberankten Mauern stoßen sie auf so manches Geheimnis und der Wettkampf um die schwarze Rose beginnt! Denn bislang ist es offiziell noch niemandem geglückt, eine schwarze Rose zu züchten. Zu allem Überfluss sollen in den alten Gemäuern auch noch Seelen der verstorbenen Mönche ihr Unwesen treiben …",
+		release: "2026-07-24",
+		track_length: 4169293,
+		book_author: "Ben Nevis",
+		track_author: "André Minninger"
+	},
+	{
+		type: "normal",
 		number: "239",
 		name: "Das Geheimnis der sieben Palmen",
 		href: ["https://www.deezer.com/de/album/945481241", "https://music.youtube.com/browse/MPREb_dvRbxAfeUId", "https://open.spotify.com/album/2mh0BDhRAJFa7clABwut3L", "https://music.apple.com/ch/album/folge-239-das-geheimnis-der-sieben-palmen/1887229472"],
@@ -3456,6 +3467,19 @@ var episoden = [
 		release: "2023-06-16",
 		track_length: 14633000,
 		book_author: "M. V. Carey",
+		track_author: ""
+	},
+	{
+		checked: false,
+		type: "audiobook",
+		number: "HB183",
+		name: "Cathlen Gawlich liest... und der Hexengarten",
+		search: "Hörbuch Hörbücher",
+		href: ["https://www.deezer.com/de/album/1001682391", "https://music.youtube.com/browse/MPREb_o9N4MdkO2ja", "https://open.spotify.com/album/7LP80VNF22uMFZ7vCHrrxy", "#"],
+		content: "Die drei ??? sollen gegen Geisterpflanzen ermitteln? Zunächst hält Peter den Auftrag seines Schulkameraden Jesse für einen Scherz. Doch der meint es ernst - denn das mysteriöse Leuchten und die körperlosen Stimmen im Gewächshaus eines benachbarten Anwesens scheinen echt zu sein. Als Jesses Schwester behauptet, das Anwesen gehöre einer Hexenfamilie, werden die Detektive hellhörig …",
+		release: "2026-07-03",
+		track_length: 12207066,
+		book_author: "Kari Erlhoff",
 		track_author: ""
 	},
 	{
