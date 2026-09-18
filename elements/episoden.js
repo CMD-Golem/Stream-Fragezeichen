@@ -18,6 +18,17 @@
 var episoden = [
 	{
 		type: "normal",
+		number: "241",
+		name: "Meister des Lichts",
+		href: ["https://www.deezer.com/de/album/1024801661", "https://music.youtube.com/browse/MPREb_ZsI39UbTBJl", "https://open.spotify.com/album/3yMvUfGBieqtsmwQ35lCoA", "https://music.apple.com/ch/album/folge-241-meister-des-lichts/6789055080"],
+		content: "Haben Aliens John Shadwell auserwählt, um den Menschen eine Botschaft mitzuteilen? Die drei ??? sind der Wahrheit auf der Spur.<br>Der Lichtkünstler ist für seine Show in Rocky Beach zu Gast. Justus, Peter und Bob freuen sich auf die Lichtprojektionen, als plötzlich ein unerklärliches Leuchten am Himmel erscheint, das eindeutig nicht vom Künstler stammt. Ein Zeichen der Außerirdischen? Sind die Gerüchte wahr und Shadwell ist der Auserwählte? Das streitet der Meister des Lichts vehement ab, doch mit der Zeit beginnt er, an sich selbst zu zweifeln.",
+		release: "2026-09-18",
+		track_length: 4740738,
+		book_author: "Christoph Dittert",
+		track_author: "André Minninger"
+	},
+	{
+		type: "normal",
 		number: "240",
 		name: "und die schwarze Rose",
 		href: ["https://www.deezer.com/de/album/985501051", "https://music.youtube.com/browse/MPREb_9O0Z0iw90aj", "https://open.spotify.com/album/55djiROmSQZWDVzzUwyKFc", "https://music.apple.com/ch/album/folge-240-und-die-schwarze-rose/6770563852"],
