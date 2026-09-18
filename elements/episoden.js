@@ -17,6 +17,7 @@
 
 var episoden = [
 	{
+		checked: false,
 		type: "normal",
 		number: "241",
 		name: "Meister des Lichts",
@@ -2872,7 +2873,6 @@ var episoden = [
 		track_author: "André Minninger"
 	},
 	{
-		checked: false,
 		type: "advent_calender",
 		number: "AK25",
 		name: "Gruselige Weihnacht überall",
@@ -2880,7 +2880,7 @@ var episoden = [
 		href: ["https://www.deezer.com/de/album/830702521", "https://music.youtube.com/browse/MPREb_nDkC3TrkRYT", "https://open.spotify.com/album/0PLjPVDHMsLP0tF1Zt6uvx", "https://music.apple.com/ch/album/adventskalender-gruselige-weihnacht-%C3%BCberall/1843382938"],
 		content: "Ein ohrenbetäubender Knall ertönt, der Auktionsraum füllt sich mit Rauch, und den drei Detektiven entwischt ein Dieb!<br>Aaron Harper leitet das Weihnachtsmuseum in Rocky Beach. Ein anonymer Erpresser verlangt ein Ausstellungsstück aus dem Museum und bis zur großen Weihnachtsauktion muss die Übergabe stattfinden. Andernfalls drohen schlimme Folgen. Wem der Auktionsgäste können Justus, Peter und Bob vertrauen? Mit Zeitdruck im Rücken müssen die drei Detektive das Geheimnis um das weihnachtliche Exponat lüften.",
 		release: "2025-11-07",
-		track_length: 10887986,
+		track_length: 10889720,
 		book_author: "Christoph Dittert",
 		track_author: "André Minninger"
 	},
